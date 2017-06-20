@@ -11,7 +11,7 @@
                 <asp:TableRow>
                     <asp:TableHeaderCell Text="Id" Width="120px"/>
                     <asp:TableCell Width="120px">
-                            <asp:TextBox ID="IdDetail" runat="server" Text='<%# Eval("Id") %>' Width="120px"/>
+                            <asp:Label ID="IdDetail" runat="server" Text='<%# Eval("Id") %>' Width="120px"/>
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow>
