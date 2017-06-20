@@ -48,7 +48,7 @@
                 Synagoge_Id:
                 <asp:Label ID="Synagoge_IdLabel" runat="server" Text='<%# Eval("Synagoge_Id") %>' />
                 <br />
-<br />
+                <br />
             </ItemTemplate>
         </asp:DataList>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * FROM [Prayers]"></asp:SqlDataSource>

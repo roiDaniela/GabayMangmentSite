@@ -14,26 +14,59 @@ namespace WingtipToys
   {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
+        protected void UpdateBtn_Click(object sender, EventArgs e)
+        {
+            PrayersList_DataBound(sender, e);
+        }
 
-    public IQueryable<Prayer> GetPrayers(
+        protected void PrayersList_DataBound(object sender, EventArgs e)
+        {
+            GridViewRow row = new GridViewRow(
+                0,
+                0,
+                DataControlRowType.DataRow,
+                DataControlRowState.Alternate);
+
+            for (int i = 0; i < PrayersList.Columns.Count; i++)
+            {
+                TableCell cell = new TableCell();
+
+                if( i!= PrayersList.Columns.Count - 1)
+                {
+                    TextBox textbox = new TextBox();
+                    //textbox.Text = "&nbsp;";
+                    cell.Controls.Add(textbox);
+                }
+                else
+                {
+                    CheckBox checkbox = new CheckBox();
+                    cell.Controls.Add(checkbox);
+                }
+                //cell.Text = "";
+                row.Cells.Add(cell);
+            }
+
+            PrayersList.Controls[0].Controls.AddAt(1, row);
+        }
+
+        public IQueryable<Prayer> GetPrayers(
                 [QueryString("id")] int? prayerId,
-                [RouteData] int prayerSynagogeId)
+                [RouteData] int? prayerSynagogeId)
     {
         var _db = new WingtipToys.Models.ProductContext();
         IQueryable<Prayer> query = _db.Prayers;
 
         if (prayerId.HasValue && prayerId > 0)
         {
-            query = query.Where(p => p.prayerId == prayerId);
+            query = query.Where(p => p.PrayerID == prayerId);
         }
 
-        if (!String.IsNullOrEmpty(prayerSynagogeId))
+        if (!(prayerSynagogeId == null))
         {
             query = query.Where(p =>
-                                String.Compare(p.SynagogeId,
-                                prayerSynagogeId) == 0);
+                                p.SynagogeId ==
+                                prayerSynagogeId);
         }
         return query;
     }

@@ -13,13 +13,13 @@ namespace WingtipToys {
     public partial class PrayerDetails {
         
         /// <summary>
-        /// prayerDetail control.
+        /// FormViewPrayerDetail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView prayerDetail;
+        protected global::System.Web.UI.WebControls.FormView FormViewPrayerDetail;
         
         /// <summary>
         /// SqlDataSource1 control.

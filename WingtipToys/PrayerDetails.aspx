@@ -3,35 +3,63 @@
          CodeBehind="PrayerDetails.aspx.cs" Inherits="WingtipToys.PrayerDetails" %>
 
  <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
-<%--    <asp:FormView ID="productDetail" runat="server" ItemType="WingtipToys.Models.Prayer" SelectMethod ="GetPrayer" RenderOuterTable="false">
-        <ItemTemplate>
-            <div>
-                <h1><%#:Item.ProductName %></h1>
-            </div>
-            <br />
-            <table>
-                <tr>
-                    <td>
-                        <img src="/Catalog/Images/boatbig" style="border:solid; height:300px" alt="<%#:Item.PrayerName %>"/>
-                    </td>
-                    <td>&nbsp;</td>  
-                    <td style="vertical-align: top; text-align:left;">
-                        <br />
-                        <span><b>Private Name:</b>&nbsp;<%#: String.Format("{0:c}", Item.Private) %></span>
-                        <br />
-                    </td>
-                </tr>
-            </table>
-        </ItemTemplate>
-    </asp:FormView>
-    --%>
-     <asp:FormView ID="prayerDetail" runat="server" ItemType="WingtipToys.Models.Prayer">
-        <ItemTemplate>
-            <input id="TextPrayerId" type="number" value=<%#Item.PrayerID %>/>
-        </ItemTemplate>
-     </asp:FormView>
-     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * FROM [Prayers]"></asp:SqlDataSource>
+
+     <asp:FormView ID="FormViewPrayerDetail" runat="server" DataKeyField="Id" DataSourceID="SqlDataSource1">
+
+         <ItemTemplate>
+            <asp:Table ID="Table2" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4" CssClass="table table-striped table-bordered">
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Id" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="IdDetail" runat="server" Text='<%# Eval("Id") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Private Name" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Private_NameLabel" runat="server" Text='<%# Eval("Private_Name") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Family Name" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Family_NameLabel" runat="server" Text='<%# Eval("Family_Name") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Birthday" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' Width="120px"/>
+                    </asp:TableCell>                    
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Parashat BarMitzva" Width="120px"/>
+                    <asp:TableCell>
+                            <asp:TextBox ID="Parashat_Bar_Mitzva_IdLabel" runat="server" Text='<%# Eval("Parashat_Bar_Mitzva_Id") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Cohen\Levi\Israel" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Title_idLabel" runat="server" Text='<%# Eval("Title_id") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Yourtzeit Father" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Yourtziet_FatherLabel" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableHeaderCell Text="Yourtzeit Mother" Width="120px"/>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Yourtziet_MotherLabel" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
+        </ItemTemplate> 
+        </asp:FormView>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * FROM [Prayers] where Id = @prayer_id"/>
 </asp:Content>
 
 

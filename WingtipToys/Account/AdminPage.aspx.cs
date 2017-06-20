@@ -86,7 +86,7 @@ namespace WingtipToys.Admin
 
     public IQueryable GetPrayers()
     {
-        var _db = new WingtipToys.Models.PrayerContext();
+        var _db = new WingtipToys.Models.ProductContext();
         IQueryable query = _db.Prayers;
         return query;
     }
