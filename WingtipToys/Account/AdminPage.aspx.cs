@@ -84,6 +84,12 @@ namespace WingtipToys.Admin
       return query;
     }
 
+    public IQueryable GetPrayers()
+    {
+        var _db = new WingtipToys.Models.PrayerContext();
+        IQueryable query = _db.Prayers;
+        return query;
+    }
     public IQueryable GetProducts()
     {
       var _db = new WingtipToys.Models.ProductContext();

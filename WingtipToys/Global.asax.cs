@@ -43,6 +43,11 @@ namespace WingtipToys
               "Product/{productName}",
               "~/ProductDetails.aspx"
           );
+          routes.MapPageRoute(
+              "PrayerByIdRoute",
+              "Prayer/{prayerId}",
+              "~/PrayerDetails.aspx"
+          );
         }
 
         void Application_Error(object sender, EventArgs e)

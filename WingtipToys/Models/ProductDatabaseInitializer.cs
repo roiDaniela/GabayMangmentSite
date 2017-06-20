@@ -9,6 +9,7 @@ namespace WingtipToys.Models
     {
       GetCategories().ForEach(c => context.Categories.Add(c));
       GetProducts().ForEach(p => context.Products.Add(p));
+      GetPrayers().ForEach(prayer => context.Prayers.Add(prayer));
     }
 
     private static List<Category> GetCategories()
@@ -51,7 +52,8 @@ namespace WingtipToys.Models
 				{
 					PrayerID = 303887678,
 					PrayerFirstName = "Moshe",
-					PrayerLastName = "Yosef"			   }
+					PrayerLastName = "Yosef"
+                }
 			};
 
 			return prayers;

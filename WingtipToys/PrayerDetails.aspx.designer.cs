@@ -10,16 +10,16 @@
 namespace WingtipToys {
     
     
-    public partial class ProductList {
+    public partial class PrayerDetails {
         
         /// <summary>
-        /// PrayersListView control.
+        /// prayerDetail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView PrayersListView;
+        protected global::System.Web.UI.WebControls.FormView prayerDetail;
         
         /// <summary>
         /// SqlDataSource1 control.
@@ -29,14 +29,5 @@ namespace WingtipToys {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
-        /// <summary>
-        /// productList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView productList;
     }
 }

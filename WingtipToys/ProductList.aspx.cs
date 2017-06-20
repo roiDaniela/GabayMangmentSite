@@ -17,9 +17,30 @@ namespace WingtipToys
 
     }
 
+    public IQueryable<Prayer> GetPrayers(
+                [QueryString("id")] int? prayerId,
+                [RouteData] int prayerSynagogeId)
+    {
+        var _db = new WingtipToys.Models.ProductContext();
+        IQueryable<Prayer> query = _db.Prayers;
+
+        if (prayerId.HasValue && prayerId > 0)
+        {
+            query = query.Where(p => p.prayerId == prayerId);
+        }
+
+        if (!String.IsNullOrEmpty(prayerSynagogeId))
+        {
+            query = query.Where(p =>
+                                String.Compare(p.SynagogeId,
+                                prayerSynagogeId) == 0);
+        }
+        return query;
+    }
+
     public IQueryable<Product> GetProducts(
-                        [QueryString("id")] int? categoryId,
-                        [RouteData] string categoryName)
+                    [QueryString("id")] int? categoryId,
+                    [RouteData] string categoryName)
     {
       var _db = new WingtipToys.Models.ProductContext();
       IQueryable<Product> query = _db.Products;

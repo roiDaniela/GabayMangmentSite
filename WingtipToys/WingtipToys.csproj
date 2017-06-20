@@ -229,7 +229,20 @@
     <Content Include="Catalog\Images\Thumbs\Thumbs.db" />
     <Content Include="Checkout\Web.config" />
     <Content Include="Admin\Web.config" />
+    <Content Include="GabayDataSet.xsc">
+      <DependentUpon>GabayDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GabayDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GabayDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="GabayDataSet.xss">
+      <DependentUpon>GabayDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="PrayerDetails.aspx" />
+    <Content Include="PrayersList.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="ProductList.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -466,6 +479,11 @@
     <Compile Include="ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GabayDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GabayDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -483,6 +501,20 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductContext.cs" />
     <Compile Include="Models\ProductDatabaseInitializer.cs" />
+    <Compile Include="PrayerDetails.aspx.cs">
+      <DependentUpon>PrayerDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrayerDetails.aspx.designer.cs">
+      <DependentUpon>PrayerDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrayersList.aspx.cs">
+      <DependentUpon>PrayersList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrayersList.aspx.designer.cs">
+      <DependentUpon>PrayersList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
