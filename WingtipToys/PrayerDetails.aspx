@@ -35,13 +35,13 @@
                 <asp:TableRow>
                     <asp:TableHeaderCell Text="Parashat BarMitzva" Width="120px"/>
                     <asp:TableCell>
-                            <asp:TextBox ID="Parashat_Bar_Mitzva_IdLabel" runat="server" Text='<%# Eval("Parashat_Bar_Mitzva_Id") %>' Width="120px"/>
+                            <asp:TextBox ID="Parashat_Bar_Mitzva_IdLabel" runat="server" Text='<%# Eval("Parasha") %>' Width="120px"/>
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow>
                     <asp:TableHeaderCell Text="Cohen\Levi\Israel" Width="120px"/>
                     <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Title_idLabel" runat="server" Text='<%# Eval("Title_id") %>' Width="120px"/>
+                            <asp:TextBox ID="Title_idLabel" runat="server" Text='<%# Eval("title") %>' Width="120px"/>
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow>
@@ -59,7 +59,7 @@
             </asp:Table>
         </ItemTemplate> 
         </asp:FormView>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * FROM [Prayers] where Id = @prayer_id"/>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title FROM [Prayers] py, [Parashot] pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and py.Id = @prayer_id"/>
 </asp:Content>
 
 

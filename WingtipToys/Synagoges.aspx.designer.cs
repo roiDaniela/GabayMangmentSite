@@ -7,64 +7,64 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WingtipToys.Account {
+namespace WingtipToys {
     
     
-    public partial class Manage {
+    public partial class Synagoges {
         
         /// <summary>
-        /// successMessage control.
+        /// UpdateBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder successMessage;
+        protected global::System.Web.UI.WebControls.Button UpdateBtn;
         
         /// <summary>
-        /// ChangePassword control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink ChangePassword;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// CreatePassword control.
+        /// IdToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CreatePassword;
+        protected global::System.Web.UI.WebControls.TextBox IdToAdd;
         
         /// <summary>
-        /// DropDownListCurrSyn control.
+        /// NameToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListCurrSyn;
+        protected global::System.Web.UI.WebControls.TextBox NameToAdd;
         
         /// <summary>
-        /// DataSourceAvailbleSyn control.
+        /// PasswordToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource DataSourceAvailbleSyn;
+        protected global::System.Web.UI.WebControls.TextBox PasswordToAdd;
         
         /// <summary>
-        /// DropDownListNotAvailbleSyn control.
+        /// SynagogesList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListNotAvailbleSyn;
+        protected global::System.Web.UI.WebControls.GridView SynagogesList;
         
         /// <summary>
         /// SqlDataSource1 control.
@@ -74,14 +74,5 @@ namespace WingtipToys.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
-        /// <summary>
-        /// SynPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SynPassword;
     }
 }

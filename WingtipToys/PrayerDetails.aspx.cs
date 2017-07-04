@@ -15,7 +15,7 @@ namespace WingtipToys
         protected void Page_Load(object sender, EventArgs e)
         {
             string rawId = Request.QueryString["PrayerID"];
-            id = Convert.ToInt32(rawId);
+            //id = Convert.ToInt32(rawId);
             SqlDataSource1.SelectParameters.Add("prayer_id", rawId);
         }
 

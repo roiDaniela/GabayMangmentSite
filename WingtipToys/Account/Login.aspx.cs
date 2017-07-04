@@ -35,6 +35,16 @@ namespace WingtipToys.Account
                 // To enable password failures to trigger lockout, change to shouldLockout: true
                 var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
 
+                if (result == SignInStatus.Failure)
+                {
+                    // check in db
+                    string real_pass = Models.ProductDatabaseInitializer.getPasswordForUser(Email.Text);
+                    if (real_pass.Equals(Password.Text))
+                    {
+                        result = SignInStatus.Success;
+                    }
+                }
+
                 switch (result)
                 {
                     case SignInStatus.Success:

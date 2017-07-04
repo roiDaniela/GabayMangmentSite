@@ -13,7 +13,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <section id="ManageForm">
                 <div class="form-horizontal">
                     <h4>Change your account settings</h4>
@@ -41,36 +41,34 @@
         </div>
         
         <div class="col-md-4">
-            <%--
-            <section id="synahoges">
+            <section id="AddSynToAcountForm">
                 <div class="form-horizontal">
-                    <asp:SqlDataSource ID="SqlDataSourceSynNotInMyAcount" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select s1.Id as Id, s1.Name as Name from [synagoge] s1 where s1.id not in (select s.Id from [synagoge] s, [Mail2Syn] m where m.Email = @email and m.Synagoge_Id = s.Id)">
-                        <SelectParameters>
-                            <asp:Parameter Name="email" Type="Int32" DefaultValue="<%= Email %>" />
-                        </SelectParameters>
-                    </asp:SqlDataSource>
-                    <h4>Add Synagoge to your acount</h4>
-                    <asp:Table ID="Table1" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4" CssClass="table table-striped table-bordered">
-                        <asp:TableHeaderRow>
-                            <asp:TableHeaderCell Text="Synagoge Name" Width="120px"/>
-                            <asp:TableHeaderCell Text="Synagoge Password" Width="120px"/>
-                        </asp:TableHeaderRow>
-                        <asp:TableRow>
-                            <asp:TableCell Width="120px">
-                                <div class="col-md-10">
-                                    <asp:DropDownList ID="Synagoge" Width="280px" CssClass="form-control" runat="server" DataSourceID="SqlDataSourceSynNotInMyAcount" DataTextField="Name" DataValueField="Id"/>
-                                </div>
-                            </asp:TableCell>
-                            <asp:TableCell Width="120px">
-                                    <asp:TextBox runat="server" ID="synPassword" TextMode="Password" CssClass="form-control" />
-                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="synPassword"
-                                        CssClass="text-danger" ErrorMessage="The Synagoge password field is required." />
-                            </asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>
+                    <h4>Add synagoge To your acount</h4>
+                    <hr />
+                   
+                    <dl class="dl-horizontal">
+                         
+                        <dt>Choose Synagoge:</dt>
+                        <dd>    
+                            <asp:DropDownList ID="DropDownListNotAvailbleSyn" AutoPostBack="True" Width="280px" CssClass="form-control" runat="server" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Id"/>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT s.Id, s.Name FROM Synagoge AS s Left outer JOIN Mail2Syn AS m ON (s.Id = m.Synagoge_Id) where (@email !=  m.email or m.email is null)">
+                                <SelectParameters>
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        </dd>
+
+                        <dt>Enter Synagoge Password:</dt>
+                        <dd>    
+                            <asp:TextBox runat="server" ID="SynPassword" TextMode="Password" CssClass="form-control" Width="280px"/>
+                            <asp:RequiredFieldValidator Visible="false" runat="server" ControlToValidate="SynPassword" CssClass="text-danger" ErrorMessage="The password field is required." />
+                        </dd>
+                            
+                        <dd>
+                            <asp:Button runat="server" OnClick="AddSynagogeToUser" Text="Add" CssClass="btn btn-default" />
+                        </dd>
+                    </dl>                              
                 </div>
             </section>
-         --%>
         </div>
     </div>
 

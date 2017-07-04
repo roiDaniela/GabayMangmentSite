@@ -33,14 +33,18 @@ namespace WingtipToys.Account
 
         public int LoginsCount { get; set; }
 
-        public string Email { get; set; }
+        //public string Email { get; set; }
 
         protected void Page_Load()
         {                        
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
             HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
+
+            DataSourceAvailbleSyn.SelectParameters.Remove(DataSourceAvailbleSyn.SelectParameters["email"]);
             DataSourceAvailbleSyn.SelectParameters.Add("email", manager.GetEmail(User.Identity.GetUserId())); //Where userID is your variable
+            SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["email"]);
+            SqlDataSource1.SelectParameters.Add("email", manager.GetEmail(User.Identity.GetUserId())); //Where userID is your variable
             // Enable this after setting up two-factor authentientication
             //PhoneNumber.Text = manager.GetPhoneNumber(User.Identity.GetUserId()) ?? String.Empty;
 
@@ -138,6 +142,30 @@ namespace WingtipToys.Account
             else
             {
                 Session["currSyn"] = String.Empty;
+            }
+        }
+
+        protected void AddSynagogeToUser(object sender, EventArgs e)
+        {
+            string Password = SynPassword.Text;
+            string realPassword = Models.ProductDatabaseInitializer.getPasswordForSynagogeId(DropDownListNotAvailbleSyn.SelectedValue);
+
+            if (Password.Equals(realPassword))
+            {
+                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                GabayDataSet gabayDataSet = new GabayDataSet();
+                GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
+                GabayDataSet.Mail2SynRow rsDetails = gabayDataSet.Mail2Syn.NewMail2SynRow();
+
+                rsDetails["Email"] = manager.GetEmail(User.Identity.GetUserId());
+                rsDetails["Synagoge_Id"] = DropDownListNotAvailbleSyn.SelectedValue;
+
+                gabayDataSet.Mail2Syn.Rows.Add(rsDetails.ItemArray);
+
+                mail2SynTableAdapter.Update(gabayDataSet.Mail2Syn);
+                
+                DropDownListNotAvailbleSyn.DataBind();
+                DropDownListCurrSyn.DataBind();
             }
         }
     }

@@ -170,6 +170,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddToCart.aspx" />
     <Content Include="Account\AdminPage.aspx" />
+    <Content Include="Aliyot.aspx" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Catalog\Images\boatbig.png" />
     <Content Include="Catalog\Images\boatpaper.png" />
@@ -282,6 +283,7 @@
     <Content Include="Global.asax" />
     <Content Include="ShoppingCart.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="Synagoges.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -414,6 +416,13 @@
     </Compile>
     <Compile Include="Account\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Aliyot.aspx.cs">
+      <DependentUpon>Aliyot.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aliyot.aspx.designer.cs">
+      <DependentUpon>Aliyot.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -555,6 +564,13 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Synagoges.aspx.cs">
+      <DependentUpon>Synagoges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Synagoges.aspx.designer.cs">
+      <DependentUpon>Synagoges.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

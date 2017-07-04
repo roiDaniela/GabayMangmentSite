@@ -10,7 +10,7 @@ namespace WingtipToys.Models
 {
   public class ProductDatabaseInitializer : DropCreateDatabaseIfModelChanges<ProductContext>
   {
-    private static string _strConn = "Server=tcp:gabay.database.windows.net,1433;Initial Catalog=Gabay;Persist Security Info=False;User ID=roifo;Password=sadna!2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+      private static string _strConn = "Server=tcp:gabay.database.windows.net,1433;Initial Catalog=Gabay;Persist Security Info=False;User ID=roifo;Password=sadna!2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         protected override void Seed(ProductContext context)
         {
@@ -248,5 +248,17 @@ namespace WingtipToys.Models
             password = dataSet.Tables[0].Rows[0]["Password"].ToString();
             return password;            
         }
-    }
+
+        internal static string getPasswordForUser(string email)
+        {
+            string password;
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("Select password from Users where email = @email", _strConn);
+            dataAdapter.SelectCommand.Parameters.AddWithValue("@email", email);
+            DataSet dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+            password = dataSet.Tables[0].Rows[0]["Password"].ToString();
+            return password;
+        }
+  }
 }
