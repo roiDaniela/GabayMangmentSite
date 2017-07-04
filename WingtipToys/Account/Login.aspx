@@ -10,6 +10,7 @@
             <section id="loginForm">
                 <div class="form-horizontal">
                     <h4>Use a local account to log in.</h4>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select * FROM [Synagoge]"></asp:SqlDataSource>
                     <hr />
                     <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                         <p class="text-danger">
@@ -24,6 +25,14 @@
                                 CssClass="text-danger" ErrorMessage="The email field is required." />
                         </div>
                     </div>
+                    
+                    <%-- <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="Synagoge" CssClass="col-md-2 control-label">Synagoge</asp:Label>
+                        <div class="col-md-10">
+                            <asp:DropDownList ID="Synagoge" Width="280px" CssClass="form-control" runat="server" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Id"/>
+                        </div>
+                    </div>--%>
+                    <%-- <br />--%>
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
                         <div class="col-md-10">
@@ -57,9 +66,9 @@
         </div>
 
         <div class="col-md-4">
-            <section id="socialLoginForm">
+            <%--<section id="socialLoginForm">
                 <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-            </section>
+            </section>--%>
         </div>
     </div>
 </asp:Content>

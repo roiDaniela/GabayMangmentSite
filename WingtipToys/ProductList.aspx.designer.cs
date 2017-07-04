@@ -31,13 +31,13 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// IdLabel control.
+        /// IdToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IdLabel;
+        protected global::System.Web.UI.WebControls.TextBox IdToAdd;
         
         /// <summary>
         /// FilteredTextBoxExtenderid1 control.
@@ -49,13 +49,13 @@ namespace WingtipToys {
         protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderid1;
         
         /// <summary>
-        /// Private_NameLabel control.
+        /// Private_NameToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Private_NameLabel;
+        protected global::System.Web.UI.WebControls.TextBox Private_NameToAdd;
         
         /// <summary>
         /// FilteredTextBoxExtenderfamily1 control.
@@ -67,13 +67,13 @@ namespace WingtipToys {
         protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderfamily1;
         
         /// <summary>
-        /// Family_NameLabel control.
+        /// Family_NameToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Family_NameLabel;
+        protected global::System.Web.UI.WebControls.TextBox Family_NameToAdd;
         
         /// <summary>
         /// FilteredTextBoxExtender3 control.
@@ -85,49 +85,58 @@ namespace WingtipToys {
         protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtender3;
         
         /// <summary>
-        /// BirthdayLabel control.
+        /// birthdayToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox BirthdayLabel;
+        protected global::System.Web.UI.WebControls.TextBox birthdayToAdd;
         
         /// <summary>
-        /// Parashat_Bar_Mitzva_IdLabel control.
+        /// Parashat_Bar_Mitzva_IdToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Parashat_Bar_Mitzva_IdLabel;
+        protected global::System.Web.UI.WebControls.TextBox Parashat_Bar_Mitzva_IdToAdd;
         
         /// <summary>
-        /// Title_idLabel control.
+        /// Title_idToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Title_idLabel;
+        protected global::System.Web.UI.WebControls.TextBox Title_idToAdd;
         
         /// <summary>
-        /// Yourtziet_FatherLabel control.
+        /// Yourtziet_FatherLabelToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_FatherLabel;
+        protected global::System.Web.UI.WebControls.TextBox Yourtziet_FatherLabelToAdd;
         
         /// <summary>
-        /// Yourtziet_MotherLabel control.
+        /// Yourtziet_MotherLabelToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_MotherLabel;
+        protected global::System.Web.UI.WebControls.TextBox Yourtziet_MotherLabelToAdd;
+        
+        /// <summary>
+        /// DisabledCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox DisabledCheckbox;
         
         /// <summary>
         /// PrayersList control.

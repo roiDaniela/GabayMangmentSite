@@ -68,7 +68,7 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> - <%: Session["currSyn"] %>!</a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
@@ -98,6 +98,9 @@
                 </ItemTemplate>
                 <ItemSeparatorTemplate>  |  </ItemSeparatorTemplate>
             </asp:ListView>
+            <%--<b style="font-size: large; font-style: normal">
+                <a href="/PrayerDetails.aspx?PrayerID=<%# Eval("Id") %>">               
+            </b>--%>
         </div>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">

@@ -33,12 +33,14 @@ namespace WingtipToys.Account
 
         public int LoginsCount { get; set; }
 
+        public string Email { get; set; }
+
         protected void Page_Load()
-        {
+        {                        
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
             HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
-
+            DataSourceAvailbleSyn.SelectParameters.Add("email", manager.GetEmail(User.Identity.GetUserId())); //Where userID is your variable
             // Enable this after setting up two-factor authentientication
             //PhoneNumber.Text = manager.GetPhoneNumber(User.Identity.GetUserId()) ?? String.Empty;
 
@@ -115,6 +117,8 @@ namespace WingtipToys.Account
             Response.Redirect("/Account/Manage");
         }
 
+
+        
         //EnableTwoFactorAuthentication 
         protected void TwoFactorEnable_Click(object sender, EventArgs e)
         {
@@ -122,6 +126,19 @@ namespace WingtipToys.Account
             manager.SetTwoFactorEnabled(User.Identity.GetUserId(), true);
 
             Response.Redirect("/Account/Manage");
+        }
+
+        protected void DropDownListCurrSyn_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //DropDownListCurrSyn.
+            if (DropDownListCurrSyn.SelectedItem != null)
+            {
+                Session["currSyn"] = DropDownListCurrSyn.SelectedItem.Text;
+            }
+            else
+            {
+                Session["currSyn"] = String.Empty;
+            }
         }
     }
 }

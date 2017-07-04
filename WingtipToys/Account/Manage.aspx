@@ -3,6 +3,7 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    
     <h2><%: Title %>.</h2>
 
     <div>
@@ -13,68 +14,63 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-horizontal">
-                <h4>Change your account settings</h4>
-                <hr />
-                <dl class="dl-horizontal">
-                    <dt>Password:</dt>
-                    <dd>
-                        <asp:HyperLink NavigateUrl="/Account/ManagePassword" Text="[Change]" Visible="false" ID="ChangePassword" runat="server" />
-                        <asp:HyperLink NavigateUrl="/Account/ManagePassword" Text="[Create]" Visible="false" ID="CreatePassword" runat="server" />
-                    </dd>
-                    <dt>External Logins:</dt>
-                    <dd><%: LoginsCount %>
-                        <asp:HyperLink NavigateUrl="/Account/ManageLogins" Text="[Manage]" runat="server" />
-
-                    </dd>
-                    <%--
-                        Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-                        See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
-                        for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-                        Uncomment the following block after you have set up two-factor authentication
-                    --%>
-
-                    <dt>Phone Number:</dt>
-                    <%--
-                    <% if (HasPhoneNumber)
-                       { %>
-                    <dd>
-                        <asp:HyperLink NavigateUrl="/Account/AddPhoneNumber" runat="server" Text="[Add]" />
-                    </dd>
-                    <% }
-                       else
-                       { %>
-                    <dd>
-                        <asp:Label Text="" ID="PhoneNumber" runat="server" />
-                        <asp:HyperLink NavigateUrl="/Account/AddPhoneNumber" runat="server" Text="[Change]" /> &nbsp;|&nbsp;
-                        <asp:LinkButton Text="[Remove]" OnClick="RemovePhone_Click" runat="server" />
-                    </dd>
-                    <% } %>
-                    --%>
-
-                    <dt>Two-Factor Authentication:</dt>
-                    <dd>
-                        <p>
-                            There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
-                            for details on setting up this ASP.NET application to support two-factor authentication.
-                        </p>
-                        <% if (TwoFactorEnabled)
-                          { %> 
-                        <%--
-                        Enabled
-                        <asp:LinkButton Text="[Disable]" runat="server" CommandArgument="false" OnClick="TwoFactorDisable_Click" />
-                        --%>
-                        <% }
-                          else
-                          { %> 
-                        <%--
-                        Disabled
-                        <asp:LinkButton Text="[Enable]" CommandArgument="true" OnClick="TwoFactorEnable_Click" runat="server" />
-                        --%>
-                        <% } %>
-                    </dd>
-                </dl>
-            </div>
+            <section id="ManageForm">
+                <div class="form-horizontal">
+                    <h4>Change your account settings</h4>
+                    <hr />
+                   
+                    <dl class="dl-horizontal">
+                        <dt>Password:</dt>
+                        <dd>
+                            <asp:HyperLink NavigateUrl="/Account/ManagePassword" Text="[Change]" Visible="false" ID="ChangePassword" runat="server" />
+                            <asp:HyperLink NavigateUrl="/Account/ManagePassword" Text="[Create]" Visible="false" ID="CreatePassword" runat="server" />
+                        </dd>
+                         
+                        <dt>Current Synagoge:</dt>
+                        <dd>    
+                            <asp:DropDownList ID="DropDownListCurrSyn" AutoPostBack="True" Width="280px" CssClass="form-control" runat="server" DataSourceID="DataSourceAvailbleSyn" DataTextField="Name" DataValueField="Id" OnSelectedIndexChanged="DropDownListCurrSyn_SelectedIndexChanged" OnLoad="DropDownListCurrSyn_SelectedIndexChanged" OnDataBinding="DropDownListCurrSyn_SelectedIndexChanged" AppendDataBoundItems="true" OnDataBound="DropDownListCurrSyn_SelectedIndexChanged"/>
+                            <asp:SqlDataSource ID="DataSourceAvailbleSyn" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT s.Id, s.Name FROM Synagoge AS s INNER JOIN Mail2Syn AS m ON s.Id = m.Synagoge_Id WHERE (m.Email = @email)">
+                                <SelectParameters>
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        </dd>
+                            
+                    </dl>                              
+                </div>
+            </section>
+        </div>
+        
+        <div class="col-md-4">
+            <%--
+            <section id="synahoges">
+                <div class="form-horizontal">
+                    <asp:SqlDataSource ID="SqlDataSourceSynNotInMyAcount" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select s1.Id as Id, s1.Name as Name from [synagoge] s1 where s1.id not in (select s.Id from [synagoge] s, [Mail2Syn] m where m.Email = @email and m.Synagoge_Id = s.Id)">
+                        <SelectParameters>
+                            <asp:Parameter Name="email" Type="Int32" DefaultValue="<%= Email %>" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                    <h4>Add Synagoge to your acount</h4>
+                    <asp:Table ID="Table1" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4" CssClass="table table-striped table-bordered">
+                        <asp:TableHeaderRow>
+                            <asp:TableHeaderCell Text="Synagoge Name" Width="120px"/>
+                            <asp:TableHeaderCell Text="Synagoge Password" Width="120px"/>
+                        </asp:TableHeaderRow>
+                        <asp:TableRow>
+                            <asp:TableCell Width="120px">
+                                <div class="col-md-10">
+                                    <asp:DropDownList ID="Synagoge" Width="280px" CssClass="form-control" runat="server" DataSourceID="SqlDataSourceSynNotInMyAcount" DataTextField="Name" DataValueField="Id"/>
+                                </div>
+                            </asp:TableCell>
+                            <asp:TableCell Width="120px">
+                                    <asp:TextBox runat="server" ID="synPassword" TextMode="Password" CssClass="form-control" />
+                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="synPassword"
+                                        CssClass="text-danger" ErrorMessage="The Synagoge password field is required." />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </div>
+            </section>
+         --%>
         </div>
     </div>
 

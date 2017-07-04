@@ -47,6 +47,7 @@ namespace WingtipToys
                 Response.Cookies.Set(responseCookie);
             }
 
+            //DataSourceAvailbleSyn.SelectParameters["email"].DefaultValue = Context.User.Identity.Name;
             Page.PreLoad += master_Page_PreLoad;
         }
 

@@ -229,12 +229,24 @@ namespace WingtipToys.Models
             // private methods
         private static DataSet selectAllFromTable(string sTableName)
         {
-            SqlDataAdapter dataAdapter = new SqlDataAdapter($"Select * from {sTableName}", _strConn);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("Select * from {sTableName}", _strConn);
             DataSet dataSet = new DataSet();
 
             dataAdapter.Fill(dataSet);
 
             return dataSet;
+        }
+
+        public static string getPasswordForSynagogeId(string id)
+        {
+            string password;
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("Select password from Synagoge where id = @id", _strConn);
+            dataAdapter.SelectCommand.Parameters.AddWithValue("@id", id);
+            DataSet dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+            password = dataSet.Tables[0].Rows[0]["Password"].ToString();
+            return password;            
         }
     }
 }

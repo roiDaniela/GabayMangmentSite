@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Web
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingtipToys", "WingtipToys\WingtipToys.csproj", "{3F8458A7-02DD-4B8C-B4E0-F6132D51ADDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GabayManageSite", "WingtipToys\GabayManageSite.csproj", "{3F8458A7-02DD-4B8C-B4E0-F6132D51ADDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
