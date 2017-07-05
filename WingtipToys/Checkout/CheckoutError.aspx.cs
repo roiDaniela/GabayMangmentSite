@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WingtipToys.Checkout
+namespace GabayManageSite.Checkout
 {
   public partial class CheckoutError : System.Web.UI.Page
   {

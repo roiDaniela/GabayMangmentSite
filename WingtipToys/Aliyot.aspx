@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Aliyot" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Aliyot.aspx.cs" Inherits="WingtipToys.Aliyot" %>
+﻿<%@ Page Title="Aliyot" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Aliyot.aspx.cs" Inherits="GabayManageSite.Aliyot" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>

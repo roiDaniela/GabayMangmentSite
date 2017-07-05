@@ -4,23 +4,86 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 using System.Web.ModelBinding;
 using System.Web.Routing;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
   public partial class ProductList : System.Web.UI.Page
   {
+      private GabayDataSet gabayDataSet { get; set; }
+      private GabayDataSetTableAdapters.PrayersTableAdapter prayersTableAdapter { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
+        gabayDataSet = new GabayDataSet();
+        prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
+
+        birthdayToAdd.Text = DateTime.Now.Date.ToShortDateString();
+        Private_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
+        Family_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
+
+        if (Thread.CurrentThread.CurrentCulture.Name == "he-IL")
+        {
+            FilteredTextBoxExtenderFamilyName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+            FilteredTextBoxExtenderPrivateName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+        }
+        else
+        {
+            FilteredTextBoxExtenderFamilyName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            FilteredTextBoxExtenderPrivateName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+
+        SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["sid"]);
+        SqlDataSource1.SelectParameters.Add("sid", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
     }
         protected void UpdateBtn_Click(object sender, EventArgs e)
         {
-            PrayersList_DataBound(sender, e);
+            int u = 9;
+            //string id = IdToAdd.Text;
+            //string private_name = Private_NameToAdd.Text;
+            //string family_name = Family_NameToAdd.Text;
+            //string birthday = birthdayToAdd.Text;
+            //string parasha_id = DropDownListParashaToAdd.SelectedValue;
+            //string yourtziet_father = Yourtziet_FatherTextToAdd.Text;
+            //string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;
+            //string title_id = DropDownTitleToAdd.SelectedValue;
+            //bool isReadingMaftir = isReadingMaftirToAdd.Checked;
+            //string synId = Session["currSynId"].ToString();
+            //string phone = PhoneToAdd.Text;
+            //string email = EmailToAdd.Text;
+
+            //GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
+
+            //rsDetails["Id"] = int.Parse(id);
+            //rsDetails["PRIVATE_NAME"] = private_name;
+            //rsDetails["FAMILY_NAME"] = family_name;
+            //rsDetails["BIRTHDAY"] = Convert.ToDateTime(birthday);
+            //rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
+            //rsDetails["TITLE_ID"] = int.Parse(title_id);
+            //rsDetails["IS_READING_MAFTIR"] = isReadingMaftir? "1":"0";
+            //rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
+            //rsDetails["phone"] = phone;
+            //rsDetails["email"] = email;
+
+            //if(!String.IsNullOrEmpty(yourtziet_father)){
+            //    rsDetails["YOURTZIET_FATHER"] = Convert.ToDateTime(yourtziet_father);
+            //}
+            
+            //if(!String.IsNullOrEmpty(yourtziet_mother)){
+            //    rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
+            //}
+
+            //gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
+
+            //prayersTableAdapter.Update(gabayDataSet.Prayers);
+            //PrayersGridView.DataBind();
+            //PrayersList_DataBound(sender, e);
         }
 
-        protected void PrayersList_DataBound(object sender, EventArgs e)
+        /*protected void PrayersList_DataBound(object sender, EventArgs e)
         {
             GridViewRow row = new GridViewRow(
                 0,
@@ -54,7 +117,7 @@ namespace WingtipToys
                 [QueryString("id")] int? prayerId,
                 [RouteData] int? prayerSynagogeId)
     {
-        var _db = new WingtipToys.Models.ProductContext();
+        var _db = new GabayManageSite.Models.ProductContext();
         IQueryable<Prayer> query = _db.Prayers;
 
         if (prayerId.HasValue && prayerId > 0)
@@ -69,13 +132,13 @@ namespace WingtipToys
                                 prayerSynagogeId);
         }
         return query;
-    }
+    }*/
 
     public IQueryable<Product> GetProducts(
                     [QueryString("id")] int? categoryId,
                     [RouteData] string categoryName)
     {
-      var _db = new WingtipToys.Models.ProductContext();
+      var _db = new GabayManageSite.Models.ProductContext();
       IQueryable<Product> query = _db.Products;
 
       if (categoryId.HasValue && categoryId > 0)
@@ -90,6 +153,37 @@ namespace WingtipToys
                             categoryName) == 0);
       }
       return query;
+    }
+
+    protected void DeleteBtn_Click(object sender, EventArgs e)
+    {
+        string sid = (Session["currSynId"] != null)? Session["currSynId"].ToString():"";
+
+        if (!String.IsNullOrEmpty(sid))
+        {
+            string id_to_delete = "(";
+            foreach (GridViewRow row in PrayersGridView.Rows)
+            {
+                if (((CheckBox)row.FindControl("Remove")).Checked)
+                {
+                    id_to_delete += (", " + row.FindControl("IdLabel").ToString());
+                }
+            }
+
+            id_to_delete += ")";
+
+            GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
+
+            prayersTableAdapter.DeleteQuery(id_to_delete, int.Parse(sid));
+            prayersTableAdapter.Update(gabayDataSet.Prayers);
+        }
+        
+        PrayersGridView.DataBind();
+    }
+
+    protected void EndSessionBtn_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
     }
   }
 }

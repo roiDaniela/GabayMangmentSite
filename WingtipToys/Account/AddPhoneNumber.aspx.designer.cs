@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WingtipToys.Account {
+namespace GabayManageSite.Account {
     
     
     public partial class AddPhoneNumber {

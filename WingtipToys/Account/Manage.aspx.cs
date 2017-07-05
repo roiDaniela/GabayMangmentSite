@@ -8,9 +8,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class Manage : System.Web.UI.Page
     {
@@ -137,11 +137,14 @@ namespace WingtipToys.Account
             //DropDownListCurrSyn.
             if (DropDownListCurrSyn.SelectedItem != null)
             {
-                Session["currSyn"] = DropDownListCurrSyn.SelectedItem.Text;
+                Session["currSynName"] = DropDownListCurrSyn.SelectedItem.Text;
+                Session["currSynId"] = DropDownListCurrSyn.SelectedValue;
+
             }
             else
             {
-                Session["currSyn"] = String.Empty;
+                Session["currSynName"] = String.Empty;
+                Session["currSynId"] = String.Empty;
             }
         }
 

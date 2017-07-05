@@ -4,9 +4,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class RegisterExternalLogin : System.Web.UI.Page
     {

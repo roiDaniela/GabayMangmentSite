@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace WingtipToys.Logic
+namespace GabayManageSite.Logic
 {
   internal class RoleActions
   {

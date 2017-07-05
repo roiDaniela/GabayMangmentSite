@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class Lockout : System.Web.UI.Page
     {

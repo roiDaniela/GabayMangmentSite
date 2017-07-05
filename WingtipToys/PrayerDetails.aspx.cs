@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 using System.Web.ModelBinding;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public partial class PrayerDetails : System.Web.UI.Page
     {
@@ -23,7 +23,7 @@ namespace WingtipToys
                     [QueryString("PrayerID")] int? prayerId,
                     [RouteData] int? prayerSynagogeId)
         {
-            var _db = new WingtipToys.Models.ProductContext();
+            var _db = new GabayManageSite.Models.ProductContext();
             IQueryable<Prayer> query = _db.Prayers;
 
             if (prayerId.HasValue && prayerId > 0)

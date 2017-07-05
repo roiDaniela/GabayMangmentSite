@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Logic
+namespace GabayManageSite.Logic
 {
   public class AddProducts
   {

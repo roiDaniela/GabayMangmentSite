@@ -7,10 +7,10 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Data.Entity;
-using WingtipToys.Models;
-using WingtipToys.Logic;
+using GabayManageSite.Models;
+using GabayManageSite.Logic;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public class Global : HttpApplication
     {
@@ -48,6 +48,22 @@ namespace WingtipToys
               "Prayer/{prayerId}",
               "~/PrayerDetails.aspx"
           );
+        }
+
+        void Session_End(object sender, EventArgs e)
+        {
+            string alert = "<SCRIPT LANGUAGE='JavaScript'>alert('Session expired')</SCRIPT>";
+            Session["SessionExpire"] = true;
+            Response.Redirect("/Account/Login");
+            System.Web.HttpContext.Current.Response.Write(alert);
+        }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            if (Session.IsNewSession && Session["SessionExpire"] == null)
+            {
+
+            }
         }
 
         void Application_Error(object sender, EventArgs e)

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WingtipToys {
+namespace GabayManageSite {
     
     
     public partial class ProductList {
@@ -22,6 +22,24 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.Button UpdateBtn;
         
         /// <summary>
+        /// DeleteBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteBtn;
+        
+        /// <summary>
+        /// EndSessionBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button EndSessionBtn;
+        
+        /// <summary>
         /// Table1 control.
         /// </summary>
         /// <remarks>
@@ -29,6 +47,123 @@ namespace WingtipToys {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
+        
+        /// <summary>
+        /// Label5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label5;
+        
+        /// <summary>
+        /// Label4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Label6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
+        
+        /// <summary>
+        /// DropDownList2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DropDownList2;
+        
+        /// <summary>
+        /// TextBox5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TextBox5;
+        
+        /// <summary>
+        /// CheckBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CheckBox1;
+        
+        /// <summary>
+        /// TextBox7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TextBox7;
+        
+        /// <summary>
+        /// TextBox8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TextBox8;
+        
+        /// <summary>
+        /// RemoveHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RemoveHeader;
+        
+        /// <summary>
+        /// FilteredTextBoxExtenderSynName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderSynName;
         
         /// <summary>
         /// IdToAdd control.
@@ -40,15 +175,6 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.TextBox IdToAdd;
         
         /// <summary>
-        /// FilteredTextBoxExtenderid1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderid1;
-        
-        /// <summary>
         /// Private_NameToAdd control.
         /// </summary>
         /// <remarks>
@@ -58,13 +184,13 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.TextBox Private_NameToAdd;
         
         /// <summary>
-        /// FilteredTextBoxExtenderfamily1 control.
+        /// FilteredTextBoxExtenderPrivateName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderfamily1;
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName;
         
         /// <summary>
         /// Family_NameToAdd control.
@@ -76,13 +202,13 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.TextBox Family_NameToAdd;
         
         /// <summary>
-        /// FilteredTextBoxExtender3 control.
+        /// FilteredTextBoxExtenderFamilyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtender3;
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName;
         
         /// <summary>
         /// birthdayToAdd control.
@@ -94,40 +220,85 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.TextBox birthdayToAdd;
         
         /// <summary>
-        /// Parashat_Bar_Mitzva_IdToAdd control.
+        /// DropDownListParashaToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Parashat_Bar_Mitzva_IdToAdd;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListParashaToAdd;
         
         /// <summary>
-        /// Title_idToAdd control.
+        /// DataSourceParashot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Title_idToAdd;
+        protected global::System.Web.UI.WebControls.SqlDataSource DataSourceParashot;
         
         /// <summary>
-        /// Yourtziet_FatherLabelToAdd control.
+        /// DropDownTitleToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_FatherLabelToAdd;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownTitleToAdd;
         
         /// <summary>
-        /// Yourtziet_MotherLabelToAdd control.
+        /// DataSourceTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_MotherLabelToAdd;
+        protected global::System.Web.UI.WebControls.SqlDataSource DataSourceTitle;
+        
+        /// <summary>
+        /// Yourtziet_FatherTextToAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Yourtziet_FatherTextToAdd;
+        
+        /// <summary>
+        /// Yourtziet_MotherTextToAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Yourtziet_MotherTextToAdd;
+        
+        /// <summary>
+        /// isReadingMaftirToAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox isReadingMaftirToAdd;
+        
+        /// <summary>
+        /// PhoneToAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PhoneToAdd;
+        
+        /// <summary>
+        /// EmailToAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox EmailToAdd;
         
         /// <summary>
         /// DisabledCheckbox control.
@@ -139,13 +310,13 @@ namespace WingtipToys {
         protected global::System.Web.UI.WebControls.CheckBox DisabledCheckbox;
         
         /// <summary>
-        /// PrayersList control.
+        /// PrayersGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView PrayersList;
+        protected global::System.Web.UI.WebControls.GridView PrayersGridView;
         
         /// <summary>
         /// SqlDataSource1 control.
@@ -155,14 +326,5 @@ namespace WingtipToys {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
-        /// <summary>
-        /// productList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView productList;
     }
 }

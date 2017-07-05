@@ -1,6 +1,6 @@
 ﻿
 <%@ Page Title="Products" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
-         CodeBehind="PrayerDetails.aspx.cs" Inherits="WingtipToys.PrayerDetails" %>
+         CodeBehind="PrayerDetails.aspx.cs" Inherits="GabayManageSite.PrayerDetails" %>
 
  <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

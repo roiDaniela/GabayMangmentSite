@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WingtipToys.Models
+namespace GabayManageSite.Models
 {
   public class Product
   {

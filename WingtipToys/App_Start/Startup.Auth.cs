@@ -7,9 +7,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public partial class Startup {
 

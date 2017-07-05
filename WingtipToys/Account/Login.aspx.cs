@@ -4,9 +4,9 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class Login : Page
     {
@@ -48,7 +48,7 @@ namespace WingtipToys.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        WingtipToys.Logic.ShoppingCartActions usersShoppingCart = new WingtipToys.Logic.ShoppingCartActions();
+                        GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions();
                         String cartId = usersShoppingCart.GetCartId();
                         usersShoppingCart.MigrateCart(cartId, Email.Text);
 

@@ -4,9 +4,9 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class ForgotPassword : Page
     {

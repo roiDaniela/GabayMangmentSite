@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WingtipToys.Models;
-using WingtipToys.Logic;
+using GabayManageSite.Models;
+using GabayManageSite.Logic;
 using System.Collections.Specialized;
 using System.Collections;
 using System.Web.ModelBinding;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
   public partial class ShoppingCart : System.Web.UI.Page
   {

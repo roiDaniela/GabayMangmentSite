@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-namespace WingtipToys.Models
+namespace GabayManageSite.Models
 {
   public class ProductContext : DbContext
   {

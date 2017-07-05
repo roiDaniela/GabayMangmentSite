@@ -7,10 +7,10 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Linq;
-using WingtipToys.Models;
-using WingtipToys.Logic;
+using GabayManageSite.Models;
+using GabayManageSite.Logic;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public partial class SiteMaster : MasterPage
     {
@@ -89,13 +89,15 @@ namespace WingtipToys
 
         public IQueryable<Category> GetCategories()
         {
-          var _db = new WingtipToys.Models.ProductContext();
+          var _db = new GabayManageSite.Models.ProductContext();
           IQueryable<Category> query = _db.Categories;
           return query;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
+            Session["currSynId"] = String.Empty;
+            Session["currSynName"] = String.Empty;
             Context.GetOwinContext().Authentication.SignOut();
         }
     }

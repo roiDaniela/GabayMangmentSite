@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WingtipToys.Checkout {
+namespace GabayManageSite.Checkout {
     
     
     public partial class CheckoutComplete {

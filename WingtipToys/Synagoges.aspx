@@ -1,5 +1,5 @@
 ﻿	<%@ Page Title="Synagoges" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
-         CodeBehind="Synagoges.aspx.cs" Inherits="WingtipToys.Synagoges" %>
+         CodeBehind="Synagoges.aspx.cs" Inherits="GabayManageSite.Synagoges" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %> 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
     <section>
@@ -28,7 +28,8 @@
                     <asp:TableCell Width="120px">
                             <asp:TextBox ID="IdToAdd" runat="server" Width="120px" Enabled="false" CssClass="form-control"/>
                     </asp:TableCell>
-                    <asp:TableCell Width="120px">
+                    <asp:TableCell Width="120px">                            
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderSynName" runat="server" TargetControlID="NameToAdd" FilterType="Custom"/>
                             <asp:TextBox ID="NameToAdd" runat="server" Width="120px" CssClass="form-control"/>
                             <asp:RequiredFieldValidator runat="server" Visible="false" ControlToValidate="NameToAdd" CssClass="text-danger" ErrorMessage="The name field is required." />
                     </asp:TableCell>

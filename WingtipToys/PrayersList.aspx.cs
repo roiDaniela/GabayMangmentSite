@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public partial class PrayersList : System.Web.UI.Page
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WingtipToys.Admin {
+namespace GabayManageSite.Admin {
     
     
     public partial class AdminPage {

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PrayersList.aspx.cs" Inherits="WingtipToys.PrayersList" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PrayersList.aspx.cs" Inherits="GabayManageSite.PrayersList" %>
 
 <!DOCTYPE html>
 

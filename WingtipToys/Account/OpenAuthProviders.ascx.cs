@@ -6,7 +6,7 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class OpenAuthProviders : System.Web.UI.UserControl
     {

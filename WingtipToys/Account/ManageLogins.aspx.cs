@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class ManageLogins : System.Web.UI.Page
     {

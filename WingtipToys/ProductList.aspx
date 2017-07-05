@@ -1,135 +1,209 @@
-﻿	<%@ Page Title="Products" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
-         CodeBehind="ProductList.aspx.cs" Inherits="WingtipToys.ProductList" %>
+﻿	<%@ Page Title="Prayers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
+         CodeBehind="ProductList.aspx.cs" Inherits="GabayManageSite.ProductList" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %> 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
     <section>
         <div>
             <hgroup>
-                <h2><%: Page.Title %></h2>
+                <% if (Session["currSynId"] == null){ %>            
+                    <h2><%: Page.Title %></h2>
+                <% } else { %>            
+                    <h2><%: Page.Title %> of "<%:Session["currSynName"] %>" shool</h2>
+                <% } %>
             </hgroup>               
         
             <br />
             
+            <% if (Session["currSynId"] == null){ %>            
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <AnonymousTemplate>
+                        <p>You have to <a runat="server" href="~/Account/Login">log in</a> first</p>  
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        <p>Hello <%: Context.User.Identity.GetUserName()  %> <a runat="server" href="~/Account/Manage" title="Manage your account"> please select your synagoge</a></p>  
+                    </LoggedInTemplate>
+                    </asp:LoginView>                
+            <% } %>
+
+            <% if (Session["currSynId"] != null){ %>
             <table>
                 <tr>
-                <td>
-                    <asp:Button ID="UpdateBtn" runat="server" Text="Update" OnClick="UpdateBtn_Click" />
-                </td>
+                    <td>
+                        <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />
+                    </td>
+                    <td>
+                        <asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
+                    </td>
+                    <td>
+                        <asp:Button ID="EndSessionBtn" runat="server" Text="Delete" OnClick="EndSessionBtn_Click"/>
+                    </td>
                 </tr>
             </table>
 
             <asp:Table ID="Table1" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4" CssClass="table table-striped table-bordered">
-                <asp:TableHeaderRow>
-                    <asp:TableHeaderCell Text="Id" Width="120px"/>
-                    <asp:TableHeaderCell Text="Private Name" Width="120px"/>
-                    <asp:TableHeaderCell Text="Family Name" Width="120px"/>
-                    <asp:TableHeaderCell Text="Birthday" Width="120px"/>
-                    <asp:TableHeaderCell Text="Parashat BarMitzva" Width="120px"/>
-                    <asp:TableHeaderCell Text="Cohen\Levi\Israel" Width="120px"/>
-                    <asp:TableHeaderCell Text="Yourtzeit Father" Width="120px"/>
-                    <asp:TableHeaderCell Text="Yourtzeit Mother" Width="120px"/>
-                    <asp:TableHeaderCell Text="Remove Item" Width="50px"/>
-                </asp:TableHeaderRow>
                 <asp:TableRow>
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="IdToAdd" runat="server" Width="120px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderid1" runat="server" TargetControlID="IdToAdd" FilterType="numbers" />
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="Label5" runat="server" Width="80px" Text="Id" Font-Bold="true"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="Label4" runat="server" Width="80px" Text="Private Name" Font-Bold="true"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="Label3" runat="server" Width="80px" Text="Family Name" Font-Bold="true"/>
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Private_NameToAdd" runat="server" Width="120px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderfamily1" runat="server" TargetControlID="Private_NameToAdd" FilterType="UppercaseLetters" />
+                            <asp:Label ID="Label2" runat="server" Width="120px" Text="Birthday" Font-Bold="true"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="Label1" runat="server" Width="80px" Text="Parasha" Font-Bold="true"/>
+                    </asp:TableCell> 
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="Label6" runat="server" Width="80px" Text="Title" Font-Bold="true"/>
+                    </asp:TableCell> 
+                    <asp:TableCell Width="120px">
+                            <asp:Label ID="DropDownList2" runat="server" Width="120px" Text="Yourtziet father" Font-Bold="true"/>
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Family_NameToAdd" runat="server" Width="120px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" TargetControlID="Family_NameToAdd" FilterType="UppercaseLetters" />
+                            <asp:Label ID="TextBox5" runat="server" Width="120px" Text="Yourtziet mother" Font-Bold="true"/>
                     </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                        <asp:TextBox ID ="birthdayToAdd" runat="server" Width="120px"/>
+                    <asp:TableCell Width="35px">
+                            <asp:Label id="CheckBox1" runat="server" Width="35px" Text="Read Maftir?" Font-Bold="true" Font-Size="X-Small"/>
                     </asp:TableCell>
-                    <asp:TableCell>
-                            <asp:TextBox ID="Parashat_Bar_Mitzva_IdToAdd" runat="server" Width="120px" />
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="TextBox7" runat="server" Width="80px" Text="Phone" Font-Bold="true"/>
                     </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Title_idToAdd" runat="server" Width="120px" />
+                    <asp:TableCell Width="80px">
+                            <asp:Label ID="TextBox8" runat="server" Width="80px" Text="Email" Font-Bold="true"/>
                     </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Yourtziet_FatherLabelToAdd" runat="server" Width="120px" />
-                    </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Yourtziet_MotherLabelToAdd" runat="server" Width="120px" />
-                    </asp:TableCell>
-                    <asp:TableCell Width="50px">
-                            <asp:CheckBox id="DisabledCheckbox" runat="server" Enabled="false" Width="50px"/>
+                    <asp:TableCell Width="35px">
+                            <asp:Label id="RemoveHeader" runat="server" Width="35px" Text="Remove Item?" Font-Bold="true" Font-Size="X-Small"/>
                     </asp:TableCell>
                 </asp:TableRow>
-            </asp:Table>
+
+                <asp:TableRow>
+                    <asp:TableCell Width="80px">
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="IdToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderSynName" runat="server" TargetControlID="IdToAdd" FilterType="Numbers"/>
+                            <asp:TextBox ID="IdToAdd" MaxLength="9" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control" Font-Size="X-Small" ToolTip="numbers only"/>                            
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">                            
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
+                            <asp:TextBox ID="Private_NameToAdd" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control"  Font-Size="X-Small"/>
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" TargetControlID="Private_NameToAdd" FilterType="Custom"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
+                            <asp:TextBox ID="Family_NameToAdd" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control"  Font-Size="X-Small"/>
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" TargetControlID="Family_NameToAdd" FilterType="Custom"/>                            
+                    </asp:TableCell>
+                    <asp:TableCell Width="120px">
+                        <asp:TextBox ID ="birthdayToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>                        
+                    </asp:TableCell>
+                    <asp:TableCell>
+                            <asp:DropDownList ID="DropDownListParashaToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceParashot" DataTextField="Name" DataValueField="Id" Font-Size="X-Small"/>
+                            <asp:SqlDataSource ID="DataSourceParashot" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * from [parashot]"/>
+                    </asp:TableCell> 
+                    <asp:TableCell Width="80px">
+                            <asp:DropDownList ID="DropDownTitleToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceTitle" DataTextField="Name" DataValueField="Id"  Font-Size="X-Small"/>
+                            <asp:SqlDataSource ID="DataSourceTitle" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * from [title]"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Yourtziet_FatherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="120px">
+                            <asp:TextBox ID="Yourtziet_MotherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="35px">
+                            <asp:CheckBox id="isReadingMaftirToAdd" runat="server" Enabled="true" Width="35px" Checked="true"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:TextBox ID="PhoneToAdd" runat="server" Width="80px" TextMode="Phone" CssClass="form-control"  Font-Size="X-Small"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="80px">
+                            <asp:TextBox ID="EmailToAdd" runat="server" Width="80px" TextMode="Email" CssClass="form-control"  Font-Size="X-Small"/>
+                    </asp:TableCell>
+                    <asp:TableCell Width="35px">
+                            <asp:CheckBox id="DisabledCheckbox" runat="server" Enabled="false" Width="35px"/>
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table> 
             
-            <asp:GridView ShowHeader="False" DataSourceID="SqlDataSource1" ID="PrayersList" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
+            <% } %>
+
+            <asp:GridView ShowHeader="False" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
                 CssClass="table table-striped table-bordered">   
                 <Columns>
-                <asp:TemplateField ItemStyle-Width="120px">            
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
                         <ItemTemplate>
                         <a href="/PrayerDetails.aspx?PrayerID=<%# Eval("Id") %>">               
-                        <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("Id") %>' Width="120px"/>
+                        <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("Id") %>' Width="80px"/>
                         </a>
-                        <%--<asp:TextBox ID="IdLabel" runat="server" Text='<%# Eval("Id") %>' />
-                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderId" runat="server" TargetControlID="IdLabel" FilterType="numbers" /> --%>
                 </ItemTemplate>        
                 </asp:TemplateField>               
-                <asp:TemplateField ItemStyle-Width="120px">            
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
                         <ItemTemplate>
-                        <asp:Label ID="Private_NameLabel" runat="server" Text='<%# Eval("Private_Name") %>' Width="120px"/>
-                        <%--<asp:TextBox ID="Private_NameLabel" runat="server" Text='<%# Eval("Private_Name") %>' />
-                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" TargetControlID="Private_NameLabel" FilterType="UppercaseLetters" /> --%>
+                        <asp:Label ID="Private_NameLabel" runat="server" Text='<%# Eval("Private_Name") %>' Width="80px"/>
                         </ItemTemplate>        
                 </asp:TemplateField>    
-                <asp:TemplateField ItemStyle-Width="120px">            
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
                         <ItemTemplate>
-                            <asp:Label ID="Family_NameLabel" runat="server" Text='<%# Eval("Family_Name") %>' Width="120px"/>
-                            <%-- <asp:TextBox ID="Family_NameLabel" runat="server" Text='<%# Eval("Family_Name") %>' />
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" TargetControlID="Family_NameLabel" FilterType="UppercaseLetters" />--%>
+                            <asp:Label ID="Family_NameLabel" runat="server" Text='<%# Eval("Family_Name") %>' Width="80px"/>
                         </ItemTemplate>        
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px">
+                <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
                     <ItemTemplate>
                         <asp:Label ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' Width="120px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px">            
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
                         <ItemTemplate>
-                            <asp:Label ID="ParashaLabel" runat="server" Text='<%# Eval("Parasha") %>' Width="120px"/>
-                            <%--<asp:Label ID="Parashat_Bar_Mitzva_IdLabel" runat="server" Text='<%# Eval("Parashat_Bar_Mitzva_Id") %>' Width="120px"/> %>
-                            <%--<asp:TextBox ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' />
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" TargetControlID="Family_NameLabel" FilterType="UppercaseLetters" /> --%>
+                            <asp:Label ID="ParashaLabel" runat="server" Text='<%# Eval("Parasha") %>' Width="80px"/>
                 </ItemTemplate>                        
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px">
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
                     <ItemTemplate>
-                            <asp:Label ID="TitleLabel" runat="server" Text='<%# Eval("Title") %>' Width="120px"/>
-                        <%--<asp:Label ID="Title_idLabel" runat="server" Text='<%# Eval("Title_id") %>' Width="120px"/>--%>
+                            <asp:Label ID="TitleLabel" runat="server" Text='<%# Eval("Title") %>' Width="80px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px">
+                <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
                     <ItemTemplate>
                         <asp:Label ID="Yourtziet_FatherLabel" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px">
+                <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
                     <ItemTemplate>
                         <asp:Label ID="Yourtziet_MotherLabel" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="50px">            
+                <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">
+                    <ItemTemplate>
+                        <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Enabled="false" Width="35px"/>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
+                    <ItemTemplate>
+                        <asp:Label ID="PhoneLabel" runat="server" Text='<%# Eval("phone") %>' Width="80px"/>
+                    </ItemTemplate>
+                </asp:TemplateField>                    
+                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
+                    <ItemTemplate>
+                        <asp:Label ID="EmailLabel" runat="server" Text='<%# Eval("email") %>' Width="80px"/>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">            
                         <ItemTemplate>
-                            <asp:CheckBox id="Remove" runat="server" Width="50px"/>
+                            <asp:CheckBox id="Remove" runat="server" Width="35px" Checked="false"/>
                         </ItemTemplate>        
                 </asp:TemplateField>    
                 </Columns>    
             </asp:GridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title FROM [Prayers] py, [Parashot] pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as Text) as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Parashot] pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and synagoge_id = @sid">
+                <SelectParameters>
+                </SelectParameters>
+        </asp:SqlDataSource>
             
-            <asp:ListView ID="productList" runat="server" 
+            <%--<asp:ListView ID="productList" runat="server" 
                 DataKeyNames="ProductID" GroupItemCount="4"
                 ItemType="WingtipToys.Models.Product" SelectMethod="GetProducts">
                 <EmptyDataTemplate>
@@ -199,7 +273,7 @@
                         </tbody>
                     </table>
                 </LayoutTemplate>
-            </asp:ListView>
+            </asp:ListView> --%>
         </div>
     </section>
 </asp:Content>

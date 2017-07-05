@@ -1,6 +1,6 @@
 ﻿using System.Web.UI;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class ResetPasswordConfirmation : Page
     {

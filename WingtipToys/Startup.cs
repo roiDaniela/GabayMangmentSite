@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(WingtipToys.Startup))]
-namespace WingtipToys
+[assembly: OwinStartupAttribute(typeof(GabayManageSite.Startup))]
+namespace GabayManageSite
 {
     public partial class Startup {
         public void Configuration(IAppBuilder app) {

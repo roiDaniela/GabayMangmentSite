@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace WingtipToys.Models
+namespace GabayManageSite.Models
 {
   public class Order
   {

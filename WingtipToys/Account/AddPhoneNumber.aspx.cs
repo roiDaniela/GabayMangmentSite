@@ -7,9 +7,9 @@ using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class AddPhoneNumber : System.Web.UI.Page
     {

@@ -6,9 +6,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys
+namespace GabayManageSite
 {
     public class EmailService : IIdentityMessageService
     {

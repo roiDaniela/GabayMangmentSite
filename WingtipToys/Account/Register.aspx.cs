@@ -5,9 +5,9 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
-using WingtipToys.Models;
+using GabayManageSite.Models;
 
-namespace WingtipToys.Account
+namespace GabayManageSite.Account
 {
     public partial class Register : Page
     {
@@ -27,7 +27,7 @@ namespace WingtipToys.Account
 
                 IdentityHelper.SignIn(manager, user, isPersistent: false);
 
-                using (WingtipToys.Logic.ShoppingCartActions usersShoppingCart = new WingtipToys.Logic.ShoppingCartActions())
+                using (GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions())
                 {
                   String cartId = usersShoppingCart.GetCartId();
                   usersShoppingCart.MigrateCart(cartId, user.Id);

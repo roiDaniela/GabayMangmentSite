@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="WingtipToys.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="GabayManageSite.Global" Language="C#" %>
