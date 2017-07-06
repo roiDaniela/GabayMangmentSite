@@ -51,7 +51,7 @@
                         <dt>Choose Synagoge:</dt>
                         <dd>    
                             <asp:DropDownList ID="DropDownListNotAvailbleSyn" AutoPostBack="True" Width="280px" CssClass="form-control" runat="server" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Id"/>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT s.Id, s.Name FROM Synagoge AS s Left outer JOIN Mail2Syn AS m ON (s.Id = m.Synagoge_Id) where (@email !=  m.email or m.email is null)">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select s.Id as Id, s.Name as Name from Synagoge s where s.Id not in (select m.Synagoge_Id from Mail2Syn m where m.email = @email)">
                                 <SelectParameters>
                                 </SelectParameters>
                             </asp:SqlDataSource>

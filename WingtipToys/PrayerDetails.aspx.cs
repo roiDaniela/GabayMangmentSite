@@ -6,17 +6,62 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GabayManageSite.Models;
 using System.Web.ModelBinding;
+using System.Web.Routing;
+using System.Threading;
+using System.Threading.Tasks;
+using AjaxControlToolkit;
 
 namespace GabayManageSite
 {
     public partial class PrayerDetails : System.Web.UI.Page
     {
-        public int id;
+        private GabayDataSet gabayDataSet { get; set; }
+        private GabayDataSetTableAdapters.PrayersTableAdapter prayersTableAdapter { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            string rawId = Request.QueryString["PrayerID"];
-            //id = Convert.ToInt32(rawId);
-            SqlDataSource1.SelectParameters.Add("prayer_id", rawId);
+            string sid = (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString();
+            if(!String.IsNullOrEmpty(sid))
+            {
+                gabayDataSet = new GabayDataSet();
+                prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
+                string rawId = Request.QueryString["PrayerID"];
+                //id = Convert.ToInt32(rawId);            
+                SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["prayer_id"]);
+                SqlDataSource1.SelectParameters.Add("prayer_id", rawId);
+
+                SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["sid"]);
+                SqlDataSource1.SelectParameters.Add("sid", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
+
+                TextBox BirthdayToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("BirthdayToEdit");
+                BirthdayToEdit.Text = DateTime.Now.Date.ToShortDateString();
+
+                DropDownList DropDownParashaToEdit = (DropDownList)PrayersGridView.Rows[0].FindControl("DropDownParashaToEdit");
+                DropDownList DropDownListTitleToEdit = (DropDownList)PrayersGridView.Rows[0].FindControl("DropDownListTitleToEdit");
+
+                TextBox Private_NameToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("Private_NameToEdit");
+                TextBox Family_NameToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("Family_NameToEdit"); 
+
+                FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderFamilyName");
+                FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderPrivateName");               
+                
+
+                DropDownParashaToEdit.SelectedIndex = (int)prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid));
+                DropDownListTitleToEdit.SelectedIndex = (int)prayersTableAdapter.GetTitleId(rawId, int.Parse(sid));
+                Private_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
+                Family_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
+            
+                if (Thread.CurrentThread.CurrentCulture.Name == "he-IL")
+                {
+                    FilteredTextBoxExtenderFamilyName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+                    FilteredTextBoxExtenderPrivateName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+                }
+                else
+                {
+                    FilteredTextBoxExtenderFamilyName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    FilteredTextBoxExtenderPrivateName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                }
+            }
+            
         }
 
         public IQueryable<Prayer> GetPrayers(
@@ -38,6 +83,11 @@ namespace GabayManageSite
                                     prayerSynagogeId);
             }
             return query;
+        }
+
+        protected void FormViewPrayerDetail_DataBound(object sender, EventArgs e)
+        {
+
         }
     }
 }

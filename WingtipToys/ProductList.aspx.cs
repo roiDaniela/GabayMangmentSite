@@ -41,46 +41,56 @@ namespace GabayManageSite
     }
         protected void UpdateBtn_Click(object sender, EventArgs e)
         {
-            int u = 9;
-            //string id = IdToAdd.Text;
-            //string private_name = Private_NameToAdd.Text;
-            //string family_name = Family_NameToAdd.Text;
-            //string birthday = birthdayToAdd.Text;
-            //string parasha_id = DropDownListParashaToAdd.SelectedValue;
-            //string yourtziet_father = Yourtziet_FatherTextToAdd.Text;
-            //string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;
-            //string title_id = DropDownTitleToAdd.SelectedValue;
-            //bool isReadingMaftir = isReadingMaftirToAdd.Checked;
-            //string synId = Session["currSynId"].ToString();
-            //string phone = PhoneToAdd.Text;
-            //string email = EmailToAdd.Text;
+            try 
+            { 
+                if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString()))
+                {
+                    string id = IdToAdd.Text;
+                    string private_name = Private_NameToAdd.Text;
+                    string family_name = Family_NameToAdd.Text;
+                    string birthday = birthdayToAdd.Text;
+                    string parasha_id = DropDownListParashaToAdd.SelectedValue;
+                    string yourtziet_father = Yourtziet_FatherTextToAdd.Text;
+                    string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;
+                    string title_id = DropDownTitleToAdd.SelectedValue;
+                    string isReadingMaftir = isReadingMaftirToAdd.Checked? "1": "0";
+                    string synId = Session["currSynId"].ToString();
+                    string phone = PhoneToAdd.Text;
+                    string email = EmailToAdd.Text;
 
-            //GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
+                    GabayDataSet.PrayersRow rsDetails = gabayDataSet.Prayers.NewPrayersRow();
 
-            //rsDetails["Id"] = int.Parse(id);
-            //rsDetails["PRIVATE_NAME"] = private_name;
-            //rsDetails["FAMILY_NAME"] = family_name;
-            //rsDetails["BIRTHDAY"] = Convert.ToDateTime(birthday);
-            //rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
-            //rsDetails["TITLE_ID"] = int.Parse(title_id);
-            //rsDetails["IS_READING_MAFTIR"] = isReadingMaftir? "1":"0";
-            //rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
-            //rsDetails["phone"] = phone;
-            //rsDetails["email"] = email;
+                    rsDetails["Id"] = int.Parse(id);
+                    rsDetails["PRIVATE_NAME"] = private_name;
+                    rsDetails["FAMILY_NAME"] = family_name;
+                    rsDetails["BIRTHDAY"] = Convert.ToDateTime(birthday);
+                    rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
+                    rsDetails["TITLE_ID"] = int.Parse(title_id);
+                    rsDetails["IS_READING_MAFTIR"] = int.Parse(isReadingMaftir);
+                    rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
+                    rsDetails["phone"] = phone;
+                    rsDetails["email"] = email;
 
-            //if(!String.IsNullOrEmpty(yourtziet_father)){
-            //    rsDetails["YOURTZIET_FATHER"] = Convert.ToDateTime(yourtziet_father);
-            //}
-            
-            //if(!String.IsNullOrEmpty(yourtziet_mother)){
-            //    rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
-            //}
+                    if (!String.IsNullOrEmpty(yourtziet_father))
+                    {
+                        rsDetails["YOURTZIET_FATHER"] = Convert.ToDateTime(yourtziet_father);
+                    }
 
-            //gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
+                    if (!String.IsNullOrEmpty(yourtziet_mother))
+                    {
+                        rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
+                    }
 
-            //prayersTableAdapter.Update(gabayDataSet.Prayers);
-            //PrayersGridView.DataBind();
-            //PrayersList_DataBound(sender, e);
+                    gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
+
+                    prayersTableAdapter.Update(gabayDataSet.Prayers);
+                    PrayersGridView.DataBind();
+                }     
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
 
         /*protected void PrayersList_DataBound(object sender, EventArgs e)
@@ -157,28 +167,51 @@ namespace GabayManageSite
 
     protected void DeleteBtn_Click(object sender, EventArgs e)
     {
-        string sid = (Session["currSynId"] != null)? Session["currSynId"].ToString():"";
-
-        if (!String.IsNullOrEmpty(sid))
+        try
         {
-            string id_to_delete = "(";
-            foreach (GridViewRow row in PrayersGridView.Rows)
+            string sid = (Session["currSynId"] != null) ? Session["currSynId"].ToString() : "";
+            string id_to_delete;
+            if (!String.IsNullOrEmpty(sid))
             {
-                if (((CheckBox)row.FindControl("Remove")).Checked)
+
+                for (int i = 0; i < PrayersGridView.Rows.Count; i++)
                 {
-                    id_to_delete += (", " + row.FindControl("IdLabel").ToString());
+                    GridViewRow row = PrayersGridView.Rows[i];
+                    if (((CheckBox)row.FindControl("Remove")).Checked)
+                    {
+                        id_to_delete = ((Label)row.FindControl("IdLabel")).Text;
+                        prayersTableAdapter.Delete(id_to_delete, int.Parse(sid));
+                    }
                 }
+                //bool isFirst = true;
+                //string id_to_delete = "(";
+
+                /*foreach (GridViewRow row in PrayersGridView.Rows)
+                {
+                    if (((CheckBox)row.FindControl("Remove")).Checked)
+                    {
+                        if (!isFirst)
+                        {
+                            id_to_delete += ", ";
+                        }
+
+                        id_to_delete += ((Label)row.FindControl("IdLabel")).Text;
+                        if(isFirst){isFirst = false;}
+                    }
+                }*/
+
+                //id_to_delete += ")";*/
+
+                //prayersTableAdapter.DeleteQuery(id_to_delete, int.Parse(sid));
+                prayersTableAdapter.Update(gabayDataSet.Prayers);
             }
 
-            id_to_delete += ")";
-
-            GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
-
-            prayersTableAdapter.DeleteQuery(id_to_delete, int.Parse(sid));
-            prayersTableAdapter.Update(gabayDataSet.Prayers);
+            PrayersGridView.DataBind();
         }
-        
-        PrayersGridView.DataBind();
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+        }
     }
 
     protected void EndSessionBtn_Click(object sender, EventArgs e)

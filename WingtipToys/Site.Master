@@ -111,6 +111,11 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
+                <%--<asp:ImageButton ID="DonateImageBtn" runat="server" 
+                      ImageUrl="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" 
+                      Width="145" AlternateText="Donate" 
+                      OnClick="DonateImageBtn_Click"
+                      BackColor="Transparent" BorderWidth="0" /> --%>
                 <p>&copy; <%: DateTime.Now.Year %> - <strong>Gabay Managment Site</strong> By Eran K. and Roi F.</p>
             </footer>
         </div>

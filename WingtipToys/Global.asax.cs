@@ -14,8 +14,10 @@ namespace GabayManageSite
 {
     public class Global : HttpApplication
     {
+        private bool firstSession {get; set;}
         void Application_Start(object sender, EventArgs e)
         {
+            firstSession = true;
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -52,18 +54,12 @@ namespace GabayManageSite
 
         void Session_End(object sender, EventArgs e)
         {
-            string alert = "<SCRIPT LANGUAGE='JavaScript'>alert('Session expired')</SCRIPT>";
-            Session["SessionExpire"] = true;
-            Response.Redirect("/Account/Login");
-            System.Web.HttpContext.Current.Response.Write(alert);
+
         }
 
         void Session_Start(object sender, EventArgs e)
         {
-            if (Session.IsNewSession && Session["SessionExpire"] == null)
-            {
 
-            }
         }
 
         void Application_Error(object sender, EventArgs e)

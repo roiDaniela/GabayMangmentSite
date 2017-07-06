@@ -15,7 +15,7 @@ namespace GabayManageSite.Account
         {
             
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
+            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text};
             IdentityResult result = manager.Create(user, Password.Text);
 
             if (result.Succeeded)
@@ -27,6 +27,8 @@ namespace GabayManageSite.Account
 
                 IdentityHelper.SignIn(manager, user, isPersistent: false);
 
+                // save to users table
+                saveToUsresTable(Email.Text, Password.Text);
                 using (GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions())
                 {
                   String cartId = usersShoppingCart.GetCartId();
@@ -39,6 +41,20 @@ namespace GabayManageSite.Account
             {
                 ErrorMessage.Text = result.Errors.FirstOrDefault();
             }
+        }
+
+        private void saveToUsresTable(string email, string password)
+        {            
+            GabayDataSet gabayDataSet = new GabayDataSet();
+            GabayDataSetTableAdapters.UsersTableAdapter usersTableAdapter = new GabayDataSetTableAdapters.UsersTableAdapter();
+            GabayDataSet.UsersRow rsDetails = gabayDataSet.Users.NewUsersRow();
+
+            rsDetails["email"] = email;
+            rsDetails["password"] = password;
+
+            gabayDataSet.Users.Rows.Add(rsDetails.ItemArray);
+
+            usersTableAdapter.Update(gabayDataSet.Users);
         }
 
         private bool checkSynagogeWithDB()

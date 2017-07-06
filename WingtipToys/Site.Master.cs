@@ -100,6 +100,12 @@ namespace GabayManageSite
             Session["currSynName"] = String.Empty;
             Context.GetOwinContext().Authentication.SignOut();
         }
+
+        protected void DonateImageBtn_Click(object sender, ImageClickEventArgs e)
+        {
+
+        }
+
     }
 
 }

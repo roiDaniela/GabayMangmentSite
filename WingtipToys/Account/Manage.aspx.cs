@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using GabayManageSite.Models;
+using System.Security.Claims;
 
 namespace GabayManageSite.Account
 {
@@ -139,7 +140,6 @@ namespace GabayManageSite.Account
             {
                 Session["currSynName"] = DropDownListCurrSyn.SelectedItem.Text;
                 Session["currSynId"] = DropDownListCurrSyn.SelectedValue;
-
             }
             else
             {

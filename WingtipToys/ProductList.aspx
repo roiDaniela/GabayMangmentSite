@@ -5,7 +5,7 @@
     <section>
         <div>
             <hgroup>
-                <% if (Session["currSynId"] == null){ %>            
+                <% if (Session["currSynId"] == null || String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
                     <h2><%: Page.Title %></h2>
                 <% } else { %>            
                     <h2><%: Page.Title %> of "<%:Session["currSynName"] %>" shool</h2>
@@ -14,7 +14,7 @@
         
             <br />
             
-            <% if (Session["currSynId"] == null){ %>            
+            <% if (Session["currSynId"] == null || String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                     <AnonymousTemplate>
                         <p>You have to <a runat="server" href="~/Account/Login">log in</a> first</p>  
@@ -25,8 +25,23 @@
                     </asp:LoginView>                
             <% } %>
 
-            <% if (Session["currSynId"] != null){ %>
+            <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
             <table>
+                <tr>
+                    <td>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="IdToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="Id is required." />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="Family name is required." />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="Private name is required." />
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />
@@ -35,7 +50,7 @@
                         <asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
                     </td>
                     <td>
-                        <asp:Button ID="EndSessionBtn" runat="server" Text="Delete" OnClick="EndSessionBtn_Click"/>
+                        <asp:Button ID="EndSessionBtn" runat="server" Text="EndSession" OnClick="EndSessionBtn_Click"/>
                     </td>
                 </tr>
             </table>
@@ -82,17 +97,14 @@
 
                 <asp:TableRow>
                     <asp:TableCell Width="80px">
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="IdToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
                             <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderSynName" runat="server" TargetControlID="IdToAdd" FilterType="Numbers"/>
                             <asp:TextBox ID="IdToAdd" MaxLength="9" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control" Font-Size="X-Small" ToolTip="numbers only"/>                            
                     </asp:TableCell>
                     <asp:TableCell Width="80px">                            
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
                             <asp:TextBox ID="Private_NameToAdd" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control"  Font-Size="X-Small"/>
                             <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" TargetControlID="Private_NameToAdd" FilterType="Custom"/>
                     </asp:TableCell>
                     <asp:TableCell Width="80px">
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToAdd" CssClass="text-danger" ValidationGroup="addGroup" ErrorMessage="*" />
                             <asp:TextBox ID="Family_NameToAdd" runat="server" Width="80px" ValidationGroup="addGroup" CssClass="form-control"  Font-Size="X-Small"/>
                             <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" TargetControlID="Family_NameToAdd" FilterType="Custom"/>                            
                     </asp:TableCell>
@@ -128,8 +140,6 @@
                 </asp:TableRow>
             </asp:Table> 
             
-            <% } %>
-
             <asp:GridView ShowHeader="False" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
                 CssClass="table table-striped table-bordered">   
                 <Columns>
@@ -177,7 +187,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">
                     <ItemTemplate>
-                        <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Enabled="false" Width="35px"/>
+                        <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Checked=<%# "true" == Eval("is_reading_maftir")%> Enabled="false" Width="35px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
@@ -197,8 +207,9 @@
                 </asp:TemplateField>    
                 </Columns>    
             </asp:GridView>
+            <% } %>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as Text) as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Parashot] pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and synagoge_id = @sid">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as varchar(50))  as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Parashot] pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and synagoge_id = @sid">
                 <SelectParameters>
                 </SelectParameters>
         </asp:SqlDataSource>

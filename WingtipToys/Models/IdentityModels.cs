@@ -18,8 +18,14 @@ namespace GabayManageSite.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = manager.CreateIdentity(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            //userIdentity.AddClaim(new Claim("currSynId", this.currSynId.ToString()));
+            //userIdentity.AddClaim(new Claim("currSynName", this.currSynName.ToString()));
+
             return userIdentity;
         }
+
+        //public string currSynName { get; set; }
+        //public string currSynId { get; set; } 
 
         public Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {

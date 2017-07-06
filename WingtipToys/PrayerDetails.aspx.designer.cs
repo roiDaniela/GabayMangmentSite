@@ -13,13 +13,13 @@ namespace GabayManageSite {
     public partial class PrayerDetails {
         
         /// <summary>
-        /// FormViewPrayerDetail control.
+        /// PrayersGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView FormViewPrayerDetail;
+        protected global::System.Web.UI.WebControls.GridView PrayersGridView;
         
         /// <summary>
         /// SqlDataSource1 control.
