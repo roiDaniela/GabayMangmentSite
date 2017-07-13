@@ -45,7 +45,7 @@ namespace GabayManageSite
                 FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderFamilyName");
                 FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderPrivateName");
 
-                DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid)).ToString();
+                DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId).ToString();
                 //DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid)).ToString();
                 //DropDownListTitleToEdit.SelectedIndex = (int)prayersTableAdapter.GetTitleId(rawId, int.Parse(sid));
                 Private_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";

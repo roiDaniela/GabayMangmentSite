@@ -16,10 +16,13 @@ namespace GabayManageSite
   {
       private GabayDataSet gabayDataSet { get; set; }
       private GabayDataSetTableAdapters.PrayersTableAdapter prayersTableAdapter { get; set; }
+      private GabayDataSetTableAdapters.Pray2SynTableAdapter pray2SynTableAdapter { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         gabayDataSet = new GabayDataSet();
         prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
+        pray2SynTableAdapter = new GabayDataSetTableAdapters.Pray2SynTableAdapter();
 
         birthdayToAdd.Text = DateTime.Now.Date.ToShortDateString();
         Private_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
@@ -58,6 +61,7 @@ namespace GabayManageSite
                     string phone = PhoneToAdd.Text;
                     string email = EmailToAdd.Text;
 
+                    prayersTableAdapter.DeleteQueryByPid(id);
                     GabayDataSet.PrayersRow rsDetails = gabayDataSet.Prayers.NewPrayersRow();
 
                     rsDetails["Id"] = int.Parse(id);
@@ -67,7 +71,7 @@ namespace GabayManageSite
                     rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
                     rsDetails["TITLE_ID"] = int.Parse(title_id);
                     rsDetails["IS_READING_MAFTIR"] = int.Parse(isReadingMaftir);
-                    rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
+                    //rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
                     rsDetails["phone"] = phone;
                     rsDetails["email"] = email;
 
@@ -81,9 +85,15 @@ namespace GabayManageSite
                         rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
                     }
 
+                    //gabayDataSet.Prayers.Rows.Remove(gabayDataSet.Prayers.Rows.Find(id));
                     gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
 
                     prayersTableAdapter.Update(gabayDataSet.Prayers);
+
+                    pray2SynTableAdapter.DeleteQuery(id, synId);
+                    pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
+
+
                     PrayersGridView.DataBind();
                 }     
             }
@@ -180,7 +190,8 @@ namespace GabayManageSite
                     if (((CheckBox)row.FindControl("Remove")).Checked)
                     {
                         id_to_delete = ((Label)row.FindControl("IdLabel")).Text;
-                        prayersTableAdapter.Delete(id_to_delete, int.Parse(sid));
+                        pray2SynTableAdapter.DeleteQuery(id_to_delete, sid);
+                        //prayersTableAdapter.Delete(id_to_delete, int.Parse(sid));
                     }
                 }
                 //bool isFirst = true;
@@ -203,7 +214,8 @@ namespace GabayManageSite
                 //id_to_delete += ")";*/
 
                 //prayersTableAdapter.DeleteQuery(id_to_delete, int.Parse(sid));
-                prayersTableAdapter.Update(gabayDataSet.Prayers);
+                //prayersTableAdapter.Update(gabayDataSet.Prayers);
+                pray2SynTableAdapter.Update(gabayDataSet.Pray2Syn);
             }
 
             PrayersGridView.DataBind();

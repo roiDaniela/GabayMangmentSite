@@ -7,27 +7,34 @@
      <br />
      <br />
 
+     <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
     <section>
-            <table>
-                <tr>
-                    <td>
-                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Family name is required." />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Private name is required." />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="updateGroup" OnClick="UpdateBtn_Click" />
-                    </td>
-                </tr>
-            </table>
+        <div>
+        <table>
+            <tr>
+                <td>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Family name is required." /> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Private name is required." /> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="updateGroup" OnClick="UpdateBtn_Click" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Image runat="server" ImageUrl="/Catalog/Images/truckfire.png"/>                    
+                </td>
+            </tr>
+        </table>
+        </div>
 
         <div>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server"></asp:SqlDataSource>
             <asp:GridView ShowHeader="true" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Horizontal" CellPadding="4"
                 CssClass="table table-striped table-bordered">   
                 <Columns>
@@ -40,14 +47,14 @@
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Private Name">
                         <ItemTemplate>
                             <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Private_NameToEdit" ValidationGroup="updateGroup" runat="server" Text='<%# Eval("Private_Name") %>' Width="80px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" TargetControlID="Private_NameToEdit" FilterType="Custom"/>                            
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" TargetControlID="Private_NameToEdit" FilterType="Custom"/> 
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Family Name">
                         <ItemTemplate>
                             <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Family_NameToEdit" ValidationGroup="updateGroup" runat="server" Text='<%# Eval("Family_Name") %>' Width="80px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" TargetControlID="Family_NameToEdit" FilterType="Custom"/>                            
+                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" TargetControlID="Family_NameToEdit" FilterType="Custom"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -106,24 +113,9 @@
         
             </div>
         </section>
-     <section>
-         <asp:ListView runat="server">
-        <ItemTemplate>
+         <% } %>
 
-         <table>
-            <tr>
-                <td>
-                    
-                        <image src='/Catalog/Images/truckfire.png'
-                            width="100" height="75" border="1" />
-                    
-                </td>
-            </tr>
-        </table>
-        </ItemTemplate>
-        </asp:ListView>
-     </section>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.id as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as varchar(50))  as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, (select nameHe as name, id from parashot where tora_order is not null) pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and synagoge_id = @sid and  py.Id = @pid">
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.id as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as varchar(50))  as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Pray2Syn] ps, (select nameHe as name, id from parashot where tora_order is not null) pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and ps.syn_id = @sid and py.Id = ps.prayer_id and py.Id = @pid">
         <SelectParameters>
         </SelectParameters>
     </asp:SqlDataSource>
