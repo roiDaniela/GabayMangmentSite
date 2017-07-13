@@ -20,20 +20,21 @@ namespace GabayManageSite
         protected void Page_Load(object sender, EventArgs e)
         {
             string sid = (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString();
-            if(!String.IsNullOrEmpty(sid))
+            string rawId = Request.QueryString["PrayerID"];
+            if (!String.IsNullOrEmpty(sid) && !String.IsNullOrEmpty(rawId))
             {
                 gabayDataSet = new GabayDataSet();
                 prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
-                string rawId = Request.QueryString["PrayerID"];
                 //id = Convert.ToInt32(rawId);            
-                SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["prayer_id"]);
-                SqlDataSource1.SelectParameters.Add("prayer_id", rawId);
-
                 SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["sid"]);
                 SqlDataSource1.SelectParameters.Add("sid", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
 
-                TextBox BirthdayToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("BirthdayToEdit");
-                BirthdayToEdit.Text = DateTime.Now.Date.ToShortDateString();
+                SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["pid"]);
+                SqlDataSource1.SelectParameters.Add("pid", rawId);
+
+                //TextBox BirthdayToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("BirthdayToEdit");
+                //BirthdayToEdit.Text = DateTime.Now.Date.ToShortDateString();
+                
 
                 DropDownList DropDownParashaToEdit = (DropDownList)PrayersGridView.Rows[0].FindControl("DropDownParashaToEdit");
                 DropDownList DropDownListTitleToEdit = (DropDownList)PrayersGridView.Rows[0].FindControl("DropDownListTitleToEdit");
@@ -42,11 +43,11 @@ namespace GabayManageSite
                 TextBox Family_NameToEdit = (TextBox)PrayersGridView.Rows[0].FindControl("Family_NameToEdit"); 
 
                 FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderFamilyName");
-                FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderPrivateName");               
-                
+                FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderPrivateName");
 
-                DropDownParashaToEdit.SelectedIndex = (int)prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid));
-                DropDownListTitleToEdit.SelectedIndex = (int)prayersTableAdapter.GetTitleId(rawId, int.Parse(sid));
+                DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid)).ToString();
+                //DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid)).ToString();
+                //DropDownListTitleToEdit.SelectedIndex = (int)prayersTableAdapter.GetTitleId(rawId, int.Parse(sid));
                 Private_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
                 Family_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
             
