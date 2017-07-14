@@ -30,13 +30,13 @@ namespace GabayManageSite
 
         if (Thread.CurrentThread.CurrentCulture.Name == "he-IL")
         {
-            FilteredTextBoxExtenderFamilyName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
-            FilteredTextBoxExtenderPrivateName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+            FilteredTextBoxExtenderFamilyName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםךןץף ";
+            FilteredTextBoxExtenderPrivateName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםךןץף ";
         }
         else
         {
-            FilteredTextBoxExtenderFamilyName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            FilteredTextBoxExtenderPrivateName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            FilteredTextBoxExtenderFamilyName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            FilteredTextBoxExtenderPrivateName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         }
 
         SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["sid"]);
@@ -61,6 +61,7 @@ namespace GabayManageSite
                     string phone = PhoneToAdd.Text;
                     string email = EmailToAdd.Text;
 
+                    pray2SynTableAdapter.DeleteQuery(id, synId);
                     prayersTableAdapter.DeleteQueryByPid(id);
                     GabayDataSet.PrayersRow rsDetails = gabayDataSet.Prayers.NewPrayersRow();
 
@@ -89,8 +90,6 @@ namespace GabayManageSite
                     gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
 
                     prayersTableAdapter.Update(gabayDataSet.Prayers);
-
-                    pray2SynTableAdapter.DeleteQuery(id, synId);
                     pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
 
 
@@ -103,6 +102,10 @@ namespace GabayManageSite
             }
         }
 
+        public void updatePrayer()
+        {
+
+        }
         /*protected void PrayersList_DataBound(object sender, EventArgs e)
         {
             GridViewRow row = new GridViewRow(

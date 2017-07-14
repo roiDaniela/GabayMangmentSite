@@ -10,32 +10,27 @@
      <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
     <section>
         <div>
-        <table>
-            <tr>
-                <td>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Family_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Family name is required." /> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Private_NameToEdit" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Private name is required." /> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="updateGroup" OnClick="UpdateBtn_Click" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Image runat="server" ImageUrl="/Catalog/Images/truckfire.png"/>                    
-                </td>
-            </tr>
-        </table>
-        </div>
+                <table>
+                <tr>
+                    <td>
+                        <asp:RequiredFieldValidator ID="Family_NameToEditValidator" runat="server" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Family name is required." />
+                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" FilterType="Custom"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:RequiredFieldValidator ID="Private_NameToEditValidator" runat="server" CssClass="text-danger" ValidationGroup="updateGroup" ErrorMessage="Private name is required." />
+                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" FilterType="Custom"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Button ID="UpdateBtn" runat="server" Text="Update" ValidationGroup="updateGroup" OnClick="UpdateBtn_Click"/>
+                    </td>
+                </tr>
+            </table>
 
-        <div>
-            <asp:GridView ShowHeader="true" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Horizontal" CellPadding="4"
+            <asp:GridView ShowHeader="true" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="false" enablesortingandpagingcallbacks="False" ShowFooter="True" GridLines="Horizontal" CellPadding="4"
                 CssClass="table table-striped table-bordered">   
                 <Columns>
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Id">
@@ -47,14 +42,12 @@
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Private Name">
                         <ItemTemplate>
                             <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Private_NameToEdit" ValidationGroup="updateGroup" runat="server" Text='<%# Eval("Private_Name") %>' Width="80px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderPrivateName" runat="server" TargetControlID="Private_NameToEdit" FilterType="Custom"/> 
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Family Name">
                         <ItemTemplate>
-                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Family_NameToEdit" ValidationGroup="updateGroup" runat="server" Text='<%# Eval("Family_Name") %>' Width="80px"/>
-                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtenderFamilyName" runat="server" TargetControlID="Family_NameToEdit" FilterType="Custom"/>
+                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Family_NameToEdit" ValidationGroup="updateGroup" runat="server" Text='<%# Eval("Family_Name") %>' Width="80px"/>                            
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -80,13 +73,13 @@
 
                     <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px" HeaderText="Yourtziet Father">
                         <ItemTemplate>
-                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" TextMode="Date" ID="Yourtziet_FatherToEdit" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
+                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Yourtziet_FatherToEdit" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px" HeaderText="Yourtziet Mother">
                         <ItemTemplate>
-                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" TextMode="Date" ID="Yourtziet_MotherToEdit" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
+                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="Yourtziet_MotherToEdit" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -98,7 +91,7 @@
 
                     <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Phone">
                         <ItemTemplate>
-                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" ID="PhoneToEdit" runat="server" Width="80px" TextMode="Phone"  Text='<%# Eval("phone") %>'/>
+                            <asp:TextBox CssClass="form-control" Font-Size="X-Small" MaxLength="12" ID="PhoneToEdit" runat="server" Width="80px" TextMode="Phone"  Text='<%# Eval("phone") %>'/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -120,6 +113,7 @@
         </SelectParameters>
     </asp:SqlDataSource>
 </asp:Content>
+
 
 
 

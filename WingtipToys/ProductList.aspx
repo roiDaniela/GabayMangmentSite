@@ -129,7 +129,7 @@
                             <asp:CheckBox id="isReadingMaftirToAdd" runat="server" Enabled="true" Width="35px" Checked="true"/>
                     </asp:TableCell>
                     <asp:TableCell Width="80px">
-                            <asp:TextBox ID="PhoneToAdd" runat="server" Width="80px" TextMode="Phone" CssClass="form-control"  Font-Size="X-Small"/>
+                            <asp:TextBox ID="PhoneToAdd" runat="server" Width="80px" TextMode="Phone" MaxLength="12" CssClass="form-control"  Font-Size="X-Small"/>
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
                             <asp:TextBox ID="EmailToAdd" runat="server" Width="120px" TextMode="Email" CssClass="form-control"  Font-Size="X-Small"/>
