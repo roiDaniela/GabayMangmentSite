@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="Aliyot" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Aliyot.aspx.cs" Inherits="GabayManageSite.Aliyot" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
-    <h3>Your application description page.</h3>
-    <p>Use this area to provide additional information.</p>
+    <h2 id="hebDate">Heb Date</h2>
+    <h3 id="parasha">Parasha</h3>
+    <p id="numOfAliyot">number of aliyot</p>
+    <p id="aliyotDetails">&nbsp;</p>
+    <p>&nbsp;</p>
 </asp:Content>

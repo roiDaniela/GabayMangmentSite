@@ -249,6 +249,7 @@
     <Content Include="PrayersList.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="ProductList.aspx" />
+    <Content Include="Scripts\Aliyot\getHebDate.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -493,7 +494,6 @@
     </Compile>
     <Compile Include="GabayDataSet.cs">
       <DependentUpon>GabayDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GabayDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
