@@ -13,6 +13,42 @@ namespace GabayManageSite {
     public partial class PrayerDetails {
         
         /// <summary>
+        /// Family_NameToEditValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator Family_NameToEditValidator;
+        
+        /// <summary>
+        /// FilteredTextBoxExtenderFamilyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName;
+        
+        /// <summary>
+        /// Private_NameToEditValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator Private_NameToEditValidator;
+        
+        /// <summary>
+        /// FilteredTextBoxExtenderPrivateName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName;
+        
+        /// <summary>
         /// UpdateBtn control.
         /// </summary>
         /// <remarks>
