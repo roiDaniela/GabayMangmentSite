@@ -104,6 +104,8 @@
                 <a runat="server" href="~/ProductList">Prayers</a>
                 |                
                 <a runat="server" href="~/Aliyot">Aliyot</a>
+                |
+                <a runat="server" href="~/Request">Request</a>
             </b>
         </div>
         <div class="container body-content">
