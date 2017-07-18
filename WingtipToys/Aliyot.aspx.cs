@@ -12,7 +12,8 @@ namespace GabayManageSite
         
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            SqlDataSource1.SelectParameters.Remove(SqlDataSource1.SelectParameters["syn_id"]);
+            SqlDataSource1.SelectParameters.Add("syn_id", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
         }
         
     }
