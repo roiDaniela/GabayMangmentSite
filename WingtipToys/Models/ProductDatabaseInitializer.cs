@@ -10,7 +10,7 @@ namespace GabayManageSite.Models
 {
     public class ProductDatabaseInitializer : DropCreateDatabaseAlways<ProductContext>
     {
-      private static string _strConn = "Server=tcp:gabay.database.windows.net,1433;Initial Catalog=Gabay;Persist Security Info=False;User ID=roifo;Password=sadna!2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+      private static string _strConn = "Server=tcp:gabay2.database.windows.net,1433;Initial Catalog=Gabay;Persist Security Info=False;User ID=roifo;Password=sadna!2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         protected override void Seed(ProductContext context)
         {
