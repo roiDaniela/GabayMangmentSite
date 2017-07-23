@@ -40,6 +40,34 @@
                                 CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="TextBoxSynCity" CssClass="col-md-2 control-label">Select your synagoge city</asp:Label>
+                        <div class="col-md-10">
+                            <asp:DropDownList AutoPostBack="true" ID="DropDownListName" runat="server" DataSourceID="SqlDataSourceName" DataTextField="Name" DataValueField="Id" Font-Size="X-Small" OnSelectedIndexChanged="DropDownListName_SelectedIndexChanged"/>
+                            <asp:SqlDataSource ID="SqlDataSourceSynCity" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select city from synagoge"/>
+                        
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
+                                CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
+                            <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
+                                CssClass="text-danger" Display="Dynamic" ErrorMessage="The synagoge city field is required." />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="DropDownListSyn" CssClass="col-md-2 control-label">Select your synagoge name</asp:Label>
+                        <div class="col-md-10">
+                            <asp:DropDownList AutoPostBack="true" ID="DropDownListSyn" Visible="false" runat="server" DataSourceID="SqlDataSourceName" DataTextField="Name" DataValueField="Id" Font-Size="X-Small"/>
+                            <asp:SqlDataSource ID="SqlDataSourceSynName" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select id, name from synagoge where city = @city">
+                                <SelectParameters>
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="DropDownListSyn"
+                                CssClass="text-danger" Display="Dynamic" ErrorMessage="The synagoge name field is required." />
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-default" />

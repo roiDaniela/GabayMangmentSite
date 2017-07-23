@@ -8,7 +8,7 @@
                 <% if (Session["currSynId"] == null || String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
                     <h2><%: Page.Title %></h2>
                 <% } else { %>            
-                    <h2><%: Page.Title %> of "<%:Session["currSynName"] %>" shool</h2>
+                    <h2><%: Page.Title %> of "<%:Session["currSynName"] %>" shul</h2>
                 <% } %>
             </hgroup>               
         

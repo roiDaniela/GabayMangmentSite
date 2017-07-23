@@ -6,7 +6,7 @@
     <h2><%: Title %>.</h2>
     
     <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
-    <h3>Add Prayers Special Requests for "<%:Session["currSynName"] %>" shool</h3> 
+    <h3>Add Prayers Special Requests for "<%:Session["currSynName"] %>" shul</h3> 
     <% } %>
     <% else{ %>
     <h3>Prayers requests.</h3>

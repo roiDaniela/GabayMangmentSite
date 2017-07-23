@@ -55,6 +55,16 @@ namespace GabayManageSite.Account
             gabayDataSet.Users.Rows.Add(rsDetails.ItemArray);
 
             usersTableAdapter.Update(gabayDataSet.Users);
+
+            // add to mail2syn
+            GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
+            GabayDataSet.Mail2SynRow rsDetails2 = gabayDataSet.Mail2Syn.NewMail2SynRow();
+
+            rsDetails["Synagoge_Id"] = DropDownListSyn.SelectedValue;
+
+            gabayDataSet.Mail2Syn.Rows.Add(rsDetails2.ItemArray);
+
+            mail2SynTableAdapter.Update(gabayDataSet.Mail2Syn);
         }
 
         private bool checkSynagogeWithDB()
@@ -62,6 +72,12 @@ namespace GabayManageSite.Account
             //string synDBPassword = Models.ProductDatabaseInitializer.getPasswordForSynagogeId(Synagoge.SelectedValue);
             //return (synPassword.Equals(synPassword.Text));           
             return true;
+        }
+
+        protected void DropDownListName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SqlDataSourceSynName.SelectParameters.Remove(SqlDataSourceSynName.SelectParameters["city"]);
+            SqlDataSourceSynName.SelectParameters.Add("city", DropDownListSyn.SelectedItem.Text);
         }
     }
 }

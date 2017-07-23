@@ -36,5 +36,34 @@ namespace GabayManageSite
             LabelHebDate.Text = doc.ChildNodes[1].ChildNodes[1].Attributes[3].Value;
         }
 
+        private void getZmanim()
+        {
+            ////Declarations:
+            //EngineClient ZmanimAPI = CreateApiInstance();
+            //EngineParamDay Params = new EngineParamDay();
+            //EngineResultDay Day = new EngineResultDay();
+
+            ////Set parameters:
+            //Params.User = APIUSER;
+            //Params.Key = APIKEY;
+            //Params.Coding = "CS";
+            //Params.Language = "en";
+            //Params.InputDate = DateTime.Now;
+            //Params.LocationID = "US33487";
+
+            ////Call API:
+            //Day = ZmanimAPI.GetDay(Params);
+
+            ////Display results:
+            //Console.WriteLine(Day.Place.Name);
+            //Console.WriteLine(Day.Time.Weekday);
+            //Console.WriteLine("Latest Shema at:");
+            //Console.WriteLine(Day.Zman.ShemaGra.ToString("t"));
+
+            ////Use results for further calculations:
+            //Console.WriteLine("Mincha Minyan 20 min before shekiah at:");
+            //Console.WriteLine(Day.Zman.SunsetDefault.AddMinutes(-20).ToString("t"));
+        }
+
     }
 }
