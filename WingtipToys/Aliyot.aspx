@@ -1,14 +1,40 @@
 ﻿<%@ Page Title="Aliyot" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Aliyot.aspx.cs" Inherits="GabayManageSite.Aliyot" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
-    
-    <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
+    <%--<asp:BoundField DataField="Title_ID" HeaderText="Title_ID" ReadOnly="True" SortExpression="Title_ID" />
+            <asp:BoundField DataField="Reason" HeaderText="Reason" ReadOnly="True" SortExpression="Reason" /> --%>            
+    <h3>
+        <asp:Label ID="LabelHebDate" runat="server" Text="Label"></asp:Label>
+    </h3>
+    <h3>
+        <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
+    </h3>
+    <p>
+        <span style="color: rgb(62, 62, 62); font-family: Arial; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Verses:</span></p>
+    <p>
+        <asp:GridView ID="GridView2" runat="server" DataSourceID="SqlDataSource2" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="מס' עליה" HeaderText="מס' עליה" SortExpression="מס' עליה" />
+                <asp:BoundField DataField="פסוקים" HeaderText="פסוקים" SortExpression="פסוקים" />
+            </Columns>
+        </asp:GridView>
+        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="Select Aliyah.Name AS &quot;מס' עליה&quot;,
+	   Reading.name AS &quot;פסוקים&quot;
+From fullkriyah
+Inner Join Reading On Reading.Id = fullkriyah.torah
+Inner Join Aliyah On Aliyah.id = fullkriyah.Aliyah
+Where date in (
+	SELECT TOP (1) date
+	From fullkriyah
+	INNER JOin Parashot ON fullkriyah.parashah = Parashot.id
+	Where getdate() &lt;= date
+)"></asp:SqlDataSource>
+    </p>
     <h3>Aliyot for "<%:Session["currSynName"] %>" shool</h3> 
-    <% } %>
-    <% else{ %>
+    <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %><%--<asp:BoundField DataField="Title_ID" HeaderText="Title_ID" ReadOnly="True" SortExpression="Title_ID" />
+            <asp:BoundField DataField="Reason" HeaderText="Reason" ReadOnly="True" SortExpression="Reason" /> --%>
     <h3>Prayers aliyot.</h3>
-     <% } %>
+    <% } %>
 
         <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
@@ -335,7 +361,7 @@ Union ALL
   	Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional.description,Title.Name
 ) Y
 ) AS g
-Order By Title_ID ASC , Reason DESC, &quot;מס' עליות&quot; DESC"></asp:SqlDataSource>
+Order By Title_ID ASC , Reason DESC, &quot;מס' עליות&quot; DESC" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>"></asp:SqlDataSource>
 
 
 </asp:Content>

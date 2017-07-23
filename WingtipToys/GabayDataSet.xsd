@@ -2,9 +2,10 @@
 <xs:schema id="GabayDataSet" targetNamespace="http://tempuri.org/GabayDataSet.xsd" xmlns:mstns="http://tempuri.org/GabayDataSet.xsd" xmlns="http://tempuri.org/GabayDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="gabayConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="gabayConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.gabayConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="DefaultConnection" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DefaultConnection (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.DefaultConnection.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SynagogeTableAdapter" GeneratorDataComponentClassName="SynagogeTableAdapter" Name="Synagoge" UserDataComponentName="SynagogeTableAdapter">
@@ -407,6 +408,58 @@ FROM            Exceptional</CommandText>
               </DbSource>
             </Sources>
           </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ParashotTableAdapter" GeneratorDataComponentClassName="ParashotTableAdapter" Name="Parashot" UserDataComponentName="ParashotTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DefaultConnection (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetCurrentParasha" GetMethodModifier="Public" GetMethodName="GetCurrentParasha" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetCurrentParasha" UserSourceName="GetCurrentParasha">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT TOP (1) Parashot.id,date,Parashot.NameEn,NameHe,link,category
+From fullkriyah
+INNER JOin Parashot ON fullkriyah.parashah = Parashot.id
+Where getdate() &lt;= date
+</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id" DataSetColumn="id" />
+              <Mapping SourceColumn="date" DataSetColumn="date" />
+              <Mapping SourceColumn="NameEn" DataSetColumn="NameEn" />
+              <Mapping SourceColumn="NameHe" DataSetColumn="NameHe" />
+              <Mapping SourceColumn="link" DataSetColumn="link" />
+              <Mapping SourceColumn="category" DataSetColumn="category" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ParashaDetailsTableAdapter" GeneratorDataComponentClassName="ParashaDetailsTableAdapter" Name="ParashaDetails" UserDataComponentName="ParashaDetailsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="gabayConnectionString (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetTorahReadings" GetMethodModifier="Public" GetMethodName="GetTorahReadings" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetTorahReadings" UserSourceName="GetTorahReadings">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>Select Aliyah.Name AS "מס' עליה",
+	   Reading.name AS "פסוקים"
+From fullkriyah
+Inner Join Reading On Reading.Id = fullkriyah.torah
+Inner Join Aliyah On Aliyah.id = fullkriyah.Aliyah
+Where date in (
+	SELECT TOP (1) date
+	From fullkriyah
+	INNER JOin Parashot ON fullkriyah.parashah = Parashot.id
+	Where getdate() &lt;= date
+)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="מס' עליה" DataSetColumn="מס' עליה" />
+              <Mapping SourceColumn="פסוקים" DataSetColumn="פסוקים" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
         </Tables>
         <Sources />
       </DataSource>
@@ -415,7 +468,7 @@ FROM            Exceptional</CommandText>
   <xs:element name="GabayDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="GabayDataSet" msprop:Generator_UserDSName="GabayDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Synagoge" msprop:Generator_TableClassName="SynagogeDataTable" msprop:Generator_TableVarName="tableSynagoge" msprop:Generator_TablePropName="Synagoge" msprop:Generator_RowDeletingName="SynagogeRowDeleting" msprop:Generator_RowChangingName="SynagogeRowChanging" msprop:Generator_RowEvHandlerName="SynagogeRowChangeEventHandler" msprop:Generator_RowDeletedName="SynagogeRowDeleted" msprop:Generator_UserTableName="Synagoge" msprop:Generator_RowChangedName="SynagogeRowChanged" msprop:Generator_RowEvArgName="SynagogeRowChangeEvent" msprop:Generator_RowClassName="SynagogeRow">
+        <xs:element name="Synagoge" msprop:Generator_TableClassName="SynagogeDataTable" msprop:Generator_TableVarName="tableSynagoge" msprop:Generator_RowChangedName="SynagogeRowChanged" msprop:Generator_TablePropName="Synagoge" msprop:Generator_RowDeletingName="SynagogeRowDeleting" msprop:Generator_RowChangingName="SynagogeRowChanging" msprop:Generator_RowEvHandlerName="SynagogeRowChangeEventHandler" msprop:Generator_RowDeletedName="SynagogeRowDeleted" msprop:Generator_RowClassName="SynagogeRow" msprop:Generator_UserTableName="Synagoge" msprop:Generator_RowEvArgName="SynagogeRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -436,7 +489,7 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Mail2Syn" msprop:Generator_TableClassName="Mail2SynDataTable" msprop:Generator_TableVarName="tableMail2Syn" msprop:Generator_TablePropName="Mail2Syn" msprop:Generator_RowDeletingName="Mail2SynRowDeleting" msprop:Generator_RowChangingName="Mail2SynRowChanging" msprop:Generator_RowEvHandlerName="Mail2SynRowChangeEventHandler" msprop:Generator_RowDeletedName="Mail2SynRowDeleted" msprop:Generator_UserTableName="Mail2Syn" msprop:Generator_RowChangedName="Mail2SynRowChanged" msprop:Generator_RowEvArgName="Mail2SynRowChangeEvent" msprop:Generator_RowClassName="Mail2SynRow">
+        <xs:element name="Mail2Syn" msprop:Generator_TableClassName="Mail2SynDataTable" msprop:Generator_TableVarName="tableMail2Syn" msprop:Generator_RowChangedName="Mail2SynRowChanged" msprop:Generator_TablePropName="Mail2Syn" msprop:Generator_RowDeletingName="Mail2SynRowDeleting" msprop:Generator_RowChangingName="Mail2SynRowChanging" msprop:Generator_RowEvHandlerName="Mail2SynRowChangeEventHandler" msprop:Generator_RowDeletedName="Mail2SynRowDeleted" msprop:Generator_RowClassName="Mail2SynRow" msprop:Generator_UserTableName="Mail2Syn" msprop:Generator_RowEvArgName="Mail2SynRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Email" msprop:Generator_ColumnVarNameInTable="columnEmail" msprop:Generator_ColumnPropNameInRow="Email" msprop:Generator_ColumnPropNameInTable="EmailColumn" msprop:Generator_UserColumnName="Email" minOccurs="0">
@@ -450,7 +503,7 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Users" msprop:Generator_TableClassName="UsersDataTable" msprop:Generator_TableVarName="tableUsers" msprop:Generator_TablePropName="Users" msprop:Generator_RowDeletingName="UsersRowDeleting" msprop:Generator_RowChangingName="UsersRowChanging" msprop:Generator_RowEvHandlerName="UsersRowChangeEventHandler" msprop:Generator_RowDeletedName="UsersRowDeleted" msprop:Generator_UserTableName="Users" msprop:Generator_RowChangedName="UsersRowChanged" msprop:Generator_RowEvArgName="UsersRowChangeEvent" msprop:Generator_RowClassName="UsersRow">
+        <xs:element name="Users" msprop:Generator_TableClassName="UsersDataTable" msprop:Generator_TableVarName="tableUsers" msprop:Generator_RowChangedName="UsersRowChanged" msprop:Generator_TablePropName="Users" msprop:Generator_RowDeletingName="UsersRowDeleting" msprop:Generator_RowChangingName="UsersRowChanging" msprop:Generator_RowEvHandlerName="UsersRowChangeEventHandler" msprop:Generator_RowDeletedName="UsersRowDeleted" msprop:Generator_RowClassName="UsersRow" msprop:Generator_UserTableName="Users" msprop:Generator_RowEvArgName="UsersRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Email" msprop:Generator_ColumnVarNameInTable="columnEmail" msprop:Generator_ColumnPropNameInRow="Email" msprop:Generator_ColumnPropNameInTable="EmailColumn" msprop:Generator_UserColumnName="Email">
@@ -470,7 +523,7 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Pray2Syn" msprop:Generator_TableClassName="Pray2SynDataTable" msprop:Generator_TableVarName="tablePray2Syn" msprop:Generator_RowChangedName="Pray2SynRowChanged" msprop:Generator_TablePropName="Pray2Syn" msprop:Generator_RowDeletingName="Pray2SynRowDeleting" msprop:Generator_RowChangingName="Pray2SynRowChanging" msprop:Generator_RowEvHandlerName="Pray2SynRowChangeEventHandler" msprop:Generator_RowDeletedName="Pray2SynRowDeleted" msprop:Generator_RowClassName="Pray2SynRow" msprop:Generator_UserTableName="Pray2Syn" msprop:Generator_RowEvArgName="Pray2SynRowChangeEvent">
+        <xs:element name="Pray2Syn" msprop:Generator_TableClassName="Pray2SynDataTable" msprop:Generator_TableVarName="tablePray2Syn" msprop:Generator_TablePropName="Pray2Syn" msprop:Generator_RowDeletingName="Pray2SynRowDeleting" msprop:Generator_RowChangingName="Pray2SynRowChanging" msprop:Generator_RowEvHandlerName="Pray2SynRowChangeEventHandler" msprop:Generator_RowDeletedName="Pray2SynRowDeleted" msprop:Generator_UserTableName="Pray2Syn" msprop:Generator_RowChangedName="Pray2SynRowChanged" msprop:Generator_RowEvArgName="Pray2SynRowChangeEvent" msprop:Generator_RowClassName="Pray2SynRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ref" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnref" msprop:Generator_ColumnPropNameInRow="_ref" msprop:Generator_ColumnPropNameInTable="refColumn" msprop:Generator_UserColumnName="ref" type="xs:int" />
@@ -485,7 +538,7 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Prayers" msprop:Generator_TableClassName="PrayersDataTable" msprop:Generator_TableVarName="tablePrayers" msprop:Generator_RowChangedName="PrayersRowChanged" msprop:Generator_TablePropName="Prayers" msprop:Generator_RowDeletingName="PrayersRowDeleting" msprop:Generator_RowChangingName="PrayersRowChanging" msprop:Generator_RowEvHandlerName="PrayersRowChangeEventHandler" msprop:Generator_RowDeletedName="PrayersRowDeleted" msprop:Generator_RowClassName="PrayersRow" msprop:Generator_UserTableName="Prayers" msprop:Generator_RowEvArgName="PrayersRowChangeEvent">
+        <xs:element name="Prayers" msprop:Generator_TableClassName="PrayersDataTable" msprop:Generator_TableVarName="tablePrayers" msprop:Generator_TablePropName="Prayers" msprop:Generator_RowDeletingName="PrayersRowDeleting" msprop:Generator_RowChangingName="PrayersRowChanging" msprop:Generator_RowEvHandlerName="PrayersRowChangeEventHandler" msprop:Generator_RowDeletedName="PrayersRowDeleted" msprop:Generator_UserTableName="Prayers" msprop:Generator_RowChangedName="PrayersRowChanged" msprop:Generator_RowEvArgName="PrayersRowChangeEvent" msprop:Generator_RowClassName="PrayersRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID">
@@ -532,7 +585,7 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Exceptional" msprop:Generator_TableClassName="ExceptionalDataTable" msprop:Generator_TableVarName="tableExceptional" msprop:Generator_TablePropName="Exceptional" msprop:Generator_RowDeletingName="ExceptionalRowDeleting" msprop:Generator_RowChangingName="ExceptionalRowChanging" msprop:Generator_RowEvHandlerName="ExceptionalRowChangeEventHandler" msprop:Generator_RowDeletedName="ExceptionalRowDeleted" msprop:Generator_UserTableName="Exceptional" msprop:Generator_RowChangedName="ExceptionalRowChanged" msprop:Generator_RowEvArgName="ExceptionalRowChangeEvent" msprop:Generator_RowClassName="ExceptionalRow">
+        <xs:element name="Exceptional" msprop:Generator_TableClassName="ExceptionalDataTable" msprop:Generator_TableVarName="tableExceptional" msprop:Generator_RowChangedName="ExceptionalRowChanged" msprop:Generator_TablePropName="Exceptional" msprop:Generator_RowDeletingName="ExceptionalRowDeleting" msprop:Generator_RowChangingName="ExceptionalRowChanging" msprop:Generator_RowEvHandlerName="ExceptionalRowChangeEventHandler" msprop:Generator_RowDeletedName="ExceptionalRowDeleted" msprop:Generator_RowClassName="ExceptionalRow" msprop:Generator_UserTableName="Exceptional" msprop:Generator_RowEvArgName="ExceptionalRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="prayer_id" msprop:Generator_ColumnVarNameInTable="columnprayer_id" msprop:Generator_ColumnPropNameInRow="prayer_id" msprop:Generator_ColumnPropNameInTable="prayer_idColumn" msprop:Generator_UserColumnName="prayer_id">
@@ -559,6 +612,62 @@ FROM            Exceptional</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Parashot" msprop:Generator_TableClassName="ParashotDataTable" msprop:Generator_TableVarName="tableParashot" msprop:Generator_TablePropName="Parashot" msprop:Generator_RowDeletingName="ParashotRowDeleting" msprop:Generator_RowChangingName="ParashotRowChanging" msprop:Generator_RowEvHandlerName="ParashotRowChangeEventHandler" msprop:Generator_RowDeletedName="ParashotRowDeleted" msprop:Generator_UserTableName="Parashot" msprop:Generator_RowChangedName="ParashotRowChanged" msprop:Generator_RowEvArgName="ParashotRowChangeEvent" msprop:Generator_RowClassName="ParashotRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="date" msprop:Generator_ColumnVarNameInTable="columndate" msprop:Generator_ColumnPropNameInRow="date" msprop:Generator_ColumnPropNameInTable="dateColumn" msprop:Generator_UserColumnName="date" type="xs:dateTime" />
+              <xs:element name="NameEn" msprop:Generator_ColumnVarNameInTable="columnNameEn" msprop:Generator_ColumnPropNameInRow="NameEn" msprop:Generator_ColumnPropNameInTable="NameEnColumn" msprop:Generator_UserColumnName="NameEn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NameHe" msprop:Generator_ColumnVarNameInTable="columnNameHe" msprop:Generator_ColumnPropNameInRow="NameHe" msprop:Generator_ColumnPropNameInTable="NameHeColumn" msprop:Generator_UserColumnName="NameHe">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="link" msprop:Generator_ColumnVarNameInTable="columnlink" msprop:Generator_ColumnPropNameInRow="link" msprop:Generator_ColumnPropNameInTable="linkColumn" msprop:Generator_UserColumnName="link">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="category" msprop:Generator_ColumnVarNameInTable="columncategory" msprop:Generator_ColumnPropNameInRow="category" msprop:Generator_ColumnPropNameInTable="categoryColumn" msprop:Generator_UserColumnName="category">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ParashaDetails" msprop:Generator_TableClassName="ParashaDetailsDataTable" msprop:Generator_TableVarName="tableParashaDetails" msprop:Generator_TablePropName="ParashaDetails" msprop:Generator_RowDeletingName="ParashaDetailsRowDeleting" msprop:Generator_RowChangingName="ParashaDetailsRowChanging" msprop:Generator_RowEvHandlerName="ParashaDetailsRowChangeEventHandler" msprop:Generator_RowDeletedName="ParashaDetailsRowDeleted" msprop:Generator_UserTableName="ParashaDetails" msprop:Generator_RowChangedName="ParashaDetailsRowChanged" msprop:Generator_RowEvArgName="ParashaDetailsRowChangeEvent" msprop:Generator_RowClassName="ParashaDetailsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="מס_x0027__x0020_עליה" msprop:Generator_ColumnVarNameInTable="_columnמס__עליה" msprop:Generator_ColumnPropNameInRow="_מס__עליה" msprop:Generator_ColumnPropNameInTable="_מס__עליהColumn" msprop:Generator_UserColumnName="מס' עליה">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="פסוקים" msprop:Generator_ColumnVarNameInTable="columnפסוקים" msprop:Generator_ColumnPropNameInRow="פסוקים" msprop:Generator_ColumnPropNameInTable="פסוקיםColumn" msprop:Generator_UserColumnName="פסוקים">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -581,13 +690,19 @@ FROM            Exceptional</CommandText>
       <xs:selector xpath=".//mstns:Exceptional" />
       <xs:field xpath="mstns:ref" />
     </xs:unique>
+    <xs:unique name="Parashot_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Parashot" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK_Pray2Syn_Synagoge" msdata:parent="Synagoge" msdata:child="Pray2Syn" msdata:parentkey="ID" msdata:childkey="syn_id" msprop:Generator_UserChildTable="Pray2Syn" msprop:Generator_ChildPropName="GetPray2SynRows" msprop:Generator_UserRelationName="FK_Pray2Syn_Synagoge" msprop:Generator_RelationVarName="relationFK_Pray2Syn_Synagoge" msprop:Generator_UserParentTable="Synagoge" msprop:Generator_ParentPropName="SynagogeRow" />
-      <msdata:Relationship name="FK_Pray2Syn_Prayers1" msdata:parent="Prayers" msdata:child="Pray2Syn" msdata:parentkey="ID" msdata:childkey="prayer_id" msprop:Generator_UserChildTable="Pray2Syn" msprop:Generator_ChildPropName="GetPray2SynRows" msprop:Generator_UserRelationName="FK_Pray2Syn_Prayers1" msprop:Generator_ParentPropName="PrayersRow" msprop:Generator_RelationVarName="relationFK_Pray2Syn_Prayers1" msprop:Generator_UserParentTable="Prayers" />
-      <msdata:Relationship name="FK_Exceptional_Prayers" msdata:parent="Prayers" msdata:child="Exceptional" msdata:parentkey="ID" msdata:childkey="prayer_id" msprop:Generator_UserChildTable="Exceptional" msprop:Generator_ChildPropName="GetExceptionalRows" msprop:Generator_UserRelationName="FK_Exceptional_Prayers" msprop:Generator_ParentPropName="PrayersRow" msprop:Generator_RelationVarName="relationFK_Exceptional_Prayers" msprop:Generator_UserParentTable="Prayers" />
-      <msdata:Relationship name="FK_Exceptional_Synagoge" msdata:parent="Synagoge" msdata:child="Exceptional" msdata:parentkey="ID" msdata:childkey="syn_id" msprop:Generator_UserChildTable="Exceptional" msprop:Generator_ChildPropName="GetExceptionalRows" msprop:Generator_UserRelationName="FK_Exceptional_Synagoge" msprop:Generator_ParentPropName="SynagogeRow" msprop:Generator_RelationVarName="relationFK_Exceptional_Synagoge" msprop:Generator_UserParentTable="Synagoge" />
+      <msdata:Relationship name="FK_Pray2Syn_Synagoge" msdata:parent="Synagoge" msdata:child="Pray2Syn" msdata:parentkey="ID" msdata:childkey="syn_id" msprop:Generator_UserChildTable="Pray2Syn" msprop:Generator_ChildPropName="GetPray2SynRows" msprop:Generator_UserRelationName="FK_Pray2Syn_Synagoge" msprop:Generator_ParentPropName="SynagogeRow" msprop:Generator_RelationVarName="relationFK_Pray2Syn_Synagoge" msprop:Generator_UserParentTable="Synagoge" />
+      <msdata:Relationship name="FK_Pray2Syn_Prayers1" msdata:parent="Prayers" msdata:child="Pray2Syn" msdata:parentkey="ID" msdata:childkey="prayer_id" msprop:Generator_UserChildTable="Pray2Syn" msprop:Generator_ChildPropName="GetPray2SynRows" msprop:Generator_UserRelationName="FK_Pray2Syn_Prayers1" msprop:Generator_RelationVarName="relationFK_Pray2Syn_Prayers1" msprop:Generator_UserParentTable="Prayers" msprop:Generator_ParentPropName="PrayersRow" />
+      <msdata:Relationship name="FK_Exceptional_Prayers" msdata:parent="Prayers" msdata:child="Exceptional" msdata:parentkey="ID" msdata:childkey="prayer_id" msprop:Generator_UserChildTable="Exceptional" msprop:Generator_ChildPropName="GetExceptionalRows" msprop:Generator_UserRelationName="FK_Exceptional_Prayers" msprop:Generator_RelationVarName="relationFK_Exceptional_Prayers" msprop:Generator_UserParentTable="Prayers" msprop:Generator_ParentPropName="PrayersRow" />
+      <msdata:Relationship name="FK_Exceptional_Synagoge" msdata:parent="Synagoge" msdata:child="Exceptional" msdata:parentkey="ID" msdata:childkey="syn_id" msprop:Generator_UserChildTable="Exceptional" msprop:Generator_ChildPropName="GetExceptionalRows" msprop:Generator_UserRelationName="FK_Exceptional_Synagoge" msprop:Generator_RelationVarName="relationFK_Exceptional_Synagoge" msprop:Generator_UserParentTable="Synagoge" msprop:Generator_ParentPropName="SynagogeRow" />
+      <msdata:Relationship name="FK_Prayers_Parashot" msdata:parent="Parashot" msdata:child="Prayers" msdata:parentkey="id" msdata:childkey="PARASHAT_BAR_MITZVA_ID" msprop:Generator_UserChildTable="Prayers" msprop:Generator_ChildPropName="GetPrayersRows" msprop:Generator_UserRelationName="FK_Prayers_Parashot" msprop:Generator_RelationVarName="relationFK_Prayers_Parashot" msprop:Generator_UserParentTable="Parashot" msprop:Generator_ParentPropName="ParashotRow" />
+      <msdata:Relationship name="FK_Exceptional_Parashot" msdata:parent="Parashot" msdata:child="Exceptional" msdata:parentkey="id" msdata:childkey="parasha_id" msprop:Generator_UserChildTable="Exceptional" msprop:Generator_ChildPropName="GetExceptionalRows" msprop:Generator_UserRelationName="FK_Exceptional_Parashot" msprop:Generator_RelationVarName="relationFK_Exceptional_Parashot" msprop:Generator_UserParentTable="Parashot" msprop:Generator_ParentPropName="ParashotRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
