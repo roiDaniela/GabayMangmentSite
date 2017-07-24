@@ -14,7 +14,7 @@
             </p>
 
             <div class="form-group">
-                <asp:Label runat="server" AssociatedControlID="email" CssClass="col-md-2 control-label">Email</asp:Label>
+                <asp:Label runat="server" AssociatedControlID="email" CssClass="col-md-4 control-label">Email</asp:Label>
                 <div class="col-md-10">
                     <asp:TextBox runat="server" ID="email" CssClass="form-control" TextMode="Email" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="email"

@@ -60,7 +60,8 @@ namespace GabayManageSite.Account
             GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
             GabayDataSet.Mail2SynRow rsDetails2 = gabayDataSet.Mail2Syn.NewMail2SynRow();
 
-            rsDetails["Synagoge_Id"] = DropDownListSyn.SelectedValue;
+            rsDetails2["Synagoge_Id"] = DropDownListSyn.SelectedValue;
+            rsDetails2["email"] = email;
 
             gabayDataSet.Mail2Syn.Rows.Add(rsDetails2.ItemArray);
 
@@ -76,8 +77,15 @@ namespace GabayManageSite.Account
 
         protected void DropDownListName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DropDownListSyn.Visible = true;
+            synNameLabel.Visible = true;
             SqlDataSourceSynName.SelectParameters.Remove(SqlDataSourceSynName.SelectParameters["city"]);
-            SqlDataSourceSynName.SelectParameters.Add("city", DropDownListSyn.SelectedItem.Text);
+            SqlDataSourceSynName.SelectParameters.Add("city", DropDownListName.SelectedValue);
+            if (!string.IsNullOrEmpty(DropDownListSyn.SelectedValue))
+            {
+                Session["currSynName"] = DropDownListSyn.SelectedItem.Text;
+                Session["currSynId"] = DropDownListSyn.SelectedValue;
+            }
         }
     }
 }

@@ -27,7 +27,7 @@
                 </p>
             </asp:PlaceHolder>
             <div class="form-group">
-                <asp:Label Text="Code:" runat="server" AssociatedControlID="Code" CssClass="col-md-2 control-label" />
+                <asp:Label Text="Code:" runat="server" AssociatedControlID="Code" CssClass="col-md-4 control-label" />
                 <div class="col-md-10">
                     <asp:TextBox runat="server" ID="Code" CssClass="form-control" />
                 </div>

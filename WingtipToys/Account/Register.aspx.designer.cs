@@ -67,6 +67,15 @@ namespace GabayManageSite.Account {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSynCity;
         
         /// <summary>
+        /// synNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label synNameLabel;
+        
+        /// <summary>
         /// DropDownListSyn control.
         /// </summary>
         /// <remarks>
@@ -83,5 +92,14 @@ namespace GabayManageSite.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSynName;
+        
+        /// <summary>
+        /// SynPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SynPassword;
     }
 }

@@ -20,7 +20,7 @@
                         <p>You have to <a runat="server" href="~/Account/Login">log in</a> first</p>  
                     </AnonymousTemplate>
                     <LoggedInTemplate>
-                        <p>Hello <%: Context.User.Identity.GetUserName()  %> <a runat="server" href="~/Account/Manage" title="Manage your account"> please select your synagoge</a></p>  
+                        <p>Hello <%: Context.User.Identity.GetUserName()  %> <a runat="server" href="~/Account/Manage" title="Manage your account" > please select your synagoge</a></p>  
                     </LoggedInTemplate>
                     </asp:LoginView>                
             <% } %>
@@ -69,7 +69,7 @@
                     <asp:TableCell Width="120px">
                             <asp:Label ID="Label2" runat="server" Width="120px" Text="Birthday" Font-Bold="true"/>
                     </asp:TableCell>
-                    <asp:TableCell Width="80px">
+                    <%--<asp:TableCell Width="80px">
                             <asp:Label ID="Label1" runat="server" Width="80px" Text="Parasha" Font-Bold="true"/>
                     </asp:TableCell> 
                     <asp:TableCell Width="80px">
@@ -80,10 +80,10 @@
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
                             <asp:Label ID="TextBox5" runat="server" Width="120px" Text="Yourtziet mother" Font-Bold="true"/>
-                    </asp:TableCell>
+                    </asp:TableCell>--%>
                     <asp:TableCell Width="35px">
                             <asp:Label id="CheckBox1" runat="server" Width="35px" Text="Read Maftir?" Font-Bold="true" Font-Size="X-Small"/>
-                    </asp:TableCell>
+                    </asp:TableCell> 
                     <asp:TableCell Width="80px">
                             <asp:Label ID="TextBox7" runat="server" Width="80px" Text="Phone" Font-Bold="true"/>
                     </asp:TableCell>
@@ -111,20 +111,21 @@
                     <asp:TableCell Width="120px">
                         <asp:TextBox ID ="birthdayToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>                        
                     </asp:TableCell>
-                    <asp:TableCell>
+                    <%--<asp:TableCell>
                             <asp:DropDownList ID="DropDownListParashaToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceParashot" DataTextField="Name" DataValueField="Id" Font-Size="X-Small"/>
                             <asp:SqlDataSource ID="DataSourceParashot" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select nameHe as name, id from parashot where tora_order is not null order by tora_order"/>
-                    </asp:TableCell> 
+                    </asp:TableCell>  --%>
                     <asp:TableCell Width="80px">
                             <asp:DropDownList ID="DropDownTitleToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceTitle" DataTextField="Name" DataValueField="Id"  Font-Size="X-Small"/>
                             <asp:SqlDataSource ID="DataSourceTitle" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * from [title]"/>
                     </asp:TableCell>
+                    <%--
                     <asp:TableCell Width="120px">
                             <asp:TextBox ID="Yourtziet_FatherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
                             <asp:TextBox ID="Yourtziet_MotherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
-                    </asp:TableCell>
+                    </asp:TableCell> --%>
                     <asp:TableCell Width="35px">
                             <asp:CheckBox id="isReadingMaftirToAdd" runat="server" Enabled="true" Width="35px" Checked="true"/>
                     </asp:TableCell>
@@ -165,16 +166,16 @@
                         <asp:Label ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' Width="120px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
+                <%--<asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
                         <ItemTemplate>
                             <asp:Label ID="ParashaLabel" runat="server" Text='<%# Eval("Parasha") %>' Width="80px"/>
                 </ItemTemplate>                        
-                </asp:TemplateField>
+                </asp:TemplateField> --%>
                 <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
                     <ItemTemplate>
                             <asp:Label ID="TitleLabel" runat="server" Text='<%# Eval("Title") %>' Width="80px"/>
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField><%--
                 <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
                     <ItemTemplate>
                         <asp:Label ID="Yourtziet_FatherLabel" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
@@ -184,12 +185,12 @@
                     <ItemTemplate>
                         <asp:Label ID="Yourtziet_MotherLabel" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
                 <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">
                     <ItemTemplate>
                         <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Checked=<%# "true" == Eval("is_reading_maftir")%> Enabled="false" Width="35px"/>
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField> 
                 <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
                     <ItemTemplate>
                         <asp:Label ID="PhoneLabel" runat="server" Text='<%# Eval("phone") %>' Width="80px"/>

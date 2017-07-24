@@ -11,7 +11,7 @@
         <asp:HiddenField runat="server" ID="PhoneNumber" />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Code" CssClass="col-md-2 control-label">Code</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Code" CssClass="col-md-4 control-label">Code</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Code" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Code"
