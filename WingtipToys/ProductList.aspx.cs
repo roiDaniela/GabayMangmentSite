@@ -9,6 +9,7 @@ using System.Web.ModelBinding;
 using System.Web.Routing;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace GabayManageSite
 {
@@ -17,12 +18,14 @@ namespace GabayManageSite
       private GabayDataSet gabayDataSet { get; set; }
       private GabayDataSetTableAdapters.PrayersTableAdapter prayersTableAdapter { get; set; }
       private GabayDataSetTableAdapters.Pray2SynTableAdapter pray2SynTableAdapter { get; set; }
+      private GabayDataSetTableAdapters.ExceptionalTableAdapter exceptionalTableAdapter { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         gabayDataSet = new GabayDataSet();
         prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
         pray2SynTableAdapter = new GabayDataSetTableAdapters.Pray2SynTableAdapter();
+        exceptionalTableAdapter = new GabayDataSetTableAdapters.ExceptionalTableAdapter();
 
         birthdayToAdd.Text = DateTime.Now.Date.ToShortDateString();
         Private_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
@@ -52,9 +55,9 @@ namespace GabayManageSite
                     string private_name = Private_NameToAdd.Text;
                     string family_name = Family_NameToAdd.Text;
                     string birthday = birthdayToAdd.Text;
-                    string parasha_id = DropDownListParashaToAdd.SelectedValue;
+                    /*string parasha_id = DropDownListParashaToAdd.SelectedValue;
                     string yourtziet_father = Yourtziet_FatherTextToAdd.Text;
-                    string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;
+                    string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;*/
                     string title_id = DropDownTitleToAdd.SelectedValue;
                     string isReadingMaftir = isReadingMaftirToAdd.Checked? "1": "0";
                     string synId = Session["currSynId"].ToString();
@@ -69,14 +72,14 @@ namespace GabayManageSite
                     rsDetails["PRIVATE_NAME"] = private_name;
                     rsDetails["FAMILY_NAME"] = family_name;
                     rsDetails["BIRTHDAY"] = Convert.ToDateTime(birthday);
-                    rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
+                    //rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
                     rsDetails["TITLE_ID"] = int.Parse(title_id);
                     rsDetails["IS_READING_MAFTIR"] = int.Parse(isReadingMaftir);
                     //rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
                     rsDetails["phone"] = phone;
                     rsDetails["email"] = email;
 
-                    if (!String.IsNullOrEmpty(yourtziet_father))
+                    /*if (!String.IsNullOrEmpty(yourtziet_father))
                     {
                         rsDetails["YOURTZIET_FATHER"] = Convert.ToDateTime(yourtziet_father);
                     }
@@ -84,9 +87,11 @@ namespace GabayManageSite
                     if (!String.IsNullOrEmpty(yourtziet_mother))
                     {
                         rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
-                    }
+                    }*/
 
                     //gabayDataSet.Prayers.Rows.Remove(gabayDataSet.Prayers.Rows.Find(id));
+
+                    addBarMitzvaToTable(id, birthday, synId);
                     gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
 
                     prayersTableAdapter.Update(gabayDataSet.Prayers);
@@ -99,6 +104,37 @@ namespace GabayManageSite
             catch(Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void addBarMitzvaToTable(string id, string birthday, string synId)
+        {
+            DateTime dtBirthday = Convert.ToDateTime(birthday);  
+
+            System.Globalization.Calendar HebCal = new HebrewCalendar();
+            int curYear = HebCal.GetYear(dtBirthday);    //current numeric hebrew year
+
+            for (int i = 0; i < 20; i++)
+            {
+                DateTime nextDt = HebCal.AddYears(dtBirthday, i);
+               
+                // Calculate the age.
+                var age = nextDt.Year - dtBirthday.Year;
+                // Go back to the year the person was born in case of a leap year
+                if (dtBirthday > nextDt.AddYears(-age)) age--;
+
+                // Bar mitzva
+                int reason = (age == 13)? 10: 12;
+
+                if (isReadingMaftirToAdd.Checked)
+                {
+                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt, null, false, 8, "", reason);
+                }
+                else
+                {
+                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt, null, false, null, "", reason);
+                }
+
             }
         }
 

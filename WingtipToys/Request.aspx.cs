@@ -31,7 +31,7 @@ namespace GabayManageSite
         {
             if(IdToAdd.Text.Length == 9)
             {                
-                GabayDataSet.PrayersDataTable prayersDataTable = prayersTableAdapter.GetDataById(IdToAdd.Text);
+                GabayDataSet.PrayersDataTable prayersDataTable = prayersTableAdapter.GetDataById1(IdToAdd.Text);
                 string private_name = prayersDataTable.Rows[0]["Private_name"].ToString();
                 string family_name = prayersDataTable.Rows[0]["Private_name"].ToString();
                 string full_name = private_name + ' ' + family_name;

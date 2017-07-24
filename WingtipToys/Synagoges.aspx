@@ -18,11 +18,12 @@
                 </tr>
             </table>
 
-            <asp:Table ID="Table1" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4" CssClass="table table-striped table-bordered">
+            <asp:Table ID="Table1" runat="server" GridLines="Vertical" CssClass="table table-striped table-bordered">
                 <asp:TableHeaderRow>
                     <asp:TableHeaderCell Text="Id" Width="120px"/>
                     <asp:TableHeaderCell Text="Name" Width="120px"/>
                     <asp:TableHeaderCell Text="Password" Width="120px"/>
+                    <asp:TableHeaderCell Text="City" Width="120px"/>
                 </asp:TableHeaderRow>
                 <asp:TableRow>
                     <asp:TableCell Width="120px">
@@ -34,8 +35,13 @@
                             <asp:RequiredFieldValidator runat="server" Visible="false" ControlToValidate="NameToAdd" CssClass="text-danger" ErrorMessage="The name field is required." />
                     </asp:TableCell>
                     <asp:TableCell Width="120px">
-                            <asp:TextBox runat="server" ID="PasswordToAdd" TextMode="Password" CssClass="form-control" />
+                            <asp:TextBox runat="server" Width="120px" ID="PasswordToAdd" TextMode="Password" CssClass="form-control" />
                             <asp:RequiredFieldValidator runat="server" Visible="false" ControlToValidate="PasswordToAdd" CssClass="text-danger" ErrorMessage="The password field is required." />
+                    </asp:TableCell>
+                    <asp:TableCell Width="120px">
+                            <asp:DropDownList Width="120px" ID="DropDownListName" CssClass="form-control" runat="server" DataSourceID="SqlDataSourceSynCity" DataTextField="Name" DataValueField="Id" Font-Size="Medium" AppendDataBoundItems="true"/>
+                            <asp:SqlDataSource ID="SqlDataSourceSynCity" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select id, name from city"/>                            
+                            <asp:RequiredFieldValidator runat="server" Visible="false" ControlToValidate="CityToAdd" CssClass="text-danger" ErrorMessage="The city field is required." />
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
@@ -58,10 +64,15 @@
                             <asp:Label ID="password" runat="server" Text='<%# Eval("Password") %>' Width="120px" Visible="false"/>
                         </ItemTemplate>        
                 </asp:TemplateField>
+                <asp:TemplateField ItemStyle-Width="120px">            
+                        <ItemTemplate>
+                            <asp:Label ID="city" runat="server" Text='<%# Eval("City") %>' Width="120px" Visible="true"/>
+                        </ItemTemplate>        
+                </asp:TemplateField>
                 </Columns>    
             </asp:GridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select * from [synagoge]"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select s.id, s.name, s.password, c.name as city from [synagoge] s, city c where c.id = s.city"></asp:SqlDataSource>
             
         </div>
     </section>

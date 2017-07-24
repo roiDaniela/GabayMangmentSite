@@ -70,7 +70,7 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/" <%--href="~/Account/Manage" --%> title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> - <%: Session["currSynName"] %>!</a></li>
+                                <li><a runat="server" href=&quot;~/Account/Manage&quot; title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> - <%: Session["currSynName"] %>!</a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>

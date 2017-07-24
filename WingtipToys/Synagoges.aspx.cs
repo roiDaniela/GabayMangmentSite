@@ -32,6 +32,7 @@ namespace GabayManageSite
             
             string Password = PasswordToAdd.Text;
             string synName = NameToAdd.Text;
+            string city = DropDownListName.SelectedValue;
             var id = synagogeTableAdapter.getNextId();
 
             GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
@@ -39,6 +40,7 @@ namespace GabayManageSite
             rsDetails["Id"] = int.Parse(id.ToString());
             rsDetails["Name"] = synName;
             rsDetails["Password"] = Password;
+            rsDetails["City"] = int.Parse(city.ToString());
 
             gabayDataSet.Synagoge.Rows.Add(rsDetails.ItemArray);
 
