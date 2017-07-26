@@ -22,24 +22,6 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.Button UpdateBtn;
         
         /// <summary>
-        /// Table1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
-        
-        /// <summary>
-        /// IdToAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IdToAdd;
-        
-        /// <summary>
         /// FilteredTextBoxExtenderSynName control.
         /// </summary>
         /// <remarks>

@@ -57,9 +57,11 @@
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li><a runat="server" href="~/Synagoges">Synagoges</a></li>
+                        <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
                         <li><a runat="server" href="~/Aliyot">Aliyot</a></li>
                         <li><a runat="server" href="~/ProductList">Prayers</a></li>
                         <li><a runat="server" href="~/ShoppingCart" ID="cartCount" visible="false">&nbsp;</a></li>
+                        <%} %>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -100,12 +102,17 @@
                 </ItemTemplate>
                 <ItemSeparatorTemplate>  |  </ItemSeparatorTemplate>
             </asp:ListView> --%>
+            
             <b style="font-size: large; font-style: normal">
+                <a runat="server" href="~/Synagoges">Synagoges</a>
+                <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
+                |
                 <a runat="server" href="~/ProductList">Prayers</a>
                 |                
                 <a runat="server" href="~/Aliyot">Aliyot</a>
                 |
                 <a runat="server" href="~/Request">Request</a>
+                <%} %>
             </b>
         </div>
         <div class="container body-content">
