@@ -69,18 +69,9 @@
                     <asp:TableCell Width="120px">
                             <asp:Label ID="Label2" runat="server" Width="120px" Text="Birthday" Font-Bold="true"/>
                     </asp:TableCell>
-                    <%--<asp:TableCell Width="80px">
-                            <asp:Label ID="Label1" runat="server" Width="80px" Text="Parasha" Font-Bold="true"/>
-                    </asp:TableCell> 
                     <asp:TableCell Width="80px">
                             <asp:Label ID="Label6" runat="server" Width="80px" Text="Title" Font-Bold="true"/>
                     </asp:TableCell> 
-                    <asp:TableCell Width="120px">
-                            <asp:Label ID="DropDownList2" runat="server" Width="120px" Text="Yourtziet father" Font-Bold="true"/>
-                    </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                            <asp:Label ID="TextBox5" runat="server" Width="120px" Text="Yourtziet mother" Font-Bold="true"/>
-                    </asp:TableCell>--%>
                     <asp:TableCell Width="35px">
                             <asp:Label id="CheckBox1" runat="server" Width="35px" Text="Read Maftir?" Font-Bold="true" Font-Size="X-Small"/>
                     </asp:TableCell> 
@@ -111,21 +102,10 @@
                     <asp:TableCell Width="120px">
                         <asp:TextBox ID ="birthdayToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>                        
                     </asp:TableCell>
-                    <%--<asp:TableCell>
-                            <asp:DropDownList ID="DropDownListParashaToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceParashot" DataTextField="Name" DataValueField="Id" Font-Size="X-Small"/>
-                            <asp:SqlDataSource ID="DataSourceParashot" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select nameHe as name, id from parashot where tora_order is not null order by tora_order"/>
-                    </asp:TableCell>  --%>
                     <asp:TableCell Width="80px">
                             <asp:DropDownList ID="DropDownTitleToAdd" Width="80px" CssClass="form-control" runat="server" DataSourceID="DataSourceTitle" DataTextField="Name" DataValueField="Id"  Font-Size="X-Small"/>
                             <asp:SqlDataSource ID="DataSourceTitle" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT * from [title]"/>
                     </asp:TableCell>
-                    <%--
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Yourtziet_FatherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
-                    </asp:TableCell>
-                    <asp:TableCell Width="120px">
-                            <asp:TextBox ID="Yourtziet_MotherTextToAdd" runat="server" Width="120px" TextMode="Date" CssClass="form-control" Font-Size="X-Small"/>
-                    </asp:TableCell> --%>
                     <asp:TableCell Width="35px">
                             <asp:CheckBox id="isReadingMaftirToAdd" runat="server" Enabled="true" Width="35px" Checked="true"/>
                     </asp:TableCell>
@@ -166,26 +146,11 @@
                         <asp:Label ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' Width="120px"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <%--<asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
-                        <ItemTemplate>
-                            <asp:Label ID="ParashaLabel" runat="server" Text='<%# Eval("Parasha") %>' Width="80px"/>
-                </ItemTemplate>                        
-                </asp:TemplateField> --%>
                 <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
                     <ItemTemplate>
                             <asp:Label ID="TitleLabel" runat="server" Text='<%# Eval("Title") %>' Width="80px"/>
                     </ItemTemplate>
-                </asp:TemplateField><%--
-                <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
-                    <ItemTemplate>
-                        <asp:Label ID="Yourtziet_FatherLabel" runat="server" Text='<%# Eval("Yourtziet_Father") %>' Width="120px"/>
-                    </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
-                    <ItemTemplate>
-                        <asp:Label ID="Yourtziet_MotherLabel" runat="server" Text='<%# Eval("Yourtziet_Mother") %>' Width="120px"/>
-                    </ItemTemplate>
-                </asp:TemplateField>--%>
                 <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">
                     <ItemTemplate>
                         <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Checked=<%# "true" == Eval("is_reading_maftir")%> Enabled="false" Width="35px"/>
@@ -210,7 +175,7 @@
             </asp:GridView>
             <% } %>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, Pr.Name as Parasha, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Father,110) ELSE '' END AS Text) as Yourtziet_Father, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) is not null THEN CONVERT(VARCHAR(10),py.Yourtziet_Mother,110) ELSE '' END AS Text) Yourtziet_Mother, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as varchar(50))  as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Pray2Syn] ps, (select nameHe as name, id from parashot where tora_order is not null) pr, [Title] t where t.Id = py.Title_id and pr.Id = py.Parashat_Bar_Mitzva_Id and ps.prayer_id = py.id and ps.syn_id = @sid">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT py.Id, py.Private_Name, py.Family_Name, CAST(CASE WHEN CONVERT(VARCHAR(10),py.Birthday,110) is not null THEN CONVERT(VARCHAR(10),py.Birthday,110) ELSE '' END AS Text) as Birthday, t.Name as title, Cast(CASE WHEN py.Is_Reading_Maftir = '1' THEN 'true'  else 'false' end as varchar(50))  as Is_Reading_Maftir, cast(case when py.email is null then '' else py.email end as text) as email, cast(case when py.phone is null then '' else py.phone end as text) as phone FROM [Prayers] py, [Pray2Syn] ps, [Title] t where t.Id = py.Title_id and ps.prayer_id = py.id and ps.syn_id = @sid">
                 <SelectParameters>
                 </SelectParameters>
         </asp:SqlDataSource>

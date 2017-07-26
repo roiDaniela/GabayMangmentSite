@@ -55,9 +55,6 @@ namespace GabayManageSite
                     string private_name = Private_NameToAdd.Text;
                     string family_name = Family_NameToAdd.Text;
                     string birthday = birthdayToAdd.Text;
-                    /*string parasha_id = DropDownListParashaToAdd.SelectedValue;
-                    string yourtziet_father = Yourtziet_FatherTextToAdd.Text;
-                    string yourtziet_mother = Yourtziet_MotherTextToAdd.Text;*/
                     string title_id = DropDownTitleToAdd.SelectedValue;
                     string isReadingMaftir = isReadingMaftirToAdd.Checked? "1": "0";
                     string synId = Session["currSynId"].ToString();
@@ -79,22 +76,9 @@ namespace GabayManageSite
                     rsDetails["phone"] = phone;
                     rsDetails["email"] = email;
 
-                    /*if (!String.IsNullOrEmpty(yourtziet_father))
-                    {
-                        rsDetails["YOURTZIET_FATHER"] = Convert.ToDateTime(yourtziet_father);
-                    }
-
-                    if (!String.IsNullOrEmpty(yourtziet_mother))
-                    {
-                        rsDetails["YOURTZIET_MOTHER"] = Convert.ToDateTime(yourtziet_mother);
-                    }*/
-
-                    //gabayDataSet.Prayers.Rows.Remove(gabayDataSet.Prayers.Rows.Find(id));
+                    
 
                     addBarMitzvaToTable(id, birthday, synId);
-                    gabayDataSet.Prayers.Rows.Add(rsDetails.ItemArray);
-
-                    prayersTableAdapter.Update(gabayDataSet.Prayers);
                     pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
 
 

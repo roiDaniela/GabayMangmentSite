@@ -76,6 +76,33 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// Label6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
+        
+        /// <summary>
+        /// CheckBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CheckBox1;
+        
+        /// <summary>
         /// TextBox7 control.
         /// </summary>
         /// <remarks>
@@ -166,24 +193,6 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.TextBox birthdayToAdd;
         
         /// <summary>
-        /// DropDownListParashaToAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListParashaToAdd;
-        
-        /// <summary>
-        /// DataSourceParashot control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource DataSourceParashot;
-        
-        /// <summary>
         /// DropDownTitleToAdd control.
         /// </summary>
         /// <remarks>
@@ -200,24 +209,6 @@ namespace GabayManageSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource DataSourceTitle;
-        
-        /// <summary>
-        /// Yourtziet_FatherTextToAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_FatherTextToAdd;
-        
-        /// <summary>
-        /// Yourtziet_MotherTextToAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Yourtziet_MotherTextToAdd;
         
         /// <summary>
         /// isReadingMaftirToAdd control.
