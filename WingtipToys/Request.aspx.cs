@@ -68,12 +68,12 @@ namespace GabayManageSite
             if (rbDateOrParasha.SelectedItem.Text == "Date")
             {
                 date = Convert.ToDateTime(DateToAdd.Text);
-                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, date, null, bIsConst, favorite_aliya, description, reason_id);
+                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, date.ToString(), favorite_aliya, description, reason_id);
             }
             else if (rbDateOrParasha.SelectedItem.Text == "Parasha")
             {
                 parasha_id = int.Parse(DropDownListParashaToAdd.SelectedItem.Value);
-                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, null, parasha_id, bIsConst, favorite_aliya, description, reason_id);
+                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, null, favorite_aliya, description, reason_id);
             }
 
             PrayersGridView.DataBind();

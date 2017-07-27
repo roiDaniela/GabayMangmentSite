@@ -56,33 +56,27 @@ namespace GabayManageSite
                     string family_name = Family_NameToAdd.Text;
                     string birthday = birthdayToAdd.Text;
                     string title_id = DropDownTitleToAdd.SelectedValue;
-                    string isReadingMaftir = isReadingMaftirToAdd.Checked? "1": "0";
+                    bool isReadingMaftir = isReadingMaftirToAdd.Checked;
                     string synId = Session["currSynId"].ToString();
                     string phone = PhoneToAdd.Text;
                     string email = EmailToAdd.Text;
 
                     pray2SynTableAdapter.DeleteQuery(id, synId);
                     prayersTableAdapter.DeleteQueryByPid(id);
-                    GabayDataSet.PrayersRow rsDetails = gabayDataSet.Prayers.NewPrayersRow();
-
-                    rsDetails["Id"] = int.Parse(id);
-                    rsDetails["PRIVATE_NAME"] = private_name;
-                    rsDetails["FAMILY_NAME"] = family_name;
-                    rsDetails["BIRTHDAY"] = Convert.ToDateTime(birthday);
-                    //rsDetails["PARASHAT_BAR_MITZVA_ID"] = int.Parse(parasha_id);
-                    rsDetails["TITLE_ID"] = int.Parse(title_id);
-                    rsDetails["IS_READING_MAFTIR"] = int.Parse(isReadingMaftir);
-                    //rsDetails["SYNAGOGE_ID"] = int.Parse(synId);
-                    rsDetails["phone"] = phone;
-                    rsDetails["email"] = email;
-
                     
-
-                    addBarMitzvaToTable(id, birthday, synId);
+                    if(id != null && !string.IsNullOrEmpty(private_name) && 
+                        !string.IsNullOrEmpty(family_name) &&
+                        !string.IsNullOrEmpty(birthday) &&
+                        !string.IsNullOrEmpty(birthday) &&
+                        !string.IsNullOrEmpty(synId) &&
+                        !string.IsNullOrEmpty(birthday))
+                    prayersTableAdapter.InsertQuery(id, private_name, family_name, birthday, int.Parse(title_id), isReadingMaftir, phone, email);
+                   
                     pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
+                    addBarMitzvaToTable(id, birthday, synId);
 
 
-                    PrayersGridView.DataBind();
+                    //PrayersGridView.DataBind();
                 }     
             }
             catch(Exception ex)
@@ -112,91 +106,19 @@ namespace GabayManageSite
 
                 if (isReadingMaftirToAdd.Checked)
                 {
-                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt, null, false, 8, "", reason);
+                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), 8, "", reason);
                 }
                 else
                 {
-                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt, null, false, null, "", reason);
+                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), null, "", reason);
                 }
-
             }
         }
 
-        public void updatePrayer()
-        {
-
-        }
-        /*protected void PrayersList_DataBound(object sender, EventArgs e)
-        {
-            GridViewRow row = new GridViewRow(
-                0,
-                0,
-                DataControlRowType.DataRow,
-                DataControlRowState.Alternate);
-
-            for (int i = 0; i < PrayersList.Columns.Count; i++)
-            {
-                TableCell cell = new TableCell();
-
-                if( i!= PrayersList.Columns.Count - 1)
-                {
-                    TextBox textbox = new TextBox();
-                    //textbox.Text = "&nbsp;";
-                    cell.Controls.Add(textbox);
-                }
-                else
-                {
-                    CheckBox checkbox = new CheckBox();
-                    cell.Controls.Add(checkbox);
-                }
-                //cell.Text = "";
-                row.Cells.Add(cell);
-            }
-
-            PrayersList.Controls[0].Controls.AddAt(1, row);
-        }
-
-        public IQueryable<Prayer> GetPrayers(
-                [QueryString("id")] int? prayerId,
-                [RouteData] int? prayerSynagogeId)
+    public void updatePrayer()
     {
-        var _db = new GabayManageSite.Models.ProductContext();
-        IQueryable<Prayer> query = _db.Prayers;
 
-        if (prayerId.HasValue && prayerId > 0)
-        {
-            query = query.Where(p => p.PrayerID == prayerId);
-        }
-
-        if (!(prayerSynagogeId == null))
-        {
-            query = query.Where(p =>
-                                p.SynagogeId ==
-                                prayerSynagogeId);
-        }
-        return query;
-    }*/
-
-    public IQueryable<Product> GetProducts(
-                    [QueryString("id")] int? categoryId,
-                    [RouteData] string categoryName)
-    {
-      var _db = new GabayManageSite.Models.ProductContext();
-      IQueryable<Product> query = _db.Products;
-
-      if (categoryId.HasValue && categoryId > 0)
-      {
-        query = query.Where(p => p.CategoryID == categoryId);
-      }
-
-      if (!String.IsNullOrEmpty(categoryName))
-      {
-        query = query.Where(p =>
-                            String.Compare(p.Category.CategoryName,
-                            categoryName) == 0);
-      }
-      return query;
-    }
+    }     
 
     protected void DeleteBtn_Click(object sender, EventArgs e)
     {
@@ -217,27 +139,6 @@ namespace GabayManageSite
                         //prayersTableAdapter.Delete(id_to_delete, int.Parse(sid));
                     }
                 }
-                //bool isFirst = true;
-                //string id_to_delete = "(";
-
-                /*foreach (GridViewRow row in PrayersGridView.Rows)
-                {
-                    if (((CheckBox)row.FindControl("Remove")).Checked)
-                    {
-                        if (!isFirst)
-                        {
-                            id_to_delete += ", ";
-                        }
-
-                        id_to_delete += ((Label)row.FindControl("IdLabel")).Text;
-                        if(isFirst){isFirst = false;}
-                    }
-                }*/
-
-                //id_to_delete += ")";*/
-
-                //prayersTableAdapter.DeleteQuery(id_to_delete, int.Parse(sid));
-                //prayersTableAdapter.Update(gabayDataSet.Prayers);
                 pray2SynTableAdapter.Update(gabayDataSet.Pray2Syn);
             }
 

@@ -27,6 +27,12 @@ namespace GabayManageSite.Account
 
                 IdentityHelper.SignIn(manager, user, isPersistent: false);
 
+                if (!string.IsNullOrEmpty(DropDownListSyn.SelectedValue))
+                {
+                    Session["currSynName"] = DropDownListSyn.SelectedItem.Text;
+                    Session["currSynId"] = DropDownListSyn.SelectedValue;
+                }
+
                 // save to users table
                 saveToUsresTable(Email.Text, Password.Text);
                 using (GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions())
@@ -81,11 +87,7 @@ namespace GabayManageSite.Account
             synNameLabel.Visible = true;
             SqlDataSourceSynName.SelectParameters.Remove(SqlDataSourceSynName.SelectParameters["city"]);
             SqlDataSourceSynName.SelectParameters.Add("city", DropDownListName.SelectedValue);
-            if (!string.IsNullOrEmpty(DropDownListSyn.SelectedValue))
-            {
-                Session["currSynName"] = DropDownListSyn.SelectedItem.Text;
-                Session["currSynId"] = DropDownListSyn.SelectedValue;
-            }
+
         }
     }
 }
