@@ -47,10 +47,10 @@
                         <%-- <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />--%>
                     </td>
                     <td>
-                        <asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
+                        <asp:Button ID="DeleteBtn" Visible="false" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
                     </td>
                     <td>
-                        <asp:Button ID="EndSessionBtn" runat="server" Text="EndSession" OnClick="EndSessionBtn_Click"/>
+                        <asp:Button ID="EndSessionBtn" runat="server" Visible="false" Text="EndSession" OnClick="EndSessionBtn_Click"/>
                     </td>
                 </tr>
             </table>
@@ -65,7 +65,7 @@
                             <td>
                                 <dl class="dl-horizontal">
                                     <dt>
-                                        <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />                                    </dt>
+                                        <asp:Button ID="UpdateBtn" Visible="false" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />                                    </dt>
                                     <dd></dd>
                                 </dl>
                             </td>
@@ -170,52 +170,52 @@
                     <h4>Show all prayers</h4>
                     <hr />
 
-                <asp:GridView ShowHeader="False" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
+                <asp:GridView ShowHeader="true" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
                     CssClass="table table-striped table-bordered">   
                     <Columns>
-                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
+                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Id">            
                             <ItemTemplate>
-                            <a href="/PrayerDetails.aspx?PrayerID=<%# Eval("Id") %>">               
+                            <%--<a href="/PrayerDetails.aspx?PrayerID=<%# Eval("Id") %>">--%>
                             <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("Id") %>' Width="80px"/>
-                            </a>
+                            <%--</a>--%>
                     </ItemTemplate>        
                     </asp:TemplateField>               
-                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
+                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Private Name">            
                             <ItemTemplate>
                             <asp:Label ID="Private_NameLabel" runat="server" Text='<%# Eval("Private_Name") %>' Width="80px"/>
                             </ItemTemplate>        
                     </asp:TemplateField>    
-                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">            
+                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Family Name">            
                             <ItemTemplate>
                                 <asp:Label ID="Family_NameLabel" runat="server" Text='<%# Eval("Family_Name") %>' Width="80px"/>
                             </ItemTemplate>        
                     </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
+                    <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px" HeaderText="Birthday">
                         <ItemTemplate>
                             <asp:Label ID="BirthdayLabel" runat="server" Text='<%# Eval("Birthday") %>' Width="120px"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
+                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Title">
                         <ItemTemplate>
                                 <asp:Label ID="TitleLabel" runat="server" Text='<%# Eval("Title") %>' Width="80px"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">
+                    <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px" HeaderText="Maftir?">
                         <ItemTemplate>
                             <asp:CheckBox id="CheckBoxIsReadingMaftir" runat="server" Checked=<%# "true" == Eval("is_reading_maftir")%> Enabled="false" Width="35px"/>
                         </ItemTemplate>
                     </asp:TemplateField> 
-                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px">
+                    <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Phone">
                         <ItemTemplate>
                             <asp:Label ID="PhoneLabel" runat="server" Text='<%# Eval("phone") %>' Width="80px"/>
                         </ItemTemplate>
                     </asp:TemplateField>                    
-                    <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px">
+                    <asp:TemplateField ItemStyle-Width="120px" ControlStyle-Width="120px" HeaderText="Email">
                         <ItemTemplate>
                             <asp:Label ID="EmailLabel" runat="server" Font-Size="X-Small" Text='<%# Eval("email") %>' Width="120px"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px">            
+                    <asp:TemplateField ItemStyle-Width="35px" ControlStyle-Width="35px" HeaderText="Remove">            
                             <ItemTemplate>
                                 <asp:CheckBox id="Remove" runat="server" Width="35px" Checked="false"/>
                             </ItemTemplate>        

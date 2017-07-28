@@ -110,8 +110,8 @@
                 <a runat="server" href="~/ProductList">Prayers</a>
                 |                
                 <a runat="server" href="~/Aliyot">Aliyot</a>
-                |
-                <a runat="server" href="~/Request">Request</a>
+                <%--|--%>
+                <a runat="server" href="~/Request" visible="false">Request</a>
                 <%} %>
             </b>
         </div>
