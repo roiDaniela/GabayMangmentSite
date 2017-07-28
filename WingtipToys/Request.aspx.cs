@@ -79,6 +79,41 @@ namespace GabayManageSite
             PrayersGridView.DataBind();
         }
 
+
+        /*private void addBarMitzvaToTable(string id, string birthday, string synId)
+        {
+            DateTime dtBirthday = Convert.ToDateTime(birthday);
+            System.Globalization.Calendar HebCal = new HebrewCalendar();
+            DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
+            int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
+
+            // Add BarMitzva
+            if (DateTime.Now <= dtBarMitzva)
+            {
+                // calc saturday date of barmitzva
+                DateTime shabatOfBarMitzva = Next(dtBarMitzva, DayOfWeek.Saturday);
+
+                exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), shabatOfBarMitzva.ToShortDateString(), favoriteAliya, "", 10);
+            }
+
+            int BirthdayYear = HebCal.GetYear(dtBirthday);    //current numeric hebrew year            
+            int currYear = HebCal.GetYear(DateTime.Now);
+            int diff = currYear - BirthdayYear; // diff between birthday to curr year
+            if (diff < 0) { diff = 0; }
+
+            int exptional_id = exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), null, favoriteAliya, "", 12);
+            for (int i = 0; i < 20; i++)
+            {
+                DateTime nextDt = HebCal.AddYears(dtBirthday, i + diff);
+
+                if (nextDt != dtBarMitzva)
+                {
+                    exceptional2DateTableAdapter.InsertQuery(nextDt.ToShortDateString(), exptional_id);
+                    //exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), favoriteAliya, "", 12);
+                }
+            }
+        }*/
+
         protected void DropDownListName_SelectedIndexChanged(object sender, EventArgs e)
         {
             string id = DropDownListName.SelectedItem.Value;

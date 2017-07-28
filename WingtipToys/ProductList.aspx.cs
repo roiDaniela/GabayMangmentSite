@@ -10,6 +10,7 @@ using System.Web.Routing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Data.SqlClient;
 
 namespace GabayManageSite
 {
@@ -19,6 +20,8 @@ namespace GabayManageSite
       private GabayDataSetTableAdapters.PrayersTableAdapter prayersTableAdapter { get; set; }
       private GabayDataSetTableAdapters.Pray2SynTableAdapter pray2SynTableAdapter { get; set; }
       private GabayDataSetTableAdapters.ExceptionalTableAdapter exceptionalTableAdapter { get; set; }
+      private GabayDataSetTableAdapters.Exceptional2DateTableAdapter exceptional2DateTableAdapter { get; set; }
+      private GabayDataSetTableAdapters.fullkriyahTableAdapter fullkriyahTableAdapter { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,8 +29,10 @@ namespace GabayManageSite
         prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
         pray2SynTableAdapter = new GabayDataSetTableAdapters.Pray2SynTableAdapter();
         exceptionalTableAdapter = new GabayDataSetTableAdapters.ExceptionalTableAdapter();
+        exceptional2DateTableAdapter = new GabayDataSetTableAdapters.Exceptional2DateTableAdapter();
+        fullkriyahTableAdapter = new GabayDataSetTableAdapters.fullkriyahTableAdapter();
 
-        birthdayToAdd.Text = DateTime.Now.Date.ToShortDateString();
+        //birthdayToAdd.Text = DateTime.Now.Date.ToShortDateString();
         Private_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
         Family_NameToAdd.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";
 
@@ -74,9 +79,6 @@ namespace GabayManageSite
                    
                     pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
                     addBarMitzvaToTable(id, birthday, synId);
-
-
-                    //PrayersGridView.DataBind();
                 }     
             }
             catch(Exception ex)
@@ -85,40 +87,68 @@ namespace GabayManageSite
             }
         }
 
+      private string GetDateByParashaAndYear(int parasha_id, int year){
+          string modified;
+          using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["gabayConnectionString"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("select top(1) CONVERT(VARCHAR(10),f.date,110) as date from fullkriyah f where year(date) >= @d_year and f.parashah = @parasha_id ", con))
+                {
+                    cmd.Parameters.AddWithValue("@parasha_id", parasha_id);
+                    cmd.Parameters.AddWithValue("@d_year", year);
+                    con.Open();
+
+                    modified = cmd.ExecuteScalar().ToString();
+
+                    if (con.State == System.Data.ConnectionState.Open) con.Close();                    
+                }
+            }
+
+          return modified;
+      }
+
         private void addBarMitzvaToTable(string id, string birthday, string synId)
         {
-            DateTime dtBirthday = Convert.ToDateTime(birthday);  
-
+            DateTime dtBirthday = Convert.ToDateTime(birthday);              
             System.Globalization.Calendar HebCal = new HebrewCalendar();
-            int curYear = HebCal.GetYear(dtBirthday);    //current numeric hebrew year
+            DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
+            int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
+            string strBarMitzva = dtBarMitzva.ToString("MM/dd/yyyy g", CultureInfo.InvariantCulture).Replace(" A.D.", "");
+            int ParashatBarMitzvaId = Convert.ToInt32(fullkriyahTableAdapter.GetParashaByDateQuery(strBarMitzva)); //This falling
 
+
+            // Add BarMitzva
+            if (DateTime.Now <= dtBarMitzva)
+            {
+                // calc saturday date of barmitzva
+                DateTime shabatOfBarMitzva = Next(dtBarMitzva, DayOfWeek.Saturday);
+
+                exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), shabatOfBarMitzva.ToShortDateString(), favoriteAliya, "", 10);
+            }
+
+            int currYear = HebCal.GetYear(DateTime.Now);
+            exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), null, favoriteAliya, "", 12);
+            int exptional_id = (int) exceptionalTableAdapter.GetRefScalarQuery(id, int.Parse(synId), 12);
+            string nextDt;
             for (int i = 0; i < 20; i++)
             {
-                DateTime nextDt = HebCal.AddYears(dtBirthday, i);
-               
-                // Calculate the age.
-                var age = nextDt.Year - dtBirthday.Year;
-                // Go back to the year the person was born in case of a leap year
-                if (dtBirthday > nextDt.AddYears(-age)) age--;
-
-                // Bar mitzva
-                int reason = (age == 13)? 10: 12;
-
-                if (isReadingMaftirToAdd.Checked)
-                {
-                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), 8, "", reason);
-                }
-                else
-                {
-                    exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), null, "", reason);
-                }
+                nextDt = GetDateByParashaAndYear(ParashatBarMitzvaId, currYear + i);
+                exceptional2DateTableAdapter.InsertQuery(nextDt, exptional_id);
             }
         }
 
     public void updatePrayer()
     {
 
-    }     
+    }
+
+    private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+    {
+        int start = (int)from.DayOfWeek;
+        int target = (int)dayOfWeek;
+        if (target <= start)
+            target += 7;
+        return from.AddDays(target - start);
+    }
 
     protected void DeleteBtn_Click(object sender, EventArgs e)
     {
@@ -136,7 +166,6 @@ namespace GabayManageSite
                     {
                         id_to_delete = ((Label)row.FindControl("IdLabel")).Text;
                         pray2SynTableAdapter.DeleteQuery(id_to_delete, sid);
-                        //prayersTableAdapter.Delete(id_to_delete, int.Parse(sid));
                     }
                 }
                 pray2SynTableAdapter.Update(gabayDataSet.Pray2Syn);
