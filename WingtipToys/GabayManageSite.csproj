@@ -198,6 +198,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddToCart.aspx" />
     <Content Include="Account\AdminPage.aspx" />
+    <Content Include="AliyotHistory.aspx" />
     <Content Include="Aliyot.aspx" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Catalog\Images\boatbig.png" />
@@ -451,6 +452,13 @@
     </Compile>
     <Compile Include="Account\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AliyotHistory.aspx.cs">
+      <DependentUpon>AliyotHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AliyotHistory.aspx.designer.cs">
+      <DependentUpon>AliyotHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Aliyot.aspx.cs">
       <DependentUpon>Aliyot.aspx</DependentUpon>
