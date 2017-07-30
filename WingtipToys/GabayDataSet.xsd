@@ -189,8 +189,8 @@ Where getdate() &lt;= date
             <MainSource>
               <DbSource ConnectionRef="gabayConnectionString (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetTorahReadings" GetMethodModifier="Public" GetMethodName="GetTorahReadings" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetTorahReadings" UserSourceName="GetTorahReadings">
                 <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>Select Aliyah.Name AS "מס' עליה",
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>Select fullkriyah.ID,Aliyah.Name AS "מס' עליה",
 	   Reading.name AS "פסוקים"
 From fullkriyah
 Inner Join Reading On Reading.Id = fullkriyah.torah
@@ -209,8 +209,27 @@ Where date in (
             <Mappings>
               <Mapping SourceColumn="מס' עליה" DataSetColumn="מס' עליה" />
               <Mapping SourceColumn="פסוקים" DataSetColumn="פסוקים" />
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
             </Mappings>
-            <Sources />
+            <Sources>
+              <DbSource ConnectionRef="gabayConnectionString (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLast" GeneratorSourceName="GetLast" GetMethodModifier="Public" GetMethodName="GetLast" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLast" UserSourceName="GetLast">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        fullkriyah.id, Aliyah.name AS [מס' עליה], Reading.name AS פסוקים
+FROM            fullkriyah INNER JOIN
+                         Reading ON Reading.id = fullkriyah.torah INNER JOIN
+                         Aliyah ON Aliyah.id = fullkriyah.Aliyah
+WHERE        (fullkriyah.date IN
+                             (SELECT        TOP (1) fullkriyah_1.date
+                               FROM            fullkriyah AS fullkriyah_1 INNER JOIN
+                                                         Parashot ON fullkriyah_1.parashah = Parashot.id
+                               WHERE        (GETDATE() &gt; fullkriyah_1.date)
+                               ORDER BY fullkriyah_1.date DESC))</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PrayersTableAdapter" GeneratorDataComponentClassName="PrayersTableAdapter" Name="Prayers" UserDataComponentName="PrayersTableAdapter">
             <MainSource>
@@ -741,6 +760,7 @@ From Prayers</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -888,6 +908,10 @@ From Prayers</CommandText>
     <xs:unique name="Parashot_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Parashot" />
       <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="ParashaDetails_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ParashaDetails" />
+      <xs:field xpath="mstns:ID" />
     </xs:unique>
     <xs:unique name="Prayers_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Prayers" />

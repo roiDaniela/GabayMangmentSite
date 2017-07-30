@@ -198,6 +198,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddToCart.aspx" />
     <Content Include="Account\AdminPage.aspx" />
+    <Content Include="AliyotHistory.aspx" />
     <Content Include="ParashahCalendar.aspx" />
     <Content Include="Aliyot.aspx" />
     <Content Include="App_Readme\Elmah.txt" />
@@ -266,7 +267,6 @@
     <Content Include="GabayDataSet.xsc">
       <DependentUpon>GabayDataSet.xsd</DependentUpon>
     </Content>
-    <Content Include="AliyotHistory.aspx" />
     <None Include="GabayDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -458,6 +458,13 @@
     <Compile Include="Account\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AliyotHistory.aspx.cs">
+      <DependentUpon>AliyotHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AliyotHistory.aspx.designer.cs">
+      <DependentUpon>AliyotHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ParashahCalendar.aspx.cs">
       <DependentUpon>ParashahCalendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -639,12 +646,6 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="AliyotHistory.aspx.cs">
-      <DependentUpon>AliyotHistory.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AliyotHistory.aspx.designer.cs">
-      <DependentUpon>AliyotHistory.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

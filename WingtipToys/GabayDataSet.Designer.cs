@@ -1872,6 +1872,8 @@ namespace GabayManageSite {
             
             private global::System.Data.DataColumn columnפסוקים;
             
+            private global::System.Data.DataColumn columnID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ParashaDetailsDataTable() {
@@ -1923,6 +1925,14 @@ namespace GabayManageSite {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IDColumn {
+                get {
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1962,10 +1972,18 @@ namespace GabayManageSite {
                 ParashaDetailsRow rowParashaDetailsRow = ((ParashaDetailsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         _מס__עליה,
-                        פסוקים};
+                        פסוקים,
+                        null};
                 rowParashaDetailsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowParashaDetailsRow);
                 return rowParashaDetailsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParashaDetailsRow FindByID(int ID) {
+                return ((ParashaDetailsRow)(this.Rows.Find(new object[] {
+                            ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1987,6 +2005,7 @@ namespace GabayManageSite {
             internal void InitVars() {
                 this._columnמס__עליה = base.Columns["מס\' עליה"];
                 this.columnפסוקים = base.Columns["פסוקים"];
+                this.columnID = base.Columns["ID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1998,10 +2017,20 @@ namespace GabayManageSite {
                 base.Columns.Add(this._columnמס__עליה);
                 this.columnפסוקים = new global::System.Data.DataColumn("פסוקים", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnפסוקים);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnID}, true));
                 this._columnמס__עליה.AllowDBNull = false;
                 this._columnמס__עליה.MaxLength = 10;
                 this.columnפסוקים.AllowDBNull = false;
                 this.columnפסוקים.MaxLength = 100;
+                this.columnID.AutoIncrement = true;
+                this.columnID.AutoIncrementSeed = -1;
+                this.columnID.AutoIncrementStep = -1;
+                this.columnID.AllowDBNull = false;
+                this.columnID.ReadOnly = true;
+                this.columnID.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4374,6 +4403,17 @@ namespace GabayManageSite {
                     this[this.tableParashaDetails.פסוקיםColumn] = value;
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ID {
+                get {
+                    return ((int)(this[this.tableParashaDetails.IDColumn]));
+                }
+                set {
+                    this[this.tableParashaDetails.IDColumn] = value;
+                }
+            }
         }
         
         /// <summary>
@@ -6656,6 +6696,7 @@ namespace GabayManageSite.GabayDataSetTableAdapters {
             tableMapping.DataSetTable = "ParashaDetails";
             tableMapping.ColumnMappings.Add("מס\' עליה", "מס\' עליה");
             tableMapping.ColumnMappings.Add("פסוקים", "פסוקים");
+            tableMapping.ColumnMappings.Add("ID", "ID");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -6669,10 +6710,10 @@ namespace GabayManageSite.GabayDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"Select Aliyah.Name AS ""מס' עליה"",
+            this._commandCollection[0].CommandText = @"Select fullkriyah.ID,Aliyah.Name AS ""מס' עליה"",
 	   Reading.name AS ""פסוקים""
 From fullkriyah
 Inner Join Reading On Reading.Id = fullkriyah.torah
@@ -6684,6 +6725,19 @@ Where date in (
 	Where getdate() <= date
 )";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT        fullkriyah.id, Aliyah.name AS [מס' עליה], Reading.name AS פסוקים
+FROM            fullkriyah INNER JOIN
+                         Reading ON Reading.id = fullkriyah.torah INNER JOIN
+                         Aliyah ON Aliyah.id = fullkriyah.Aliyah
+WHERE        (fullkriyah.date IN
+                             (SELECT        TOP (1) fullkriyah_1.date
+                               FROM            fullkriyah AS fullkriyah_1 INNER JOIN
+                                                         Parashot ON fullkriyah_1.parashah = Parashot.id
+                               WHERE        (GETDATE() > fullkriyah_1.date)
+                               ORDER BY fullkriyah_1.date DESC))";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6692,6 +6746,17 @@ Where date in (
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual GabayDataSet.ParashaDetailsDataTable GetTorahReadings() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            GabayDataSet.ParashaDetailsDataTable dataTable = new GabayDataSet.ParashaDetailsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual GabayDataSet.ParashaDetailsDataTable GetLast() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             GabayDataSet.ParashaDetailsDataTable dataTable = new GabayDataSet.ParashaDetailsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
