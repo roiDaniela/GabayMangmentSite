@@ -36,6 +36,7 @@ namespace GabayManageSite
             LabelHebDate.Text = doc.ChildNodes[1].ChildNodes[1].Attributes[3].Value;
         }
 
+
         private void getZmanim()
         {
             ////Declarations:

@@ -111,8 +111,12 @@
                 |                
                 <a runat="server" href="~/Aliyot">Aliyot</a>
                 <%--|--%>
+                |
                 <a runat="server" href="~/Request" visible="false">Request</a>
                 <%} %>
+            |                
+                <a runat="server" href="~/AliyotHistory">Aliyot History</a>
+                <%--|--%>
             </b>
         </div>
         <div class="container body-content">
