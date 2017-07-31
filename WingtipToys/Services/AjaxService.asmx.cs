@@ -18,6 +18,9 @@ namespace GabayManageSite.Services
     // [System.Web.Script.Services.ScriptService]
     public class GabayService : System.Web.Services.WebService
     {
+        PrayersTableAdapter PrayersTableAdapter { get; set; }
+        ParashaDetailsTableAdapter ParashaTabeleAdapter { get; set; }
+
         GabayDataSet gabayDataSet { get; set; }
         PrayersTableAdapter prayersTableAdapter { get; set; }
 
@@ -37,7 +40,7 @@ namespace GabayManageSite.Services
         }
 
         [WebMethod]
-        public void SaveProduct(string productCode, string userName)
+        public void SaveAliyaHistory(string prayer_id, int kriyaId)
         {
             //productCode = productCode.Replace(" ", String.Empty);
 
@@ -50,6 +53,8 @@ namespace GabayManageSite.Services
             //    db.UserProducts.InsertOnSubmit(userProduct);
             //    db.SubmitChanges();
             //}
+            AliyaHistoryTableAdapter AliyotAdapter = new AliyaHistoryTableAdapter();
+            AliyotAdapter.InsertQuery(prayer_id, 7, kriyaId);
         }
     }
 }

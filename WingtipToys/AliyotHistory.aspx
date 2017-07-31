@@ -38,11 +38,7 @@ li
             <asp:Button ID="ButtonApply" runat="server" OnClick="ButtonApply_Click" style="direction: rtl" Text="Apply" />
             <asp:Button ID="ButtonClear" runat="server" OnClick="ButtonClear_Click1" Text="Clear" />
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2">
-            <Columns>
-                <asp:BoundField DataField="מס' עליה" HeaderText="מס' עליה" SortExpression="מס' עליה" />
-                <asp:BoundField DataField="פסוקים" HeaderText="פסוקים" SortExpression="פסוקים" />
-            </Columns>
+        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource2">
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID, Aliyah.Name AS &quot;מס' עליה&quot;,
 	   Reading.name AS &quot;פסוקים&quot;
@@ -97,7 +93,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     <div id="shoppingCart" style="width:277px; overflow:auto; height:521px; background-color:yellow;position:absolute;top:23px; left:688px;">
     <div id="header" style="text-align:center"><h3>Aliyot Order</h3></div>
 
-    <div>
+    <div id="AliyotOrderList">
     
     </div>
 
@@ -167,20 +163,25 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 $(this).append(droppedItem);
 
                 var productCode = jQuery.trim($(droppedItem).children("ul").children(".productCode").text());
+                var shoppingCart = document.getElementById("shoppingCart");
+                var rowIndex = shoppingCart.childElementCount - 2;
+                var kriyaTable= document.getElementById("GridView1");
+                var kriyaId = kriyaTable.rows[rowIndex].cells[0].innerHTML;
+                window.alert(productCode + " " + kriyaId);
 
                 // ajax request to persist product for the user 
 
                 var params = new Object();
-                params.productCode = productCode;
-                params.userName = "azamsharp";
-
+                params.prayer_id = productCode;
+                params.kriyaId = kriyaId;
+                //params.op = "SaveAliyaHistory";
                 $.ajax(
 
                 {
                     type: "POST",
                     data: $.toJSON(params),
                     contentType: "application/json",
-                    url: "AjaxService.asmx/SaveProduct",
+                    url: "Services/AjaxService.asmx/SaveAliyaHistory",
                     success: function (response) {
 
                     }
