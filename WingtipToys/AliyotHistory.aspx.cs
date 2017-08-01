@@ -13,7 +13,7 @@ namespace GabayManageSite
         GabayDataSet GabayDataSet { get; set; }
         PrayersTableAdapter PrayersTableAdapter { get; set; }
         ParashaDetailsTableAdapter ParashaTabeleAdapter { get; set;}
-
+        AliyaHistoryTableAdapter AliyaHistoryAdapter { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             dlProducts.ItemStyle.BorderStyle = BorderStyle.Dashed;
@@ -23,9 +23,9 @@ namespace GabayManageSite
 
         protected void ButtonClear_Click1(object sender, EventArgs e)
         {
-            Items.Clear();
+            AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
+            AliyaHistoryAdapter.DeleteLastAliyaDateRecords((int)Session["currSynId"]);
+            Response.Redirect(Request.RawUrl);
         }
-
-
     }
 }
