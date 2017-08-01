@@ -26,21 +26,6 @@ namespace GabayManageSite
             Items.Clear();
         }
 
-        protected void ButtonApply_Click(object sender, EventArgs e)
-        {
-            if (GridView1.Rows.Count != 0 && Items.Count == GridView1.Rows.Count)
-            {
-                AliyaHistoryTableAdapter AliyotAdapter = new AliyaHistoryTableAdapter();
-                ParashaTabeleAdapter = new ParashaDetailsTableAdapter();
-                var aliyot = ParashaTabeleAdapter.GetLast();
-                int i = 0;
-                Control Test = Page.FindControl("AliyotOrderList");
-                
-                foreach (var aliya in aliyot)
-                {
-                    AliyotAdapter.InsertQuery("52115", (int)Session["currSynId"], aliya.ID);
-                }
-            }
-        }
+
     }
 }
