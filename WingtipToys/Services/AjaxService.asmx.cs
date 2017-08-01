@@ -15,7 +15,7 @@ namespace GabayManageSite.Services
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
+     [System.Web.Script.Services.ScriptService]
     public class GabayService : System.Web.Services.WebService
     {
         PrayersTableAdapter PrayersTableAdapter { get; set; }
@@ -23,20 +23,21 @@ namespace GabayManageSite.Services
 
         GabayDataSet gabayDataSet { get; set; }
         PrayersTableAdapter prayersTableAdapter { get; set; }
+        AliyaHistoryTableAdapter AliyaHistoryAdapter { get; set; }
 
         [WebMethod]
         public string GetPrayerBySynagoge(int synid)
         {
             gabayDataSet = new GabayDataSet();
-            prayersTableAdapter = new PrayersTableAdapter();
+            AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
 
-            var prayers = prayersTableAdapter.GetData();
+            var prayers = AliyaHistoryAdapter.GetLastAliyaDate(synid);
             List<Models.Prayer> prayersInfo = new List<Models.Prayer>();
             foreach (var prayer in prayers.ToList())
             {
-                prayersInfo.Add(new Models.Prayer { PrayerFirstName = prayer.PRIVATE_NAME, PrayerLastName = prayer.FAMILY_NAME, PrayerIDString = prayer.ID });
+                prayersInfo.Add(new Models.Prayer { PrayerFirstName = prayer.PRIVATE_NAME, PrayerLastName = prayer.FAMILY_NAME, PrayerIDString = prayer.Prayer_id });
             }
-                return new JavaScriptSerializer().Serialize(prayersInfo);   
+            return new JavaScriptSerializer().Serialize(prayersInfo);   
         }
 
         [WebMethod]

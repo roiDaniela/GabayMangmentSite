@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AliyotHistory.aspx.cs" Inherits="GabayManageSite.AliyotHistory" %>
+﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AliyotHistory.aspx.cs" Inherits="GabayManageSite.AliyotHistory" %>
 
 <!DOCTYPE html>
 
@@ -35,7 +35,6 @@ li
     <div>
         
         <div>
-            <asp:Button ID="ButtonApply" runat="server" OnClick="ButtonApply_Click" style="direction: rtl" Text="Apply" />
             <asp:Button ID="ButtonClear" runat="server" OnClick="ButtonClear_Click1" Text="Clear" />
         </div>
         <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource2">
@@ -109,7 +108,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     function loadProductsFromUser() {
 
         var params = new Object();
-        params.userName = "azamsharp";
+        params.synid = 7;
 
         $.ajax(
 
@@ -118,17 +117,27 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
             data: $.toJSON(params),
             dataType: "json",
             contentType: "application/json",
-            url: "AjaxService.asmx/GetProductByUserName",
+            url: "Services/AjaxService.asmx/GetPrayerBySynagoge",
             success: function (response) {
 
-                var products = $.evalJSON(response.d);
+                var prayers = $.evalJSON(response.d);
 
-                for (i = 0; i <= products.length; i++) {
+                for (i = 0; i < prayers.length; i++) {
 
-                    var list = $("#items");
+                    var list = $("#AliyotOrderList");
                     var div = document.createElement("div");
-                    div.innerHTML = products[i].ProductCode;
-
+                    //Findding Node
+                    var table = table = document.getElementById("dlProducts");
+                    for (r = 0; r < table.rows.length; r++) {
+                        for (c = 0; c < table.rows[r].cells.length; c++) {
+                            if (table.rows.item(r).cells.item(c).innerHTML != "") {
+                                var prayerID = table.rows.item(r).cells.item(c).querySelector(".productCode").innerHTML.trim(" ");
+                                if (prayerID == prayers[i].PrayerIDString.trim(" ")) {
+                                    div.innerHTML = table.rows.item(r).cells.item(c).innerHTML;
+                                }
+                            }
+                        }
+                    }
 
                     // you can store more information about the product in the UserProducts table
                     // and then display it over here! 
@@ -146,7 +155,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     $(document).ready(function () {
 
 
-       // loadProductsFromUser();
+        loadProductsFromUser();
 
 
         $(".block").draggable({ helper: 'clone' });

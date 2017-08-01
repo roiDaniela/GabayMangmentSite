@@ -64,6 +64,10 @@ namespace GabayManageSite {
         
         private global::System.Data.DataRelation relationFK_Exceptional_Prayers1;
         
+        private global::System.Data.DataRelation relationFK_AliyaHistory_Prayers;
+        
+        private global::System.Data.DataRelation relationFK_AliyaHistory_Prayers1;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -482,6 +486,8 @@ namespace GabayManageSite {
             this.relationFK_Exceptional_Synagoge = this.Relations["FK_Exceptional_Synagoge"];
             this.relationFK_Pray2Syn_Prayers1 = this.Relations["FK_Pray2Syn_Prayers1"];
             this.relationFK_Exceptional_Prayers1 = this.Relations["FK_Exceptional_Prayers1"];
+            this.relationFK_AliyaHistory_Prayers = this.Relations["FK_AliyaHistory_Prayers"];
+            this.relationFK_AliyaHistory_Prayers1 = this.Relations["FK_AliyaHistory_Prayers1"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -548,6 +554,14 @@ namespace GabayManageSite {
                         this.tablePrayersBasicInfo.IDColumn}, new global::System.Data.DataColumn[] {
                         this.tableExceptional.prayer_idColumn}, false);
             this.Relations.Add(this.relationFK_Exceptional_Prayers1);
+            this.relationFK_AliyaHistory_Prayers = new global::System.Data.DataRelation("FK_AliyaHistory_Prayers", new global::System.Data.DataColumn[] {
+                        this.tablePrayers.IDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAliyaHistory.Prayer_idColumn}, false);
+            this.Relations.Add(this.relationFK_AliyaHistory_Prayers);
+            this.relationFK_AliyaHistory_Prayers1 = new global::System.Data.DataRelation("FK_AliyaHistory_Prayers1", new global::System.Data.DataColumn[] {
+                        this.tablePrayersBasicInfo.IDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAliyaHistory.Prayer_idColumn}, false);
+            this.Relations.Add(this.relationFK_AliyaHistory_Prayers1);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4129,6 +4143,20 @@ namespace GabayManageSite {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class AliyaHistoryDataTable : global::System.Data.TypedTableBase<AliyaHistoryRow> {
             
+            private global::System.Data.DataColumn columnRef;
+            
+            private global::System.Data.DataColumn columndate;
+            
+            private global::System.Data.DataColumn columnPrayer_id;
+            
+            private global::System.Data.DataColumn columnPRIVATE_NAME;
+            
+            private global::System.Data.DataColumn columnFAMILY_NAME;
+            
+            private global::System.Data.DataColumn columnAliyah;
+            
+            private global::System.Data.DataColumn columnReading;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public AliyaHistoryDataTable() {
@@ -4160,6 +4188,62 @@ namespace GabayManageSite {
             protected AliyaHistoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RefColumn {
+                get {
+                    return this.columnRef;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn dateColumn {
+                get {
+                    return this.columndate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Prayer_idColumn {
+                get {
+                    return this.columnPrayer_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PRIVATE_NAMEColumn {
+                get {
+                    return this.columnPRIVATE_NAME;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FAMILY_NAMEColumn {
+                get {
+                    return this.columnFAMILY_NAME;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AliyahColumn {
+                get {
+                    return this.columnAliyah;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReadingColumn {
+                get {
+                    return this.columnReading;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4199,12 +4283,29 @@ namespace GabayManageSite {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AliyaHistoryRow AddAliyaHistoryRow() {
+            public AliyaHistoryRow AddAliyaHistoryRow(System.DateTime date, PrayersRow parentPrayersRowByFK_AliyaHistory_Prayers, string PRIVATE_NAME, string FAMILY_NAME, string Aliyah, string Reading) {
                 AliyaHistoryRow rowAliyaHistoryRow = ((AliyaHistoryRow)(this.NewRow()));
-                object[] columnValuesArray = new object[0];
+                object[] columnValuesArray = new object[] {
+                        null,
+                        date,
+                        null,
+                        PRIVATE_NAME,
+                        FAMILY_NAME,
+                        Aliyah,
+                        Reading};
+                if ((parentPrayersRowByFK_AliyaHistory_Prayers != null)) {
+                    columnValuesArray[2] = parentPrayersRowByFK_AliyaHistory_Prayers[0];
+                }
                 rowAliyaHistoryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowAliyaHistoryRow);
                 return rowAliyaHistoryRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AliyaHistoryRow FindByRef(int Ref) {
+                return ((AliyaHistoryRow)(this.Rows.Find(new object[] {
+                            Ref})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4224,11 +4325,51 @@ namespace GabayManageSite {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
+                this.columnRef = base.Columns["Ref"];
+                this.columndate = base.Columns["date"];
+                this.columnPrayer_id = base.Columns["Prayer_id"];
+                this.columnPRIVATE_NAME = base.Columns["PRIVATE_NAME"];
+                this.columnFAMILY_NAME = base.Columns["FAMILY_NAME"];
+                this.columnAliyah = base.Columns["Aliyah"];
+                this.columnReading = base.Columns["Reading"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
+                this.columnRef = new global::System.Data.DataColumn("Ref", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRef);
+                this.columndate = new global::System.Data.DataColumn("date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndate);
+                this.columnPrayer_id = new global::System.Data.DataColumn("Prayer_id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrayer_id);
+                this.columnPRIVATE_NAME = new global::System.Data.DataColumn("PRIVATE_NAME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPRIVATE_NAME);
+                this.columnFAMILY_NAME = new global::System.Data.DataColumn("FAMILY_NAME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFAMILY_NAME);
+                this.columnAliyah = new global::System.Data.DataColumn("Aliyah", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAliyah);
+                this.columnReading = new global::System.Data.DataColumn("Reading", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReading);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnRef}, true));
+                this.columnRef.AutoIncrement = true;
+                this.columnRef.AutoIncrementSeed = -1;
+                this.columnRef.AutoIncrementStep = -1;
+                this.columnRef.AllowDBNull = false;
+                this.columnRef.ReadOnly = true;
+                this.columnRef.Unique = true;
+                this.columndate.AllowDBNull = false;
+                this.columnPrayer_id.AllowDBNull = false;
+                this.columnPrayer_id.MaxLength = 50;
+                this.columnPRIVATE_NAME.AllowDBNull = false;
+                this.columnPRIVATE_NAME.MaxLength = 50;
+                this.columnFAMILY_NAME.AllowDBNull = false;
+                this.columnFAMILY_NAME.MaxLength = 50;
+                this.columnAliyah.AllowDBNull = false;
+                this.columnAliyah.MaxLength = 10;
+                this.columnReading.AllowDBNull = false;
+                this.columnReading.MaxLength = 100;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4841,6 +4982,17 @@ namespace GabayManageSite {
                     return ((ExceptionalRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Exceptional_Prayers"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AliyaHistoryRow[] GetAliyaHistoryRows() {
+                if ((this.Table.ChildRelations["FK_AliyaHistory_Prayers"] == null)) {
+                    return new AliyaHistoryRow[0];
+                }
+                else {
+                    return ((AliyaHistoryRow[])(base.GetChildRows(this.Table.ChildRelations["FK_AliyaHistory_Prayers"])));
+                }
+            }
         }
         
         /// <summary>
@@ -5325,6 +5477,17 @@ namespace GabayManageSite {
                     return ((ExceptionalRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Exceptional_Prayers1"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AliyaHistoryRow[] GetAliyaHistoryRows() {
+                if ((this.Table.ChildRelations["FK_AliyaHistory_Prayers1"] == null)) {
+                    return new AliyaHistoryRow[0];
+                }
+                else {
+                    return ((AliyaHistoryRow[])(base.GetChildRows(this.Table.ChildRelations["FK_AliyaHistory_Prayers1"])));
+                }
+            }
         }
         
         /// <summary>
@@ -5339,6 +5502,105 @@ namespace GabayManageSite {
             internal AliyaHistoryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
                 this.tableAliyaHistory = ((AliyaHistoryDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Ref {
+                get {
+                    return ((int)(this[this.tableAliyaHistory.RefColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.RefColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime date {
+                get {
+                    return ((global::System.DateTime)(this[this.tableAliyaHistory.dateColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.dateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Prayer_id {
+                get {
+                    return ((string)(this[this.tableAliyaHistory.Prayer_idColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.Prayer_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PRIVATE_NAME {
+                get {
+                    return ((string)(this[this.tableAliyaHistory.PRIVATE_NAMEColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.PRIVATE_NAMEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string FAMILY_NAME {
+                get {
+                    return ((string)(this[this.tableAliyaHistory.FAMILY_NAMEColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.FAMILY_NAMEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Aliyah {
+                get {
+                    return ((string)(this[this.tableAliyaHistory.AliyahColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.AliyahColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Reading {
+                get {
+                    return ((string)(this[this.tableAliyaHistory.ReadingColumn]));
+                }
+                set {
+                    this[this.tableAliyaHistory.ReadingColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PrayersRow PrayersRow {
+                get {
+                    return ((PrayersRow)(this.GetParentRow(this.Table.ParentRelations["FK_AliyaHistory_Prayers"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_AliyaHistory_Prayers"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PrayersBasicInfoRow PrayersBasicInfoRow {
+                get {
+                    return ((PrayersBasicInfoRow)(this.GetParentRow(this.Table.ParentRelations["FK_AliyaHistory_Prayers1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_AliyaHistory_Prayers1"]);
+                }
             }
         }
         
@@ -9401,6 +9663,17 @@ WHERE        (fullkriyah.date IN
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "AliyaHistory";
+            tableMapping.ColumnMappings.Add("Ref", "Ref");
+            tableMapping.ColumnMappings.Add("date", "date");
+            tableMapping.ColumnMappings.Add("Prayer_id", "Prayer_id");
+            tableMapping.ColumnMappings.Add("PRIVATE_NAME", "PRIVATE_NAME");
+            tableMapping.ColumnMappings.Add("FAMILY_NAME", "FAMILY_NAME");
+            tableMapping.ColumnMappings.Add("Aliyah", "Aliyah");
+            tableMapping.ColumnMappings.Add("Reading", "Reading");
+            this._adapter.TableMappings.Add(tableMapping);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9416,15 +9689,7 @@ WHERE        (fullkriyah.date IN
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "INSERT INTO AliyaHistory ([prayer_id], [syn_id], [fullkriyah_id]) VALUES (@prayer" +
-                "_id, @syn_id, @fullkriyah_id)";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@syn_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fullkriyah_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "fullkriyah_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"Select AliyaHistory.Ref,date,Prayer_id,PRIVATE_NAME,FAMILY_NAME,Aliyah.Name AS Aliyah,Reading.Name AS Reading
+            this._commandCollection[0].CommandText = @"Select AliyaHistory.Ref,date,Prayer_id,PRIVATE_NAME,FAMILY_NAME,Aliyah.Name AS Aliyah,Reading.Name AS Reading
 From AliyaHistory
 Inner Join Prayers On AliyaHistory.prayer_id = Prayers.ID
 Inner Join fullkriyah ON AliyaHistory.fullkriyah_id = fullKriyah.ID
@@ -9437,17 +9702,25 @@ WHERE fullkriyah.date IN
                                                          Parashot ON fullkriyah_1.parashah = Parashot.id
                                WHERE        (GETDATE() > fullkriyah_1.date)
                                ORDER BY fullkriyah_1.date DESC)
-AND syn_id = @syn_id";
+AND syn_id = @syn_id ";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@syn_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "INSERT INTO AliyaHistory ([prayer_id], [syn_id], [fullkriyah_id]) VALUES (@prayer" +
+                "_id, @syn_id, @fullkriyah_id)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@syn_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fullkriyah_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "fullkriyah_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual GabayDataSet.AliyaHistoryDataTable GetLastAliyot(int syn_id) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual GabayDataSet.AliyaHistoryDataTable GetLastAliyaDate(int syn_id) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(syn_id));
             GabayDataSet.AliyaHistoryDataTable dataTable = new GabayDataSet.AliyaHistoryDataTable();
             this.Adapter.Fill(dataTable);
@@ -9457,8 +9730,9 @@ AND syn_id = @syn_id";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual int InsertQuery(string prayer_id, int syn_id, int fullkriyah_id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[0];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             if ((prayer_id == null)) {
                 throw new global::System.ArgumentNullException("prayer_id");
             }
