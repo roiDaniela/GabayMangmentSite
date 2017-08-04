@@ -53,7 +53,7 @@
             <asp:Label ID="LabelHebDate" runat="server" Text="Label"></asp:Label>
         </h3>
         <h3 style="text-align: center;">
-            שבת פרשת <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
+            פרשת <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
         </h3>
             <asp:GridView ID="GridView2" runat="server" HorizontalAlign="Center" DataSourceID="SqlDataSource2" AutoGenerateColumns="false" CssClass="table table-striped table-bordered" ShowFooter="True" GridLines="Vertical" CellPadding="2" Width="30%">
                 <Columns>

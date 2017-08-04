@@ -30,18 +30,22 @@ li
 
 
     <div>
-                <h3 style="text-align: center;">בית הכנסת <%:Session["currSynName"] %></h3> 
+        <h3 style="text-align: center;">בית הכנסת <%:Session["currSynName"] %></h3> 
 
         <h3 style="text-align: center;">
             <asp:Label ID="LabelHebDate" runat="server" Text="Label"></asp:Label>
         </h3>
         <h3 style="text-align: center;">
-            שבת פרשת <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
+             פרשת <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
         </h3>
 
         <div>
         </div>
-        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" HorizontalAlign="Center" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered" Width="30%">
+            <Columns>
+                <asp:BoundField DataField="פסוקים" HeaderText="פסוקים" SortExpression="פסוקים" />
+                <asp:BoundField DataField="מס' עליה" HeaderText="מס' עליה" SortExpression="מס' עליה" />
+            </Columns>
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID, Aliyah.Name AS &quot;מס' עליה&quot;,
 	   Reading.name AS &quot;פסוקים&quot;
@@ -56,8 +60,16 @@ Where date in (
 	Order By date DESC
 )"></asp:SqlDataSource>
         
-            <asp:Button ID="ButtonClear" runat="server" OnClick="ButtonClear_Click1" Text="Clear" />
+            <div style="text-align: center;  align-content:center; align-self:center; align-items:center; vertical-align: middle; ">
+                <asp:Button ID="ButtonClear" runat="server" 
+                 CssClass = "SElementHide" OnClick="ButtonClear_Click1" Text="Clear"/>
+            </div>
         
+
+    <table style="margin: 0px auto;">
+
+    <tr>
+    <td style="padding:0 15px 0 15px;">
     <asp:DataList ID="dlProducts" RepeatDirection="Horizontal" RepeatColumns="3" runat="server" DataSourceID="SqlDataSource1">
     <ItemTemplate>
     
@@ -94,8 +106,9 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 <asp:SessionParameter Name="synId" SessionField="currSynId" />
             </SelectParameters>
         </asp:SqlDataSource>
-
-    <div id="shoppingCart" style="width:339px; overflow:auto; height:754px; background-color:yellow;position:absolute;top:703px; left:851px; margin-left: 16px;">
+    </td>
+    <td style="padding:0 150px 0 150px;">
+    <div id="shoppingCart" style="width:339px; overflow:auto; height:754px; background-color:yellow; margin-left: 16px;">
     <div id="header" style="text-align:center"><h3>Aliyot Order</h3></div>
 
     <div id="AliyotOrderList">
@@ -105,14 +118,21 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     </div>
 
     </div>
+    </td>
+    </tr>
+    </table>
 
 <script type="text/javascript">
 
     function loadProductsFromUser() {
 
         var params = new Object();
-        params.synid = 7
-        ;
+
+        jQuery(document).ready(function ($) {
+            params.synid = '@Request.RequestContext.HttpContext.Session["currSynId"]';
+        }); 
+
+        //params.synid = 7;
 
         $.ajax(
 
