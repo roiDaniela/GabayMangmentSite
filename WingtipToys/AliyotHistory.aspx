@@ -1,10 +1,10 @@
-﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AliyotHistory.aspx.cs" Inherits="GabayManageSite.AliyotHistory" %>
+﻿
 
-<!DOCTYPE html>
+<%@ Page Title="Aliyot History" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AliyotHistory.aspx.cs" Inherits="GabayManageSite.AliyotHistory" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+            <br />
+            <br />
     <script src="/scripts/jQuery.min.js" type="text/javascript"></script>
     <script src="/scripts/jQuery.ui.js" type="text/javascript"></script>
     <script src="/scripts/jQuery-json.js" type="text/javascript"></script>
@@ -29,9 +29,7 @@ li
 
 </style>
 
-</head>
-<body>
-    <form id="form1" runat="server">
+
     <div>
         
         <div>
@@ -99,11 +97,8 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     </div>
 
     </div>
-    </form>
-</body>
-</html>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 
     function loadProductsFromUser() {
 
@@ -176,7 +171,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 var rowIndex = shoppingCart.childElementCount - 2;
                 var kriyaTable= document.getElementById("GridView1");
                 var kriyaId = kriyaTable.rows[rowIndex].cells[0].innerHTML;
-                window.alert(productCode + " " + kriyaId);
+                //window.alert(productCode + " " + kriyaId);
 
                 // ajax request to persist product for the user 
 
@@ -209,3 +204,4 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
 
 
 </script>
+    </asp:Content>
