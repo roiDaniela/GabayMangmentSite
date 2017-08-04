@@ -183,7 +183,21 @@ Where getdate() &lt;= date
               <Mapping SourceColumn="link" DataSetColumn="link" />
               <Mapping SourceColumn="category" DataSetColumn="category" />
             </Mappings>
-            <Sources />
+            <Sources>
+              <DbSource ConnectionRef="DefaultConnection (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLastParashah" GetMethodModifier="Public" GetMethodName="GetLastParashah" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLastParashah" UserSourceName="GetLastParashah">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT TOP (1) Parashot.id,date,Parashot.NameEn,NameHe,link,category
+From fullkriyah
+INNER JOin Parashot ON fullkriyah.parashah = Parashot.id
+Where getdate() &gt; date
+ORDER BY date DESC
+</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ParashaDetailsTableAdapter" GeneratorDataComponentClassName="ParashaDetailsTableAdapter" Name="ParashaDetails" UserDataComponentName="ParashaDetailsTableAdapter">
             <MainSource>

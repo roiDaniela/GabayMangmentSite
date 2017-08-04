@@ -4,7 +4,6 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
             <br />
-            <br />
     <script src="/scripts/jQuery.min.js" type="text/javascript"></script>
     <script src="/scripts/jQuery.ui.js" type="text/javascript"></script>
     <script src="/scripts/jQuery-json.js" type="text/javascript"></script>
@@ -31,11 +30,18 @@ li
 
 
     <div>
-        
+                <h3 style="text-align: center;">בית הכנסת <%:Session["currSynName"] %></h3> 
+
+        <h3 style="text-align: center;">
+            <asp:Label ID="LabelHebDate" runat="server" Text="Label"></asp:Label>
+        </h3>
+        <h3 style="text-align: center;">
+            שבת פרשת <asp:HyperLink ID="HyperLinkParasha" runat="server">HyperLink</asp:HyperLink>
+        </h3>
+
         <div>
-            <asp:Button ID="ButtonClear" runat="server" OnClick="ButtonClear_Click1" Text="Clear" />
         </div>
-        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource2">
+        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered">
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID, Aliyah.Name AS &quot;מס' עליה&quot;,
 	   Reading.name AS &quot;פסוקים&quot;
@@ -49,6 +55,8 @@ Where date in (
 	Where getdate() &gt; date
 	Order By date DESC
 )"></asp:SqlDataSource>
+        
+            <asp:Button ID="ButtonClear" runat="server" OnClick="ButtonClear_Click1" Text="Clear" />
         
     <asp:DataList ID="dlProducts" RepeatDirection="Horizontal" RepeatColumns="3" runat="server" DataSourceID="SqlDataSource1">
     <ItemTemplate>
@@ -87,7 +95,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
             </SelectParameters>
         </asp:SqlDataSource>
 
-    <div id="shoppingCart" style="width:277px; overflow:auto; height:521px; background-color:yellow;position:absolute;top:23px; left:688px;">
+    <div id="shoppingCart" style="width:339px; overflow:auto; height:754px; background-color:yellow;position:absolute;top:703px; left:851px; margin-left: 16px;">
     <div id="header" style="text-align:center"><h3>Aliyot Order</h3></div>
 
     <div id="AliyotOrderList">
@@ -103,7 +111,8 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     function loadProductsFromUser() {
 
         var params = new Object();
-        params.synid = 7;
+        params.synid = 7
+        ;
 
         $.ajax(
 
@@ -122,7 +131,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                     var list = $("#AliyotOrderList");
                     var div = document.createElement("div");
                     //Findding Node
-                    var table = table = document.getElementById("dlProducts");
+                    var table = document.getElementById("MainContent_dlProducts");
                     for (r = 0; r < table.rows.length; r++) {
                         for (c = 0; c < table.rows[r].cells.length; c++) {
                             if (table.rows.item(r).cells.item(c).innerHTML != "") {
@@ -169,7 +178,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 var productCode = jQuery.trim($(droppedItem).children("ul").children(".productCode").text());
                 var shoppingCart = document.getElementById("shoppingCart");
                 var rowIndex = shoppingCart.childElementCount - 2;
-                var kriyaTable= document.getElementById("GridView1");
+                var kriyaTable = document.getElementById("MainContent_GridView1");
                 var kriyaId = kriyaTable.rows[rowIndex].cells[0].innerHTML;
                 //window.alert(productCode + " " + kriyaId);
 

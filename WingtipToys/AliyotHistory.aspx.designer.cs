@@ -13,13 +13,22 @@ namespace GabayManageSite {
     public partial class AliyotHistory {
         
         /// <summary>
-        /// ButtonClear control.
+        /// LabelHebDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonClear;
+        protected global::System.Web.UI.WebControls.Label LabelHebDate;
+        
+        /// <summary>
+        /// HyperLinkParasha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkParasha;
         
         /// <summary>
         /// GridView1 control.
@@ -38,6 +47,15 @@ namespace GabayManageSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
+        
+        /// <summary>
+        /// ButtonClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonClear;
         
         /// <summary>
         /// dlProducts control.
