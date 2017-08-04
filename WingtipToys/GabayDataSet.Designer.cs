@@ -8050,31 +8050,36 @@ WHERE        (fullkriyah.date IN
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        Exceptional.*\r\nFROM            Exceptional";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT ref FROM Exceptional where prayer_id = @p_id and syn_id = @s_id and reason" +
-                "_id = @reason";
+            this._commandCollection[1].CommandText = "DELETE FROM [Exceptional] WHERE (([prayer_id] = @prayer_id))";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@p_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@reason", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "reason_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "INSERT INTO [Exceptional] ([prayer_id], [syn_id], [date], [favorite_Aliya], [desc" +
+            this._commandCollection[2].CommandText = "SELECT ref FROM Exceptional where prayer_id = @p_id and syn_id = @s_id and reason" +
+                "_id = @reason";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@p_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@reason", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "reason_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "INSERT INTO [Exceptional] ([prayer_id], [syn_id], [date], [favorite_Aliya], [desc" +
                 "ription], [reason_id]) VALUES (@prayer_id, @syn_id, @date, @favorite_Aliya, @des" +
                 "cription, @reason_id)";
-            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@syn_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@date", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@favorite_Aliya", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "favorite_Aliya", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@description", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@reason_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "reason_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "prayer_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@syn_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "syn_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@date", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@favorite_Aliya", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "favorite_Aliya", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@description", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@reason_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "reason_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8250,8 +8255,37 @@ WHERE        (fullkriyah.date IN
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<int> GetRefScalarQuery(string p_id, int s_id, int reason) {
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteQueryByPrayerId(string prayer_id) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((prayer_id == null)) {
+                throw new global::System.ArgumentNullException("prayer_id");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(prayer_id));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<int> GetRefScalarQuery(string p_id, int s_id, int reason) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             if ((p_id == null)) {
                 throw new global::System.ArgumentNullException("p_id");
             }
@@ -8288,7 +8322,7 @@ WHERE        (fullkriyah.date IN
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual int InsertQuery(string prayer_id, int syn_id, string date, global::System.Nullable<int> favorite_Aliya, string description, int reason_id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
             if ((prayer_id == null)) {
                 throw new global::System.ArgumentNullException("prayer_id");
             }
@@ -8490,18 +8524,26 @@ WHERE        (fullkriyah.date IN
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        Exceptional2Date.*\r\nFROM            Exceptional2Date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "INSERT INTO [Exceptional2Date] ([date], [exceptional_id]) VALUES (@date, @excepti" +
-                "onal_id)";
+            this._commandCollection[1].CommandText = "DELETE FROM Exceptional2Date\r\nWHERE        (exceptional_id IN\r\n                  " +
+                "           (SELECT        ref\r\n                               FROM            ex" +
+                "ceptional AS e\r\n                               WHERE        (prayer_id = @prayer" +
+                "_id)))";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@date", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@exceptional_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "exceptional_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prayer_id", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "INSERT INTO Exceptional2Date\r\n                         (date, exceptional_id)\r\nVA" +
+                "LUES        (CONVERT(varchar(30),@date, 102),@exceptional_id)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@date", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@exceptional_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "exceptional_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8629,9 +8671,37 @@ WHERE        (fullkriyah.date IN
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int InsertQuery(string date, int exceptional_id) {
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteQueryByPrayerId(string prayer_id) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((prayer_id == null)) {
+                throw new global::System.ArgumentNullException("prayer_id");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(prayer_id));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int InsertQuery(string date, int exceptional_id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             if ((date == null)) {
                 throw new global::System.ArgumentNullException("date");
             }
@@ -9183,10 +9253,10 @@ WHERE        (fullkriyah.date IN
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "dbo.GetParashaByDateQuery";
+            this._commandCollection[1].CommandText = "GetDataById";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@b_date", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@pid", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9318,13 +9388,13 @@ WHERE        (fullkriyah.date IN
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual object GetParashaByDateQuery(string b_date) {
+        public virtual object GetParashaByDateQuery(string pid) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
-            if ((b_date == null)) {
+            if ((pid == null)) {
                 command.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                command.Parameters[1].Value = ((string)(b_date));
+                command.Parameters[1].Value = ((string)(pid));
             }
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 

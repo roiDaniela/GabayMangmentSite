@@ -66,19 +66,20 @@ namespace GabayManageSite
                     string phone = PhoneToAdd.Text;
                     string email = EmailToAdd.Text;
 
+                    exceptional2DateTableAdapter.DeleteQueryByPrayerId(id);
+                    exceptionalTableAdapter.DeleteQueryByPrayerId(id);
                     pray2SynTableAdapter.DeleteQuery(id, synId);
                     prayersTableAdapter.DeleteQueryByPid(id);
                     
                     if(id != null && !string.IsNullOrEmpty(private_name) && 
                         !string.IsNullOrEmpty(family_name) &&
-                        !string.IsNullOrEmpty(birthday) &&
-                        !string.IsNullOrEmpty(birthday) &&
-                        !string.IsNullOrEmpty(synId) &&
-                        !string.IsNullOrEmpty(birthday))
+                        !string.IsNullOrEmpty(title_id) &&
+                        !string.IsNullOrEmpty(synId))
                     prayersTableAdapter.InsertQuery(id, private_name, family_name, birthday, int.Parse(title_id), isReadingMaftir, phone, email);
                    
                     pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
                     addBarMitzvaToTable(id, birthday, synId);
+                    PrayersGridView.DataBind();
                 }     
             }
             catch(Exception ex)
@@ -87,11 +88,30 @@ namespace GabayManageSite
             }
         }
 
+        private string GetParashaByDateQuery2(string strBarMitzva)
+        {
+            string modified;
+            using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["gabayConnectionString"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("select top(1) pr.id from fullkriyah f, parashot pr where pr.id = f.parashah and date >= @date order by date", con))
+                {
+                    cmd.Parameters.AddWithValue("@date", strBarMitzva);
+                    con.Open();
+
+                    modified = cmd.ExecuteScalar().ToString();
+
+                    if (con.State == System.Data.ConnectionState.Open) con.Close();
+                }
+            }
+
+            return modified;
+        }
+
       private string GetDateByParashaAndYear(int parasha_id, int year){
           string modified;
           using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["gabayConnectionString"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("select top(1) CONVERT(VARCHAR(10),f.date,110) as date from fullkriyah f where year(date) >= @d_year and f.parashah = @parasha_id ", con))
+                using (SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),f.date,110) as date from fullkriyah f where year(date) >= @d_year and f.parashah = @parasha_id group by date order by f.date", con))
                 {
                     cmd.Parameters.AddWithValue("@parasha_id", parasha_id);
                     cmd.Parameters.AddWithValue("@d_year", year);
@@ -113,9 +133,9 @@ namespace GabayManageSite
             DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
             int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
             string strBarMitzva = dtBarMitzva.ToString("MM/dd/yyyy g", CultureInfo.InvariantCulture).Replace(" A.D.", "");
-            int ParashatBarMitzvaId = Convert.ToInt32(fullkriyahTableAdapter.GetParashaByDateQuery(strBarMitzva)); //This falling
+            int ParashatBarMitzvaId = Convert.ToInt32(GetParashaByDateQuery2(strBarMitzva)); //This falling
 
-
+            try { 
             // Add BarMitzva
             if (DateTime.Now <= dtBarMitzva)
             {
@@ -125,14 +145,22 @@ namespace GabayManageSite
                 exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), shabatOfBarMitzva.ToShortDateString(), favoriteAliya, "", 10);
             }
 
-            int currYear = HebCal.GetYear(DateTime.Now);
+            int currYear = DateTime.Now.Year;//HebCal.GetYear(DateTime.Now);
             exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), null, favoriteAliya, "", 12);
             int exptional_id = (int) exceptionalTableAdapter.GetRefScalarQuery(id, int.Parse(synId), 12);
             string nextDt;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 3; i++)
             {
                 nextDt = GetDateByParashaAndYear(ParashatBarMitzvaId, currYear + i);
-                exceptional2DateTableAdapter.InsertQuery(nextDt, exptional_id);
+
+                if (nextDt != null)
+                {
+                    exceptional2DateTableAdapter.InsertQuery(nextDt, exptional_id);
+                }
+            }
+                }
+            catch(Exception e){
+                System.Diagnostics.Debug.WriteLine(e.Message);
             }
         }
 
@@ -165,10 +193,13 @@ namespace GabayManageSite
                     if (((CheckBox)row.FindControl("Remove")).Checked)
                     {
                         id_to_delete = ((Label)row.FindControl("IdLabel")).Text;
+
+                        exceptional2DateTableAdapter.DeleteQueryByPrayerId(id_to_delete);
+                        exceptionalTableAdapter.DeleteQueryByPrayerId(id_to_delete);
                         pray2SynTableAdapter.DeleteQuery(id_to_delete, sid);
+                        prayersTableAdapter.DeleteQueryByPid(id_to_delete);
                     }
-                }
-                pray2SynTableAdapter.Update(gabayDataSet.Pray2Syn);
+                }                
             }
 
             PrayersGridView.DataBind();

@@ -47,7 +47,7 @@
                         <%-- <asp:Button ID="UpdateBtn" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />--%>
                     </td>
                     <td>
-                        <asp:Button ID="DeleteBtn" Visible="false" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
+                        <%--<asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/> --%>
                     </td>
                     <td>
                         <asp:Button ID="EndSessionBtn" runat="server" Visible="false" Text="EndSession" OnClick="EndSessionBtn_Click"/>
@@ -65,7 +65,7 @@
                             <td>
                                 <dl class="dl-horizontal">
                                     <dt>
-                                        <asp:Button ID="UpdateBtn" Visible="false" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />                                    </dt>
+                                        <asp:Button ID="UpdateBtn" Font-Bold="false" runat="server" Text="Add" ValidationGroup="addGroup" OnClick="UpdateBtn_Click" />                                    </dt>
                                     <dd></dd>
                                 </dl>
                             </td>
@@ -169,6 +169,9 @@
                 <div class="form-horizontal">
                     <h4>Show all prayers</h4>
                     <hr />
+
+                    <asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
+                    <br />
 
                 <asp:GridView ShowHeader="true" DataSourceID="SqlDataSource1" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
                     CssClass="table table-striped table-bordered">   
