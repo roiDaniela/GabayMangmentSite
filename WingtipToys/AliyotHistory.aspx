@@ -28,7 +28,8 @@ li
 
 </style>
 
-
+    <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>            
+    
     <div>
         <h3 style="text-align: center;">בית הכנסת <%:Session["currSynName"] %></h3> 
 
@@ -121,7 +122,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     </td>
     </tr>
     </table>
-
+        <%} %>
 <script type="text/javascript">
 
     function loadProductsFromUser() {

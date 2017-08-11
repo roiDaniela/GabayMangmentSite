@@ -1,6 +1,7 @@
 ﻿using GabayManageSite.GabayDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,11 +14,33 @@ namespace GabayManageSite
         GabayDataSet gabayDataSet { get; set; }
         PrayersTableAdapter prayersTableAdapter { get; set; }
         ExceptionalTableAdapter exceptionalTableAdapter { get; set; }
+        private GabayDataSetTableAdapters.Exceptional2DateTableAdapter exceptional2DateTableAdapter { get; set; }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string to_year;
+
             SqlDataSource2.SelectParameters.Remove(SqlDataSource2.SelectParameters["sid"]);
             SqlDataSource2.SelectParameters.Add("sid", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
+
+            if (DropDownListRangeOfYears.SelectedValue != null && !string.IsNullOrEmpty(DropDownListRangeOfYears.SelectedValue))
+            {
+                to_year = DropDownListRangeOfYears.SelectedValue;
+            }
+            else
+            {
+                to_year = DateTime.Now.Year.ToString();
+            }
+
+            SqlDataSource2.SelectParameters.Remove(SqlDataSource2.SelectParameters["range"]);
+            SqlDataSource2.SelectParameters.Add("range", to_year);
+
+            if (!this.IsPostBack && DropDownListName.SelectedValue != null && !string.IsNullOrEmpty(DropDownListName.SelectedValue))
+            {
+                string id = DropDownListName.SelectedValue;
+                IdToAdd.Text = id;
+            }
 
             SqlDataSourceName.SelectParameters.Remove(SqlDataSourceName.SelectParameters["sid"]);
             SqlDataSourceName.SelectParameters.Add("sid", (Session["currSynId"] == null) ? String.Empty : Session["currSynId"].ToString());
@@ -25,6 +48,8 @@ namespace GabayManageSite
             gabayDataSet = new GabayDataSet();
             prayersTableAdapter = new GabayDataSetTableAdapters.PrayersTableAdapter();
             exceptionalTableAdapter = new GabayDataSetTableAdapters.ExceptionalTableAdapter();
+            exceptional2DateTableAdapter = new GabayDataSetTableAdapters.Exceptional2DateTableAdapter();
+
         }
 
         protected void IdToAdd_TextChanged(object sender, EventArgs e)
@@ -36,88 +61,90 @@ namespace GabayManageSite
                 string family_name = prayersDataTable.Rows[0]["Private_name"].ToString();
                 string full_name = private_name + ' ' + family_name;
                 //TextBoxFull_name.Text = full_name;
-                DropDownListName.SelectedItem.Value = IdToAdd.Text;
-            }
-        }
-
-        protected void rbDateOrParasha_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (rbDateOrParasha.SelectedItem.Text == "Date")
-            {
-                DateToAdd.Visible = true;
-                DropDownListParashaToAdd.Visible = false;
-            }
-            else if (rbDateOrParasha.SelectedItem.Text == "Parasha")
-            {
-                DateToAdd.Visible = false;
-                DropDownListParashaToAdd.Visible = true;
+                DropDownListName.SelectedValue = IdToAdd.Text;
             }
         }
 
         protected void addButton_Click(object sender, EventArgs e)
         {
             int id = int.Parse(IdToAdd.Text);
-            int syn_id = int.Parse(Session["currSynId"].ToString());
-            DateTime date;
-            int parasha_id;
-            bool bIsConst = isConstToAdd.Checked;
+            string syn_id = Session["currSynId"].ToString();
+            bool isRegular = isRegularToAdd.Checked;
             int favorite_aliya = int.Parse(DropDownListSuggestedAliya.SelectedItem.Value);
             string description = DescriptionToAdd.Text;
-            int reason_id = int.Parse(DropDownListReason.SelectedItem.Value);
+            string reason_id = DropDownListReason.SelectedValue;
 
-            if (rbDateOrParasha.SelectedItem.Text == "Date")
-            {
-                date = Convert.ToDateTime(DateToAdd.Text);
-                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, date.ToString(), favorite_aliya, description, reason_id);
-            }
-            else if (rbDateOrParasha.SelectedItem.Text == "Parasha")
-            {
-                parasha_id = int.Parse(DropDownListParashaToAdd.SelectedItem.Value);
-                exceptionalTableAdapter.InsertQuery(id.ToString(), syn_id, null, favorite_aliya, description, reason_id);
-            }
-
+            addDateToTable(IdToAdd.Text, DateToAdd.Text, syn_id, reason_id, isRegular, description);
+                        
             PrayersGridView.DataBind();
         }
 
-
-        /*private void addBarMitzvaToTable(string id, string birthday, string synId)
+        // same as in productlist
+        private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
         {
-            DateTime dtBirthday = Convert.ToDateTime(birthday);
+            int start = (int)from.DayOfWeek;
+            int target = (int)dayOfWeek;
+            if (target <= start)
+                target += 7;
+            return from.AddDays(target - start);
+        }
+
+        private void addDateToTable(string id, string date, string synId, string reason_id, bool isRegular, string description)
+        {
+            DateTime dtDate = Convert.ToDateTime(date);
+            DateTime startDate;
             System.Globalization.Calendar HebCal = new HebrewCalendar();
-            DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
-            int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
+            int? favoriteAliya = Int32.Parse(DropDownListSuggestedAliya.SelectedValue);
 
-            // Add BarMitzva
-            if (DateTime.Now <= dtBarMitzva)
+            try
             {
-                // calc saturday date of barmitzva
-                DateTime shabatOfBarMitzva = Next(dtBarMitzva, DayOfWeek.Saturday);
+                DateTime shabatOfDate = Next(dtDate, DayOfWeek.Saturday);
+                int reason = Int32.Parse(reason_id);
+                exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), shabatOfDate.ToShortDateString(), favoriteAliya, description, reason);
+                int exptional_id = (int)exceptionalTableAdapter.GetExRefForRequest(id, int.Parse(synId), reason, shabatOfDate.ToShortDateString());
+                string strshabatOfDate = shabatOfDate.ToString("yyyy-MM-dd");
 
-                exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), shabatOfBarMitzva.ToShortDateString(), favoriteAliya, "", 10);
-            }
+                exceptional2DateTableAdapter.InsertQuery(strshabatOfDate, exptional_id);
 
-            int BirthdayYear = HebCal.GetYear(dtBirthday);    //current numeric hebrew year            
-            int currYear = HebCal.GetYear(DateTime.Now);
-            int diff = currYear - BirthdayYear; // diff between birthday to curr year
-            if (diff < 0) { diff = 0; }
-
-            int exptional_id = exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), null, favoriteAliya, "", 12);
-            for (int i = 0; i < 20; i++)
-            {
-                DateTime nextDt = HebCal.AddYears(dtBirthday, i + diff);
-
-                if (nextDt != dtBarMitzva)
+                if (isRegular)
                 {
-                    exceptional2DateTableAdapter.InsertQuery(nextDt.ToShortDateString(), exptional_id);
-                    //exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), nextDt.ToShortDateString(), favoriteAliya, "", 12);
+                    if (dtDate < DateTime.Now)
+                    {
+                        int diff = DateTime.Now.Year - dtDate.Year;
+                        startDate = HebCal.AddYears(dtDate, diff);
+                    }
+                    else
+                    {
+                        startDate = dtDate;
+                    }
+                    DateTime nextDt;
+                    for (int i = 1; i < 4; i++)
+                    {
+                        nextDt = HebCal.AddYears(startDate, i);
+
+                        if (nextDt != null)
+                        {
+                            exceptional2DateTableAdapter.InsertQuery(nextDt.ToShortDateString(), exptional_id);
+                        }
+                    }
                 }
             }
-        }*/
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+                             
+        }
 
         protected void DropDownListName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string id = DropDownListName.SelectedItem.Value;
+            string id = DropDownListName.SelectedValue;
             IdToAdd.Text = id;
+        }
+
+        protected void DropDownListRangeOfYears_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PrayersGridView.DataBind();
         }
     }
 }

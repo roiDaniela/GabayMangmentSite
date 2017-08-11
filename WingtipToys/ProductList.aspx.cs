@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace GabayManageSite
 {
@@ -107,8 +108,10 @@ namespace GabayManageSite
             return modified;
         }
 
-      private string GetDateByParashaAndYear(int parasha_id, int year){
-          string modified;
+        private List<string> GetDatesByParashaAndStartYear(int parasha_id, int year)
+        {
+          List<string> listdate = new List<string>();
+
           using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["gabayConnectionString"].ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),f.date,110) as date from fullkriyah f where year(date) >= @d_year and f.parashah = @parasha_id group by date order by f.date", con))
@@ -117,13 +120,21 @@ namespace GabayManageSite
                     cmd.Parameters.AddWithValue("@d_year", year);
                     con.Open();
 
-                    modified = cmd.ExecuteScalar().ToString();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        string date = (dr["date"]).ToString();
+                        listdate.Add(date);
+                    }
+
+
+                    //modified = cmd.ExecuteReader(). .ToString();
 
                     if (con.State == System.Data.ConnectionState.Open) con.Close();                    
                 }
             }
 
-          return modified;
+          return listdate;
       }
 
         private void addBarMitzvaToTable(string id, string birthday, string synId)
@@ -131,6 +142,17 @@ namespace GabayManageSite
             DateTime dtBirthday = Convert.ToDateTime(birthday);              
             System.Globalization.Calendar HebCal = new HebrewCalendar();
             DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
+
+            // c# bug
+            if (HebCal.GetMonth(dtBarMitzva) < HebCal.GetMonth(dtBirthday))
+            {
+                dtBarMitzva = HebCal.AddMonths(dtBarMitzva, HebCal.GetMonth(dtBirthday) - HebCal.GetMonth(dtBarMitzva));
+            }
+            else if (HebCal.GetMonth(dtBarMitzva) > HebCal.GetMonth(dtBirthday))
+            {
+                dtBarMitzva = HebCal.AddMonths(dtBarMitzva, HebCal.GetMonth(dtBarMitzva) - HebCal.GetMonth(dtBirthday));
+            }
+
             int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
             string strBarMitzva = dtBarMitzva.ToString("MM/dd/yyyy g", CultureInfo.InvariantCulture).Replace(" A.D.", "");
             int ParashatBarMitzvaId = Convert.ToInt32(GetParashaByDateQuery2(strBarMitzva)); //This falling
@@ -149,9 +171,13 @@ namespace GabayManageSite
             exceptionalTableAdapter.InsertQuery(id, int.Parse(synId), null, favoriteAliya, "", 12);
             int exptional_id = (int) exceptionalTableAdapter.GetRefScalarQuery(id, int.Parse(synId), 12);
             string nextDt;
+            List<string> listdate = new List<string>();
+            listdate = GetDatesByParashaAndStartYear(ParashatBarMitzvaId, currYear);
+            
             for (int i = 0; i < 3; i++)
             {
-                nextDt = GetDateByParashaAndYear(ParashatBarMitzvaId, currYear + i);
+
+                nextDt = listdate[i];
 
                 if (nextDt != null)
                 {
