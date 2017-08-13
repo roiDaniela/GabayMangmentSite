@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Data.SqlClient;
 using System.Data;
+using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace GabayManageSite
 {
@@ -139,19 +141,38 @@ namespace GabayManageSite
 
         private void addBarMitzvaToTable(string id, string birthday, string synId)
         {
-            DateTime dtBirthday = Convert.ToDateTime(birthday);              
-            System.Globalization.Calendar HebCal = new HebrewCalendar();
+            DateTime dtBirthday = Convert.ToDateTime(birthday);
+            NewHebCal HebCal = new NewHebCal();
             DateTime dtBarMitzva = HebCal.AddYears(dtBirthday, 13);
 
-            // c# bug
-            if (HebCal.GetMonth(dtBarMitzva) < HebCal.GetMonth(dtBirthday))
+            /*try
             {
-                dtBarMitzva = HebCal.AddMonths(dtBarMitzva, HebCal.GetMonth(dtBirthday) - HebCal.GetMonth(dtBarMitzva));
+                // fix c# bug
+                string urlG2H = "http://www.hebcal.com/converter/?cfg=json&gy={0}&gm={1}&gd={2}&g2h=1";
+                urlG2H = String.Format(urlG2H, dtBirthday.Year.ToString(), dtBirthday.Month.ToString(), dtBirthday.Day.ToString());
+                var wc = new System.Net.WebClient { Encoding = Encoding.UTF8 };
+                var contents = wc.DownloadString(urlG2H);
+                JObject dateObject = JObject.Parse(contents);
+                string hebrewYear = dateObject.GetValue("hy").ToString();
+                string hebrewMonth = dateObject.GetValue("hm").ToString();
+                string hebrewDay = dateObject.GetValue("hd").ToString(); 
+                // calc bar mitzva
+                hebrewYear = (Int32.Parse(hebrewYear) + 13).ToString();
+                string urlH2G = "http://www.hebcal.com/converter/?cfg=json&hy={0}&hm={1}&hd={2}&h2g=1";
+                urlH2G = String.Format(urlH2G, hebrewYear, hebrewMonth, hebrewDay);
+                wc = new System.Net.WebClient { Encoding = Encoding.UTF8 };
+                contents = wc.DownloadString(urlH2G);
+                dateObject = JObject.Parse(contents);
+                string gYear = dateObject.GetValue("gy").ToString();
+                string gMonth = dateObject.GetValue("gm").ToString();
+                string gDay = dateObject.GetValue("gd").ToString();
+                dtBarMitzva = new DateTime(Int32.Parse(gYear), Int32.Parse(gMonth), Int32.Parse(gDay));
             }
-            else if (HebCal.GetMonth(dtBarMitzva) > HebCal.GetMonth(dtBirthday))
+            catch (Exception e)
             {
-                dtBarMitzva = HebCal.AddMonths(dtBarMitzva, HebCal.GetMonth(dtBarMitzva) - HebCal.GetMonth(dtBirthday));
-            }
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }*/
+
 
             int? favoriteAliya = (isReadingMaftirToAdd.Checked) ? (int?)8 : null;
             string strBarMitzva = dtBarMitzva.ToString("MM/dd/yyyy g", CultureInfo.InvariantCulture).Replace(" A.D.", "");
@@ -184,7 +205,7 @@ namespace GabayManageSite
                     exceptional2DateTableAdapter.InsertQuery(nextDt, exptional_id);
                 }
             }
-                }
+            }
             catch(Exception e){
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }

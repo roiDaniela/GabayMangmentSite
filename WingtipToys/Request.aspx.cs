@@ -75,8 +75,8 @@ namespace GabayManageSite
             string reason_id = DropDownListReason.SelectedValue;
 
             addDateToTable(IdToAdd.Text, DateToAdd.Text, syn_id, reason_id, isRegular, description);
-                        
-            PrayersGridView.DataBind();
+
+            RequestsGridView.DataBind();
         }
 
         // same as in productlist
@@ -93,7 +93,7 @@ namespace GabayManageSite
         {
             DateTime dtDate = Convert.ToDateTime(date);
             DateTime startDate;
-            System.Globalization.Calendar HebCal = new HebrewCalendar();
+            NewHebCal HebCal = new NewHebCal();
             int? favoriteAliya = Int32.Parse(DropDownListSuggestedAliya.SelectedValue);
 
             try
@@ -144,7 +144,45 @@ namespace GabayManageSite
 
         protected void DropDownListRangeOfYears_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PrayersGridView.DataBind();
+            RequestsGridView.DataBind();
+        }
+
+        protected void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string sid = (Session["currSynId"] != null) ? Session["currSynId"].ToString() : "";
+                int ref_to_delete;
+                int expId_to_delete;
+
+                if (!String.IsNullOrEmpty(sid))
+                {
+
+                    for (int i = 0; i < RequestsGridView.Rows.Count; i++)
+                    {
+                        GridViewRow row = RequestsGridView.Rows[i];
+                        if (((CheckBox)row.FindControl("Remove")).Checked)
+                        {
+                            ref_to_delete = Int32.Parse(((Label)row.FindControl("RefLabel")).Text);
+                            expId_to_delete = Int32.Parse(((Label)row.FindControl("ExceptionalIdLabel")).Text);
+
+
+                            //exceptional2DateTableAdapter.DeleteQueryByDateAndRef(ref_to_delete, date_to_delete);
+                            exceptional2DateTableAdapter.Delete(ref_to_delete);
+                            if (Int32.Parse(exceptional2DateTableAdapter.ScalarQueryGetCountRef(expId_to_delete).ToString()) == 0)
+                            {
+                                exceptionalTableAdapter.DeleteQueryByRef(expId_to_delete);
+                            }
+                        }
+                    }
+                }
+
+                RequestsGridView.DataBind();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
     }
 }

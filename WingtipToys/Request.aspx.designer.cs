@@ -139,13 +139,22 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceRangeOfYears;
         
         /// <summary>
-        /// PrayersGridView control.
+        /// DeleteBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView PrayersGridView;
+        protected global::System.Web.UI.WebControls.Button DeleteBtn;
+        
+        /// <summary>
+        /// RequestsGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView RequestsGridView;
         
         /// <summary>
         /// SqlDataSource2 control.

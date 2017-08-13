@@ -465,6 +465,7 @@
     <Compile Include="AliyotHistory.aspx.designer.cs">
       <DependentUpon>AliyotHistory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NewHebCal.cs" />
     <Compile Include="ParashahCalendar.aspx.cs">
       <DependentUpon>ParashahCalendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -548,6 +549,7 @@
     </Compile>
     <Compile Include="GabayDataSet.cs">
       <DependentUpon>GabayDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GabayDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

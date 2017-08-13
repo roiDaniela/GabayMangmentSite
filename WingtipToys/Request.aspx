@@ -145,9 +145,11 @@
 
             </h3> 
             </div>
+            <asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/>
+
            
 
-                <asp:GridView showHeader="true" DataSourceID="SqlDataSource2" ID="PrayersGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
+                <asp:GridView showHeader="true" DataSourceID="SqlDataSource2" ID="RequestsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
                 CssClass="table table-striped table-bordered">
                     <Columns>
                                                                 
@@ -156,6 +158,18 @@
                                 <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("prayer_id") %>' Width="80px"/>
                         </ItemTemplate>        
                         </asp:TemplateField>      
+
+                        <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" Visible="false">            
+                                <ItemTemplate>
+                                <asp:Label ID="RefLabel" runat="server" Text='<%# Eval("ref") %>' Width="80px"/>
+                        </ItemTemplate>        
+                        </asp:TemplateField>
+
+                        <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" Visible="false">            
+                                <ItemTemplate>
+                                <asp:Label ID="ExceptionalIdLabel" runat="server" Text='<%# Eval("ExceptionalId") %>' Width="80px"/>
+                        </ItemTemplate>        
+                        </asp:TemplateField>
 
                         <asp:TemplateField ItemStyle-Width="80px" ControlStyle-Width="80px" HeaderText="Name">            
                                 <ItemTemplate>
@@ -203,7 +217,7 @@
                 </asp:GridView>
             <%} %>
             
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select p.id as prayer_id, r.name as reason, e1.description as description,a.name as favorite_aliya, CONCAT ( p.private_Name, ' ', p.family_name) as name, CAST(CASE WHEN CONVERT(VARCHAR(10),e2.date,110) is not null THEN CONVERT(VARCHAR(10),e2.date,110) ELSE '' END AS Text) as date, (select top(1) pr.nameHe from fullkriyah f, parashot pr where pr.id = f.parashah and date >= e2.date order by date) as parasha, CASE WHEN e2.date >= getdate() THEN 0 ELSE 1 END AS order_date  from exceptional e1, exceptional2date e2, prayers p, reason r, pray2syn ps, Aliyah a where a.id = e1.favorite_aliya and r.id = e1.reason_id and ps.prayer_id = p.id and ps.syn_id = @sid and e2.exceptional_id = e1.ref and p.id = e1.prayer_id and year(e2.date) between year(getdate()) and @range order by order_date, e2.date">
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="select p.id as prayer_id, e2.exceptional_id as ExceptionalId ,e2.ref as ref, r.name as reason, e1.description as description,a.name as favorite_aliya, CONCAT ( p.private_Name, ' ', p.family_name) as name, CAST(CASE WHEN CONVERT(VARCHAR(10),e2.date,110) is not null THEN CONVERT(VARCHAR(10),e2.date,110) ELSE '' END AS Text) as date, (select top(1) pr.nameHe from fullkriyah f, parashot pr where pr.id = f.parashah and date >= e2.date order by date) as parasha, CASE WHEN e2.date >= getdate() THEN 0 ELSE 1 END AS order_date  from exceptional e1, exceptional2date e2, prayers p, reason r, pray2syn ps, Aliyah a where a.id = e1.favorite_aliya and r.id = e1.reason_id and ps.prayer_id = p.id and ps.syn_id = @sid and e2.exceptional_id = e1.ref and p.id = e1.prayer_id and year(e2.date) between year(getdate()) and @range order by order_date, e2.date">
                 <SelectParameters>
                 </SelectParameters>
             </asp:SqlDataSource>
