@@ -10,70 +10,61 @@
 namespace GabayManageSite {
     
     
-    public partial class Synagoges {
+    public partial class AliyotHistory {
         
         /// <summary>
-        /// UpdateBtn control.
+        /// LabelHebDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpdateBtn;
+        protected global::System.Web.UI.WebControls.Label LabelHebDate;
         
         /// <summary>
-        /// FilteredTextBoxExtenderSynName control.
+        /// HyperLinkParasha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtenderSynName;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkParasha;
         
         /// <summary>
-        /// NameToAdd control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NameToAdd;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
-        /// PasswordToAdd control.
+        /// SqlDataSource2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PasswordToAdd;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
         
         /// <summary>
-        /// DropDownListName control.
+        /// ButtonClear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListName;
+        protected global::System.Web.UI.WebControls.Button ButtonClear;
         
         /// <summary>
-        /// SqlDataSourceSynCity control.
+        /// dlProducts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSynCity;
-        
-        /// <summary>
-        /// SynagogesList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView SynagogesList;
+        protected global::System.Web.UI.WebControls.DataList dlProducts;
         
         /// <summary>
         /// SqlDataSource1 control.

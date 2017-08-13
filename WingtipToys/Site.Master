@@ -57,9 +57,11 @@
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li><a runat="server" href="~/Synagoges">Synagoges</a></li>
+                        <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
                         <li><a runat="server" href="~/Aliyot">Aliyot</a></li>
                         <li><a runat="server" href="~/ProductList">Prayers</a></li>
                         <li><a runat="server" href="~/ShoppingCart" ID="cartCount" visible="false">&nbsp;</a></li>
+                        <%} %>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -70,7 +72,7 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> - <%: Session["currSynName"] %>!</a></li>
+                                <li><a runat="server" href="~/" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> - <%: Session["currSynName"] %>!</a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
@@ -100,12 +102,19 @@
                 </ItemTemplate>
                 <ItemSeparatorTemplate>  |  </ItemSeparatorTemplate>
             </asp:ListView> --%>
+            
             <b style="font-size: large; font-style: normal">
+                <a runat="server" href="~/Synagoges">Synagoges</a>
+                <% if (Session["currSynId"] != null && !String.IsNullOrEmpty(Session["currSynId"].ToString())){ %>
+                |
                 <a runat="server" href="~/ProductList">Prayers</a>
                 |                
                 <a runat="server" href="~/Aliyot">Aliyot</a>
                 |
-                <a runat="server" href="~/Request">Request</a>
+                <a runat="server" href="~/Request" >Request</a>
+                |                
+                <a runat="server" href="~/AliyotHistory">Aliyot History</a>
+               <%} %>
             </b>
         </div>
         <div class="container body-content">

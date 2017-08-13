@@ -49,15 +49,6 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceName;
         
         /// <summary>
-        /// rbDateOrParasha control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rbDateOrParasha;
-        
-        /// <summary>
         /// DateToAdd control.
         /// </summary>
         /// <remarks>
@@ -67,31 +58,13 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.TextBox DateToAdd;
         
         /// <summary>
-        /// DropDownListParashaToAdd control.
+        /// isRegularToAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListParashaToAdd;
-        
-        /// <summary>
-        /// DataSourceParashot control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource DataSourceParashot;
-        
-        /// <summary>
-        /// isConstToAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox isConstToAdd;
+        protected global::System.Web.UI.WebControls.CheckBox isRegularToAdd;
         
         /// <summary>
         /// DropDownListSuggestedAliya control.
@@ -148,13 +121,40 @@ namespace GabayManageSite {
         protected global::System.Web.UI.WebControls.Button addButton;
         
         /// <summary>
-        /// PrayersGridView control.
+        /// DropDownListRangeOfYears control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView PrayersGridView;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListRangeOfYears;
+        
+        /// <summary>
+        /// SqlDataSourceRangeOfYears control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceRangeOfYears;
+        
+        /// <summary>
+        /// DeleteBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteBtn;
+        
+        /// <summary>
+        /// RequestsGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView RequestsGridView;
         
         /// <summary>
         /// SqlDataSource2 control.

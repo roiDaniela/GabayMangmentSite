@@ -35,22 +35,29 @@ namespace GabayManageSite.Account
                 // To enable password failures to trigger lockout, change to shouldLockout: true
                 var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
 
-                if (result == SignInStatus.Failure)
+                /*if (result == SignInStatus.Failure)
                 {
                     // check in db
                     string real_pass = Models.ProductDatabaseInitializer.getPasswordForUser(Email.Text);
-                    if (real_pass.Equals(Password.Text))
+                    if (real_pass!= null && real_pass.Equals(Password.Text))
                     {
                         result = SignInStatus.Success;
                     }
-                }
+                }*/
 
                 switch (result)
                 {
                     case SignInStatus.Success:
                         GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions();
                         String cartId = usersShoppingCart.GetCartId();
-                        usersShoppingCart.MigrateCart(cartId, Email.Text);
+                        //usersShoppingCart.MigrateCart(cartId, Email.Text);
+
+                        GabayDataSet gabayDataSet = new GabayDataSet();
+                        GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
+
+                        mail2SynTableAdapter.GetDataBy(Email.Text);
+                        Session["currSynName"] = mail2SynTableAdapter.GetDataBy(Email.Text)[0]["name"];
+                        Session["currSynId"] = mail2SynTableAdapter.GetDataBy(Email.Text)[0]["id"];
 
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         break;

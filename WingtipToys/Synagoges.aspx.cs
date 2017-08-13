@@ -17,11 +17,11 @@ namespace GabayManageSite
 
             if (Thread.CurrentThread.CurrentCulture.Name == "he-IL")
             {
-                FilteredTextBoxExtenderSynName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך";
+                FilteredTextBoxExtenderSynName.ValidChars = "אבגדהוזחטיכלמנסעפצקרשתםך ";
             }
             else
             {
-                FilteredTextBoxExtenderSynName.ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                FilteredTextBoxExtenderSynName.ValidChars = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             }
         }
 
@@ -32,18 +32,15 @@ namespace GabayManageSite
             
             string Password = PasswordToAdd.Text;
             string synName = NameToAdd.Text;
-            var id = synagogeTableAdapter.getNextId();
+            int city = int.Parse(DropDownListName.SelectedValue);
 
-            GabayDataSet.SynagogeRow rsDetails = gabayDataSet.Synagoge.NewSynagogeRow();
+            if (!string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(synName))
+            {
+                synagogeTableAdapter.InsertQuery(synName, Password, city);
+            }
 
-            rsDetails["Id"] = int.Parse(id.ToString());
-            rsDetails["Name"] = synName;
-            rsDetails["Password"] = Password;
-
-            gabayDataSet.Synagoge.Rows.Add(rsDetails.ItemArray);
-
-            synagogeTableAdapter.Update(gabayDataSet.Synagoge);
-            SynagogesList.DataBind();
+            Response.Redirect("~/Synagoges");
+            //SynagogesList.DataBind();
         }
     }
 }

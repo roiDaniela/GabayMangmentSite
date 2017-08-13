@@ -67,11 +67,11 @@ namespace GabayManageSite
                     Private_NameToEditValidator.ControlToValidate = Private_NameToEdit.GetUniqueIDRelativeTo(Private_NameToEditValidator);
                     //FilteredTextBoxExtender FilteredTextBoxExtenderFamilyName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderFamilyName");
                     // FilteredTextBoxExtender FilteredTextBoxExtenderPrivateName = (FilteredTextBoxExtender)PrayersGridView.Rows[0].FindControl("FilteredTextBoxExtenderPrivateName");
-                    if (!Page.IsPostBack)
+                    /*if (!Page.IsPostBack)
                     {
                         DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId).ToString();
                         DropDownListTitleToEdit.SelectedValue = prayersTableAdapter.GetTitleId(rawId).ToString();
-                    }
+                    }*/
                     //DropDownParashaToEdit.SelectedValue = prayersTableAdapter.GetParashatBarMitzvaId(rawId, int.Parse(sid)).ToString();
                     //DropDownListTitleToEdit.SelectedIndex = (int)prayersTableAdapter.GetTitleId(rawId, int.Parse(sid));
                     Private_NameToEdit.ToolTip = Thread.CurrentThread.CurrentCulture.Name + " characters only";

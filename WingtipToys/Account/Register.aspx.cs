@@ -27,6 +27,12 @@ namespace GabayManageSite.Account
 
                 IdentityHelper.SignIn(manager, user, isPersistent: false);
 
+                if (!string.IsNullOrEmpty(DropDownListSyn.SelectedValue))
+                {
+                    Session["currSynName"] = DropDownListSyn.SelectedItem.Text;
+                    Session["currSynId"] = DropDownListSyn.SelectedValue;
+                }
+
                 // save to users table
                 saveToUsresTable(Email.Text, Password.Text);
                 using (GabayManageSite.Logic.ShoppingCartActions usersShoppingCart = new GabayManageSite.Logic.ShoppingCartActions())
@@ -55,6 +61,17 @@ namespace GabayManageSite.Account
             gabayDataSet.Users.Rows.Add(rsDetails.ItemArray);
 
             usersTableAdapter.Update(gabayDataSet.Users);
+
+            // add to mail2syn
+            GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
+            GabayDataSet.Mail2SynRow rsDetails2 = gabayDataSet.Mail2Syn.NewMail2SynRow();
+
+            rsDetails2["Synagoge_Id"] = DropDownListSyn.SelectedValue;
+            rsDetails2["email"] = email;
+
+            gabayDataSet.Mail2Syn.Rows.Add(rsDetails2.ItemArray);
+
+            mail2SynTableAdapter.Update(gabayDataSet.Mail2Syn);
         }
 
         private bool checkSynagogeWithDB()
@@ -62,6 +79,15 @@ namespace GabayManageSite.Account
             //string synDBPassword = Models.ProductDatabaseInitializer.getPasswordForSynagogeId(Synagoge.SelectedValue);
             //return (synPassword.Equals(synPassword.Text));           
             return true;
+        }
+
+        protected void DropDownListName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownListSyn.Visible = true;
+            synNameLabel.Visible = true;
+            SqlDataSourceSynName.SelectParameters.Remove(SqlDataSourceSynName.SelectParameters["city"]);
+            SqlDataSourceSynName.SelectParameters.Add("city", DropDownListName.SelectedValue);
+
         }
     }
 }

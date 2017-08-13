@@ -9,12 +9,16 @@ using System.Web.SessionState;
 using System.Data.Entity;
 using GabayManageSite.Models;
 using GabayManageSite.Logic;
+using Microsoft.AspNet.Identity;
 
 namespace GabayManageSite
 {
     public class Global : HttpApplication
     {
         private bool firstSession {get; set;}
+        private object currsyn { get; set; }
+        private object synname { get; set; }
+        
         void Application_Start(object sender, EventArgs e)
         {
             firstSession = true;
@@ -59,7 +63,15 @@ namespace GabayManageSite
 
         void Session_Start(object sender, EventArgs e)
         {
+            if (Context.User.Identity.GetUserName() != null && !string.IsNullOrEmpty(Context.User.Identity.GetUserName()))
+            {
+                GabayDataSet gabayDataSet = new GabayDataSet();
+                GabayDataSetTableAdapters.Mail2SynTableAdapter mail2SynTableAdapter = new GabayDataSetTableAdapters.Mail2SynTableAdapter();
 
+                mail2SynTableAdapter.GetDataBy(Context.User.Identity.GetUserName());
+                Session["currSynName"] = mail2SynTableAdapter.GetDataBy(Context.User.Identity.GetUserName())[0]["name"];
+                Session["currSynId"] = mail2SynTableAdapter.GetDataBy(Context.User.Identity.GetUserName())[0]["id"];
+            }
         }
 
         void Application_Error(object sender, EventArgs e)
