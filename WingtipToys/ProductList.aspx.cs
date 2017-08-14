@@ -69,20 +69,63 @@ namespace GabayManageSite
                     string phone = PhoneToAdd.Text;
                     string email = EmailToAdd.Text;
 
-                    exceptional2DateTableAdapter.DeleteQueryByPrayerId(id);
-                    exceptionalTableAdapter.DeleteQueryByPrayerId(id);
+                    exceptional2DateTableAdapter.DeleteQueryByPrayerIdAndSynId(id, Int32.Parse(synId));
+                    exceptionalTableAdapter.DeleteQueryByPrayerIdAndSynId(id, Int32.Parse(synId));
                     pray2SynTableAdapter.DeleteQuery(id, synId);
-                    prayersTableAdapter.DeleteQueryByPid(id);
+
+                    if (pray2SynTableAdapter.ScalarQueryGetCountByPid(id).ToString().Equals("0"))
+                    {
+                        prayersTableAdapter.DeleteQueryByPid(id);
                     
-                    if(id != null && !string.IsNullOrEmpty(private_name) && 
-                        !string.IsNullOrEmpty(family_name) &&
-                        !string.IsNullOrEmpty(title_id) &&
-                        !string.IsNullOrEmpty(synId))
-                    prayersTableAdapter.InsertQuery(id, private_name, family_name, birthday, int.Parse(title_id), isReadingMaftir, phone, email);
-                   
-                    pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
-                    addBarMitzvaToTable(id, birthday, synId);
-                    PrayersGridView.DataBind();
+                        if(id != null && !string.IsNullOrEmpty(private_name) && 
+                            !string.IsNullOrEmpty(family_name) &&
+                            !string.IsNullOrEmpty(title_id) &&
+                            !string.IsNullOrEmpty(synId))
+                        prayersTableAdapter.InsertQuery(id, private_name, family_name, birthday, int.Parse(title_id), isReadingMaftir, phone, email);
+                    }
+                    else
+                    {
+                        string old_name = prayersTableAdapter.GetDataById1(id).Rows[0]["private_name"].ToString();
+                        string old_Familyname = prayersTableAdapter.GetDataById1(id).Rows[0]["family_name"].ToString();
+                        string old_title = prayersTableAdapter.GetDataById1(id).Rows[0]["title_id"].ToString();
+                        string old_email = prayersTableAdapter.GetDataById1(id).Rows[0]["email"].ToString();
+                        string old_phone = prayersTableAdapter.GetDataById1(id).Rows[0]["phone"].ToString();
+                        bool? old_isReadingMaftir = (bool) prayersTableAdapter.GetDataById1(id).Rows[0]["is_reading_maftir"];
+
+                        string strErr = "Dear user The details of this prayer are different then exist in DB: \n";
+
+                        if (!string.IsNullOrEmpty(old_name) && !string.IsNullOrEmpty(private_name) && old_name != private_name)
+                        {
+                            strErr += String.Format("curremt private name - {0} - is different then old private name - {1} \n", private_name, old_name);
+                        }
+                        if (!string.IsNullOrEmpty(old_Familyname) && !string.IsNullOrEmpty(family_name) && old_Familyname != family_name)
+                        {
+                            strErr += String.Format("curremt family name - {0} - is different then old family name - {1} \n", family_name, old_Familyname);
+                        }
+                        if (!string.IsNullOrEmpty(old_title) && !string.IsNullOrEmpty(title_id) && old_title != title_id)
+                        {
+                            strErr += String.Format("curremt title - {0} - is different then old title - {1} \n", title_id, old_title);
+                        }
+                        if (!string.IsNullOrEmpty(old_email) && !string.IsNullOrEmpty(email) && email != old_email)
+                        {
+                            strErr += String.Format("curremt Email - {0} - is different then old Email - {1} \n", email, old_email);
+                        }
+                        if (!string.IsNullOrEmpty(old_phone) && !string.IsNullOrEmpty(phone) && phone != old_phone)
+                        {
+                            strErr += String.Format("curremt phone - {0} - is different then old phone - {1} \n", phone, old_phone);
+                        }
+                        if (old_isReadingMaftir != isReadingMaftir)
+                        {
+                            strErr += String.Format("curremt is_reading_maftir - {0} - is different then old is_reading_maftir - {1} \n", isReadingMaftir.ToString(), old_isReadingMaftir.ToString());
+                        }
+
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", String.Format("alert({0})", strErr), true);
+                        prayersTableAdapter.UpdateQuery(id, private_name, family_name, birthday, int.Parse(title_id), isReadingMaftir, phone, email, id);
+
+                        pray2SynTableAdapter.InsertQuery(id, int.Parse(synId));
+                        addBarMitzvaToTable(id, birthday, synId);
+                        PrayersGridView.DataBind();
+                    }                  
                 }     
             }
             catch(Exception ex)
@@ -241,10 +284,14 @@ namespace GabayManageSite
                     {
                         id_to_delete = ((Label)row.FindControl("IdLabel")).Text;
 
-                        exceptional2DateTableAdapter.DeleteQueryByPrayerId(id_to_delete);
-                        exceptionalTableAdapter.DeleteQueryByPrayerId(id_to_delete);
+                        exceptional2DateTableAdapter.DeleteQueryByPrayerIdAndSynId(id_to_delete, Int32.Parse(sid));
+                        exceptionalTableAdapter.DeleteQueryByPrayerIdAndSynId(id_to_delete, Int32.Parse(sid));
                         pray2SynTableAdapter.DeleteQuery(id_to_delete, sid);
-                        prayersTableAdapter.DeleteQueryByPid(id_to_delete);
+
+                        if (pray2SynTableAdapter.ScalarQueryGetCountByPid(id_to_delete).ToString().Equals("0"))
+                        {
+                            prayersTableAdapter.DeleteQueryByPid(id_to_delete);
+                        }
                     }
                 }                
             }
