@@ -30,7 +30,6 @@ namespace GabayManageSite
             DateTime parashaDate = (DateTime)currentParasha.Rows[0]["date"];
 
             String URLString = "http://www.hebcal.com/converter/?cfg=xml&gy=" + parashaDate.Year + "&gm=" + parashaDate.Month + "&gd=" + parashaDate.Day + "&g2h=1";
-
             XmlTextReader reader = new XmlTextReader(URLString);
             XmlDocument doc = new XmlDocument();
             doc.Load(reader);
@@ -41,14 +40,22 @@ namespace GabayManageSite
 
         protected void ButtonClear_Click1(object sender, EventArgs e)
         {
-            AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
-            AliyaHistoryAdapter.DeleteLastAliyaDateRecords((int)Session["currSynId"]);
-            Response.Redirect(Request.RawUrl);
+            if (Session["currSynId"] != null)
+            {
+                AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
+                AliyaHistoryAdapter.DeleteLastAliyaDateRecords((int)Session["currSynId"]);
+                Response.Redirect(Request.RawUrl);
+            }
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            e.Row.Cells[0].Style.Add("visibility", "hidden");
         }
     }
 }

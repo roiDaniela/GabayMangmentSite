@@ -1,7 +1,9 @@
 ﻿	<%@ Page Title="Prayers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
          CodeBehind="ProductList.aspx.cs" Inherits="GabayManageSite.ProductList" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %> 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
+
     <section>
         <div>
             <hgroup>
@@ -50,7 +52,7 @@
                         <%--<asp:Button ID="DeleteBtn" runat="server" Text="Delete" OnClick="DeleteBtn_Click"/> --%>
                     </td>
                     <td>
-                        <asp:Button ID="EndSessionBtn" runat="server" Visible="true" Text="EndSession" OnClick="EndSessionBtn_Click"/>
+                        <asp:Button ID="EndSessionBtn" runat="server" Visible="false" Text="EndSession" OnClick="EndSessionBtn_Click"/>
                     </td>
                 </tr>
             </table>

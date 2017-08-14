@@ -41,7 +41,7 @@ namespace GabayManageSite.Services
         }
 
         [WebMethod]
-        public void SaveAliyaHistory(string prayer_id, int kriyaId)
+        public void SaveAliyaHistory(int synId, string prayer_id, int kriyaId)
         {
             //productCode = productCode.Replace(" ", String.Empty);
 
@@ -55,7 +55,7 @@ namespace GabayManageSite.Services
             //    db.SubmitChanges();
             //}
             AliyaHistoryTableAdapter AliyotAdapter = new AliyaHistoryTableAdapter();
-            AliyotAdapter.InsertQuery(prayer_id, 7, kriyaId);
+            AliyotAdapter.InsertQuery(prayer_id, synId, kriyaId);
         }
     }
 }

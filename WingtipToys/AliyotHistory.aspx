@@ -42,14 +42,10 @@ li
 
         <div>
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" HorizontalAlign="Center" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered" Width="30%">
-            <Columns>
-                <asp:BoundField DataField="פסוקים" HeaderText="פסוקים" SortExpression="פסוקים" />
-                <asp:BoundField DataField="מס' עליה" HeaderText="מס' עליה" SortExpression="מס' עליה" />
-            </Columns>
+        <asp:GridView ID="GridView1" runat="server" HorizontalAlign="Center" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered" Width="30%" OnRowDataBound="GridView1_RowDataBound">
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID, Aliyah.Name AS &quot;מס' עליה&quot;,
-	   Reading.name AS &quot;פסוקים&quot;
+        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID,  Reading.name AS &quot;פסוקים&quot;,Aliyah.Name AS &quot;מס' עליה&quot;
+	  
 From fullkriyah
 Inner Join Reading On Reading.Id = fullkriyah.torah
 Inner Join Aliyah On Aliyah.id = fullkriyah.Aliyah
@@ -124,14 +120,15 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     </table>
         <%} %>
 <script type="text/javascript">
-
+    function GetCurrSynId()
+    {
+          return '<%= Session["currSynId"] %>';
+    }
     function loadProductsFromUser() {
 
         var params = new Object();
 
-        jQuery(document).ready(function ($) {
-            params.synid = '@Request.RequestContext.HttpContext.Session["currSynId"]';
-        }); 
+        params.synid = GetCurrSynId();
 
         //params.synid = 7;
 
@@ -192,7 +189,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
         {
             accept: ".block",
             drop: function (ev, ui) {
-
+                $(".block").draggable({ disabled: true });
                 var droppedItem = $(ui.draggable).clone(); 
                 $(this).append(droppedItem);
 
@@ -208,19 +205,22 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 var params = new Object();
                 params.prayer_id = productCode;
                 params.kriyaId = kriyaId;
-                //params.op = "SaveAliyaHistory";
+                params.synId = GetCurrSynId();
                 $.ajax(
 
-                {
-                    type: "POST",
-                    data: $.toJSON(params),
-                    contentType: "application/json",
-                    url: "Services/AjaxService.asmx/SaveAliyaHistory",
-                    success: function (response) {
-
-                    }
-
-                });
+                    {
+                        type: "POST",
+                        data: $.toJSON(params),
+                        contentType: "application/json",
+                        url: "Services/AjaxService.asmx/SaveAliyaHistory",
+                        success: function (response) {
+                            $(".block").draggable({ disabled: false });
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(params.prayer_id + " not inserted to table some error with the server");
+                            droppedItem.remove();
+                        }
+                    });
 
 
             }
