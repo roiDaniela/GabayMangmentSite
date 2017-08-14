@@ -41,9 +41,12 @@ namespace GabayManageSite
 
         protected void ButtonClear_Click1(object sender, EventArgs e)
         {
-            AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
-            AliyaHistoryAdapter.DeleteLastAliyaDateRecords((int)Session["currSynId"]);
-            Response.Redirect(Request.RawUrl);
+            if (Session["currSynId"] != null)
+            {
+                AliyaHistoryAdapter = new AliyaHistoryTableAdapter();
+                AliyaHistoryAdapter.DeleteLastAliyaDateRecords((int)Session["currSynId"]);
+                Response.Redirect(Request.RawUrl);
+            }
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)

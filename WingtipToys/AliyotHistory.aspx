@@ -124,7 +124,10 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
     </table>
         <%} %>
 <script type="text/javascript">
-
+    function GetCurrSynId()
+    {
+          return '<%= Session["currSynId"] %>';
+    }
     function loadProductsFromUser() {
 
         var params = new Object();
@@ -192,7 +195,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
         {
             accept: ".block",
             drop: function (ev, ui) {
-
+                $(".block").draggable({ disabled: true });
                 var droppedItem = $(ui.draggable).clone(); 
                 $(this).append(droppedItem);
 
@@ -208,19 +211,22 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                 var params = new Object();
                 params.prayer_id = productCode;
                 params.kriyaId = kriyaId;
-                //params.op = "SaveAliyaHistory";
+                params.synId = GetCurrSynId();
                 $.ajax(
 
-                {
-                    type: "POST",
-                    data: $.toJSON(params),
-                    contentType: "application/json",
-                    url: "Services/AjaxService.asmx/SaveAliyaHistory",
-                    success: function (response) {
-
-                    }
-
-                });
+                    {
+                        type: "POST",
+                        data: $.toJSON(params),
+                        contentType: "application/json",
+                        url: "Services/AjaxService.asmx/SaveAliyaHistory",
+                        success: function (response) {
+                            $(".block").draggable({ disabled: false });
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(params.prayer_id + " not inserted to table some error with the server");
+                            droppedItem.remove();
+                        }
+                    });
 
 
             }
