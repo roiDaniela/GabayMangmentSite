@@ -42,14 +42,10 @@ li
 
         <div>
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" HorizontalAlign="Center" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered" Width="30%">
-            <Columns>
-                <asp:BoundField DataField="פסוקים" HeaderText="פסוקים" SortExpression="פסוקים" />
-                <asp:BoundField DataField="מס' עליה" HeaderText="מס' עליה" SortExpression="מס' עליה" />
-            </Columns>
+        <asp:GridView ID="GridView1" runat="server" HorizontalAlign="Center" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" CssClass="table table-striped table-bordered" Width="30%">
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID, Aliyah.Name AS &quot;מס' עליה&quot;,
-	   Reading.name AS &quot;פסוקים&quot;
+        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>" SelectCommand="Select  fullkriyah.ID,  Reading.name AS &quot;פסוקים&quot;,Aliyah.Name AS &quot;מס' עליה&quot;
+	  
 From fullkriyah
 Inner Join Reading On Reading.Id = fullkriyah.torah
 Inner Join Aliyah On Aliyah.id = fullkriyah.Aliyah
@@ -132,9 +128,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
 
         var params = new Object();
 
-        jQuery(document).ready(function ($) {
-            params.synid = '@Request.RequestContext.HttpContext.Session["currSynId"]';
-        }); 
+        params.synid = GetCurrSynId();
 
         //params.synid = 7;
 
