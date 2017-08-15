@@ -95,10 +95,294 @@ Where date in (
     
     </asp:DataList>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="SELECT Prayers.* 
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:gabayConnectionString %>" SelectCommand="
+select ID,PRIVATE_NAME, FAMILY_NAME
+From
+(
+Select Top (3) *
+From
+(
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	 --CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+	   PRIVATE_NAME,FAMILY_NAME,
+  	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מספר העליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =1
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ ) C
+ Order By Priority DESC,&quot;מספר העליות&quot; DESC
+Union ALL 
+
+
+Select Top (3) *
+From
+(
+-----------------------------------------------------------------------------
+--------------Query from Exceptional table (1,3,4,6,8)----------------------
+-----------------------------------------------------------------------------
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	-- CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+  	   PRIVATE_NAME,FAMILY_NAME,
+	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מס עליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =2
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ ) L
+ Order By Priority DESC,&quot;מס עליות&quot; ASC
+
+
+UNION ALL
+
+
+Select Top (12) *
+From
+(
+-----------------------------------------------------------------------------
+--------------Query from Exceptional table (1,3,4,6,8)----------------------
+-----------------------------------------------------------------------------
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	-- CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+	   PRIVATE_NAME,FAMILY_NAME,
+  	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מס עליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =3
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ )Y
+  Order By Priority DESC,&quot;מס עליות&quot; ASC
+) AS g
+--Order By Title_ID ASC , Priority DESC, &quot;מספר העליות&quot; ASC
+
+UNION ALL
+
+SELECT ID,PRIVATE_NAME, FAMILY_NAME
  From Prayers
 inner JOIN  Pray2Syn on Pray2Syn.prayer_id = Prayers.ID
-where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>">
+where Pray2Syn.syn_id =@synId AND Prayers.ID NOT IN 
+(
+Select ID
+From
+(
+Select Top (3) *
+From
+(
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	 --CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+	   PRIVATE_NAME,FAMILY_NAME,
+  	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מספר העליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =1
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ ) C
+ Order By Priority DESC,&quot;מספר העליות&quot; DESC
+Union ALL 
+
+
+Select Top (3) *
+From
+(
+-----------------------------------------------------------------------------
+--------------Query from Exceptional table (1,3,4,6,8)----------------------
+-----------------------------------------------------------------------------
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	-- CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+  	   PRIVATE_NAME,FAMILY_NAME,
+	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מס עליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =2
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ ) L
+ Order By Priority DESC,&quot;מס עליות&quot; ASC
+
+
+UNION ALL
+
+
+Select Top (12) *
+From
+(
+-----------------------------------------------------------------------------
+--------------Query from Exceptional table (1,3,4,6,8)----------------------
+-----------------------------------------------------------------------------
+  	Select 
+  	   Title_ID,
+  	   Reason.Priority,
+  	   Prayers.ID,
+  	-- CONCAT ( PRIVATE_NAME, '  ', FAMILY_NAME ) AS &quot;שם מלא&quot;,
+	   PRIVATE_NAME,FAMILY_NAME,
+  	   Title.Name AS &quot;כהן/לוי/ישראל&quot;,
+  	   Aliyah.Name as &quot;עליה מומלצת&quot;,
+  	   Reason.name AS &quot;סיבה&quot;,
+  	   Exceptional2.description as &quot;תיאור&quot;,
+  	   Count( AliyaHistory.prayer_Id) AS &quot;מס עליות&quot;
+  	From Prayers
+  	Left Outer JOIN (SELECT [prayer_id]
+      ,[syn_id]
+      ,[fullkriyah_id]
+      ,[ref]
+  FROM [dbo].[AliyaHistory]
+  Where [fullkriyah_id] IN (SELECT 
+	id
+  	FROM fullkriyah
+    Where date &lt; getdate())) AS AliyaHistory ON  AliyaHistory.prayer_id = Prayers.id
+  	Left Outer Join (
+	Select prayer_id,reason_id,description,favorite_Aliya from Exceptional INNER JOIN Exceptional2Date ON Exceptional2Date.exceptional_id = Exceptional.ref  where Exceptional2Date.date in (SELECT TOP (1) 
+	date
+  	FROM fullkriyah
+    Where date &lt; getdate() Order By date Desc)) AS Exceptional2 ON Exceptional2.prayer_id = Prayers.id
+  	Left Outer Join Aliyah ON Exceptional2.favorite_Aliya = Aliyah.Id
+  	Left join Reason ON Reason.id = Exceptional2.reason_id
+  	Inner Join  Title On Title.id = Prayers.Title_ID
+  	where Prayers.ID IN (
+  		Select prayer_id
+  		from Pray2syn 
+  		where syn_id = @synId)
+  AND Title_ID =3
+  Group By  Title_ID,Reason.Priority,Prayers.ID,PRIVATE_NAME,FAMILY_NAME, Aliyah.Name,Reason.name,Exceptional2.description,Title.Name
+ )Y
+  Order By Priority DESC,&quot;מס עליות&quot; ASC
+) AS g
+)
+" ProviderName="<%$ ConnectionStrings:gabayConnectionString.ProviderName %>">
             <SelectParameters>
                 <asp:SessionParameter Name="synId" SessionField="currSynId" />
             </SelectParameters>
@@ -217,7 +501,7 @@ where Pray2Syn.syn_id =@synId" ProviderName="<%$ ConnectionStrings:gabayConnecti
                             $(".block").draggable({ disabled: false });
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert(params.prayer_id + " not inserted to table some error with the server");
+                            alert(params.prayer_id + " not inserted to table some error, may some error with server or disconnected try refreshing the page");
                             droppedItem.remove();
                         }
                     });
